@@ -42,6 +42,7 @@
 
 .col {
   text-align: center;
+  justify-content: center;
 }
 
 .addBtn {
@@ -49,7 +50,13 @@
   width: 70px;
   font-weight: bolder;
 }
- 
-.testNameBox {
-  min-width: 50%;
+
+.testNameBox{
+  width: 50%;
 }
+
+.testNameValid {
+  width:fit-content;
+  margin-left:6.5%;
+}
+ 
