@@ -59,4 +59,11 @@
   width:fit-content;
   margin-left:6.5%;
 }
+
+.errorMsg {
+  color:rgb(205, 68, 68);
+  font-size: small;
+  margin-left: 0%;
+  padding: 0;
+}
  
