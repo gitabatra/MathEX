@@ -39,14 +39,16 @@ html{
     transition: 1s;
 }
 
+
   .active {
     display: block;
-    background-color: #7189BF; 
+    background: rgb(144,144,218);
+    background: linear-gradient(205deg, rgba(144,144,218,1) 9%, rgba(0,212,255,1) 100%);
     color: #000;
   }
 
   #testPapers {
-    margin: 7% 15%;
+    margin: 2% auto;
   }
 
   .container
@@ -64,11 +66,44 @@ html{
 
  .addTestBtn {
     float: right;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
     font-size: large;
  }
-  
+
+ /********** Admin Page styles *********/
+#main {
+  margin:2% 10%;
+}
+
+.bigHeading {
+  margin: 2% 0;
+  text-align: center;
+}
+
+
+.col {
+  text-align: center;
+  justify-content: center;
+}
+
+.addBtn {
+  font-size: 1.2rem;
+  width: 70px;
+  font-weight: bolder;
+}
+
+.testNameBox{
+  width: 50%;
+}
+
+.testNameValid {
+  width:fit-content;
+  margin-left:6.5%;
+}
+
+.errorMsg {
+  color:rgb(205, 68, 68);
+  font-size: small;
+  margin-left: 0%;
+  padding: 0;
+}
  
