@@ -1,5 +1,3 @@
-
-
 const app = {
     init :() => {
         document.addEventListener("DOMContentLoaded", app.load);
