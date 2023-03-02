@@ -8,8 +8,9 @@
   }
 
   #testPapers {
-    margin: 2% auto;
+    margin: 2% 10%;
   }
+ 
 
   .container
  {
@@ -28,7 +29,26 @@
     float: right;
     font-size: large;
  }
+ .testPapers {
+  margin: 5% auto;
+}
+.testPapers > .row  {
+  border:2px solid black;
+  margin: 1% 4%;
+  padding:1% 3%;
+}
 
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #fff1eb;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, rgba(255,241,235,0.5), rgba(172,224,249,0.5));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, rgba(255,241,235,0.5), rgba(172,224,249,0.5))
+}
+ 
  /********** Admin Page styles *********/
 #main {
   margin:2% 10%;
@@ -66,4 +86,3 @@
   margin-left: 0%;
   padding: 0;
 }
- 
