@@ -8,6 +8,29 @@ const app = {
         app.getData();
     },
 
+    displayQuestions: (firstNum,secondNum) =>{
+        const ques = firstNum + " + " + secondNum + " = ? ";
+        let div = document.createElement("div");
+        let label = document.createElement("label");
+        label.innerText = ques;
+        console.log(label.innerText);
+        div.appendChild(label);
+        div.setAttribute("class","alignQuestions");
+        let questionDiv = document.getElementById("questionForm");
+        questionDiv.appendChild(div);  
+    },
+
+    checkData: (e) => {
+        console.log(e);
+        if (!document.getElementById("popupForm").checkValidity()) {
+            
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("checking validity...");
+        }
+        document.getElementById("popupForm").classList.add('was-validated');
+    },
+
     getData : () => {
         let page = document.body.id;
         switch(page) {
@@ -19,6 +42,9 @@ const app = {
                 break;
             case "newTest" :
                 app.getNewTestInfo();
+                break;
+            case "questionPaper":
+                app.getNewTestpaper();
                 break;
             default:
                 //add code
@@ -37,10 +63,7 @@ const app = {
 
       document.getElementById("popupForm").addEventListener("submit",function(e)
       {  
-        if (!document.getElementById("popupForm").checkValidity()) {
-            e.preventDefault();
-            e.stopPropagation();
-        }    
+        app.checkData(e);   
         const testName = document.getElementById("newTestText").value;
         console.log(testName);
 
@@ -56,11 +79,41 @@ const app = {
       
         const secondNumber = document.getElementById("inputNumber2").value;
         console.log(secondNumber);
-        const ques = firstNumber + " + " + secondNumber + " = ? ";
 
-        document.getElementById("popupForm").classList.add('was-validated');
+        localStorage.setItem('test-name',testName);
+        localStorage.setItem('question-type',selectedQuestion);
+        localStorage.setItem('digits',noOfDigits);
+        localStorage.setItem('first-number',firstNumber);
+        localStorage.setItem('second-number',secondNumber);
       })
-    }
+    },
+    getNewTestpaper: ()=> {
+        const testName = localStorage.getItem("test-name");
+        const questionType = localStorage.getItem("question-type");
+        const noOfDigits = localStorage.getItem("digits");
+        const firstNumber = localStorage.getItem("first-number");
+        const secondNumber = localStorage.getItem("second-number");
+
+        document.getElementById("addHeadingForTest").innerText = testName;
+        app.displayQuestions(firstNumber,secondNumber);
+
+
+        document.getElementById("saveBtn").addEventListener("click", (e) => {
+            app.checkData(e);
+            const questionType = document.getElementById("selectQuestion");
+            const selectedQuestion = questionType.options[questionType.selectedIndex].text;
+            const noOfDigits = document.getElementById("inputNumber").value;
+            const firstNumber = document.getElementById("inputNumber1").value;
+            const secondNumber = document.getElementById("inputNumber2").value;
+
+            if(noOfDigits!="" && firstNumber!="" && secondNumber!=""){
+                console.log("not null");
+                app.displayQuestions(firstNumber,secondNumber);
+            }else {
+                e.preventDefault();
+            }        
+            })
+    },
 }
 
 app.init();

@@ -86,3 +86,14 @@
   margin-left: 0%;
   padding: 0;
 }
+
+#questionsList {
+  margin:2% 10%;
+  
+}
+.alignQuestions {
+  text-align: center;
+  padding: 2% 10%;
+  border: 1px solid #000;
+  margin: 1% auto;
+}
