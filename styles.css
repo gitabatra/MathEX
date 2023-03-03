@@ -9,7 +9,7 @@
   }
 
   #testPapers {
-    margin: 2% auto;
+    margin: 2% 10%;
   }
 
   .container
@@ -68,3 +68,11 @@
   padding: 0;
 }
  
+.testPapers {
+  margin: 5% auto;
+}
+.testPapers > .row  {
+  border:2px solid black;
+  margin: 1% 4%;
+  padding:1% 3%;
+}
