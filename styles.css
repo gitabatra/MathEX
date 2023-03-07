@@ -1,11 +1,16 @@
 /****** index page styles *******/
+#navigation-bar{
+  background-color: #1572A1;
+}
 
-  .active {
-    display: block;
-    background: rgb(144,144,218);
-    background: linear-gradient(205deg, rgba(144,144,218,1) 9%, rgba(0,212,255,1) 100%);
-    color: #000;
-  }
+.active {
+  display: block;
+  background: rgb(93,156,89);
+  background: linear-gradient(137deg, rgba(93,156,89,1) 16%, rgba(233,0,100,1) 35%, rgba(21,114,161,1) 50%);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
 
   #testPapers {
     margin: 2% 10%;
@@ -28,6 +33,7 @@
  .addTestBtn {
     float: right;
     font-size: large;
+    background-color: #1572A1;
  }
  .testPapers {
   margin: 5% auto;
