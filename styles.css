@@ -1,7 +1,11 @@
+
 /****** index page styles *******/
 #navigation-bar{
   background-color: #1572A1;
 }
+
+
+
 
 .active {
   display: block;
@@ -93,6 +97,7 @@
   padding: 0;
 }
 
+
 #questionsList {
   margin:2% 10%;
   
@@ -102,4 +107,14 @@
   padding: 2% 10%;
   border: 1px solid #000;
   margin: 1% auto;
+
+ 
+.testPapers {
+  margin: 5% auto;
+}
+.testPapers > .row  {
+  border:2px solid black;
+  margin: 1% 4%;
+  padding:1% 3%;
+
 }
