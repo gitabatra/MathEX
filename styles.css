@@ -129,6 +129,12 @@
   width:40px;
   text-align:center;
 }
-.card-body {
-  margin-left : 30%;
+
+.tableAlign {
+  margin: 0 auto;
+}
+
+.alignNumbers {
+  margin:0px; 
+  padding:0px;
 }
