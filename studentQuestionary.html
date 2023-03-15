@@ -1,163 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Questions</title>
-     <!--MDBootstrap libraries-->
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet"/>
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
-     <!--Local Stylesheet-->
-     <link rel="stylesheet" href="styles.css">
-</head>
-<body id="studentQuestionary">
-    <header id="navigation-bar">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-           <div class="container-fluid">
-              <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                       <li class="nav-item px-2">
-                            <a class="nav-link" aria-current="page" href="index.html">Student</a>
-                       </li>
-                       <li class="nav-item px-2">
-                            <a class="nav-link active" href="admin.html">Admin</a>
-                       </li>
-                   </ul>
-               </div>
-           </div>
-       </nav>
-       </header>
-       <section id="questionsList">
-        <div class="bigHeading">
-            <h1>Test2 - 2-Digit Addition</h1>
-        </div>
+    <!--MDBootstrap libraries-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
+      rel="stylesheet"
+    />
 
-        <div class="main">
-          <div class="row">
-             <div class="col-sm-6 col-md-4">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+      rel="stylesheet"
+    />
+
+    <!--Local Stylesheet-->
+    <link rel="stylesheet" href="styles.css" />
+
+  </head>
+  <body id="studentQuestionary">
+    <header id="navigation-bar">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item px-2">
+                <a class="nav-link" aria-current="page" href="index.html"
+                  >Student</a
+                >
+              </li>
+              <li class="nav-item px-2">
+                <a class="nav-link active" href="admin.html">Admin</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header><br>
+    <section class="buttonGroup">
+      <div id="alignQuestions" class="col">
+        <input
+          type="button"
+          id="submitBtn"
+          class="btn btn-dark"
+          value="Submit"
+        />
+        <input
+          type="button"
+          id="publishBtn"
+          class="btn btn-dark"
+          value="Finish"
+        />
+      </div>
+    </section>
+    <section id="questionsList">
+      <div class="bigHeading">
+        <h1>Test2 - 2-Digit Addition</h1>
+      </div>
+
+      <div class="main">
+        <div class="row g-3">
+          <div class="col-sm-6 col-md-4">
             <div class="card text-center">
               <div class="card-header">Question 1</div>
               <div class="card-body">
-               <table class="tableAlign">
-              <thead>
-                <td></td>
-                <td>Carry</td>
-                <td></td>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td class="text-end"><input type="text" class="inputBox"></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td  class="text-center align-bottom">3</td>
-                  <td class="text-center" >6</td>
-                </tr>
-                <tr>
-                  <td class="text-center align-bottom">+</td>
-                  <td class="text-center align-bottom">1</td>
-                  <td class="text-center">4</td>
-                </tr>
-                <tr>
-                  <td></td>
-                <td class=" text-end align-items-end alignNumbers"><input class="inputBox" type="text"></td>
-                <td class="alignNumbers"><input class="inputBox" type="text"></td>
-              </tr>
-              </tbody>
-            </table><br>
+                <table class="tableAlign">
+                  <thead>
+                    <td></td>
+                    <td>Carry</td>
+                    <td></td>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td class="text-end">
+                        <input type="text" class="inputBox" />
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td class="text-center align-bottom">3</td>
+                      <td class="text-center">6</td>
+                    </tr>
+                    <tr>
+                      <td class="text-center align-bottom">+</td>
+                      <td class="text-center align-bottom">1</td>
+                      <td class="text-center">4</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td class="text-end align-items-end alignNumbers">
+                        <input class="inputBox" type="text" />
+                      </td>
+                      <td class="alignNumbers">
+                        <input class="inputBox" type="text" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
                 <a href="#" class="btn btn-success ms-3">Check</a>
               </div>
             </div>
           </div>
-          
+
           <div class="col-sm-6 col-md-4">
             <div class="card text-center">
               <div class="card-header">Question 2</div>
               <div class="card-body">
-              <table class="tableAlign">
-              <thead>
-                <td></td>
-                <td>Carry</td>
-                <td></td>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td class="text-end"><input type="text" class="inputBox"></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td  class="text-center align-bottom">2</td>
-                  <td class="text-center">8</td>
-                </tr>
-                <tr>
-                  <td class="text-center align-bottom">+</td>
-                  <td class="text-center align-bottom">5</td>
-                  <td class="text-center">3</td>
-                </tr>
-                <tr>
-                  <td></td>
-                <td class=" text-end align-items-end alignNumbers"><input class="inputBox" type="text"></td>
-                <td class="alignNumbers"><input class="inputBox" type="text"></td>
-              </tr>
-              </tbody>
-            </table><br>
+                <table class="tableAlign">
+                  <thead>
+                    <td></td>
+                    <td>Carry</td>
+                    <td></td>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td class="text-end">
+                        <input type="text" class="inputBox" />
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td class="text-center align-bottom">2</td>
+                      <td class="text-center">8</td>
+                    </tr>
+                    <tr>
+                      <td class="text-center align-bottom">+</td>
+                      <td class="text-center align-bottom">5</td>
+                      <td class="text-center">3</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td class="text-end align-items-end alignNumbers">
+                        <input class="inputBox" type="text" />
+                      </td>
+                      <td class="alignNumbers">
+                        <input class="inputBox" type="text" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
                 <a href="#" class="btn btn-success ms-3">Check</a>
               </div>
             </div>
           </div>
-          
+
           <div class="col-sm-6 col-md-4">
             <div class="card text-center">
               <div class="card-header">Question 3</div>
               <div class="card-body">
-              <table class="tableAlign">
-              <thead>
-                <td></td>
-                <td>Carry</td>
-                <td></td>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td class="text-end"><input type="text" class="inputBox"></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td  class="text-center align-bottom">4</td>
-                  <td class="text-center" >4</td>
-                </tr>
-                <tr>
-                  <td class="text-center align-bottom">+</td>
-                  <td class="text-center align-bottom">3</td>
-                  <td class="text-center">7</td>
-                </tr>
-                <tr>
-                  <td></td>
-                <td class=" text-end align-items-end alignNumbers"><input class="inputBox" type="text"></td>
-                <td class="alignNumbers"><input class="inputBox" type="text"></td>
-              </tr>
-              </tbody>
-            </table> <br>
+                <table class="tableAlign">
+                  <thead>
+                    <td></td>
+                    <td>Carry</td>
+                    <td></td>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td class="text-end">
+                        <input type="text" class="inputBox" />
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td class="text-center align-bottom">4</td>
+                      <td class="text-center">4</td>
+                    </tr>
+                    <tr>
+                      <td class="text-center align-bottom">+</td>
+                      <td class="text-center align-bottom">3</td>
+                      <td class="text-center">7</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td class="text-end align-items-end alignNumbers">
+                        <input class="inputBox" type="text" />
+                      </td>
+                      <td class="alignNumbers">
+                        <input class="inputBox" type="text" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
                 <a href="#" class="btn btn-success ms-3">Check</a>
               </div>
-              
             </div>
           </div>
+
+          <div class="col-sm-6 col-md-4">
+            <div class="card text-center">
+              <div class="card-header">Question 4</div>
+              <div class="card-body">
+                <table class="tableAlign">
+                  <thead>
+                    <td></td>
+                    <td>Carry</td>
+                    <td></td>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td class="text-end">
+                        <input type="text" class="inputBox" />
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td class="text-center align-bottom">4</td>
+                      <td class="text-center">4</td>
+                    </tr>
+                    <tr>
+                      <td class="text-center align-bottom">+</td>
+                      <td class="text-center align-bottom">3</td>
+                      <td class="text-center">7</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td class="text-end align-items-end alignNumbers">
+                        <input class="inputBox" type="text" />
+                      </td>
+                      <td class="alignNumbers">
+                        <input class="inputBox" type="text" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+                <a href="#" class="btn btn-success ms-3">Check</a>
+              </div>
+            </div>
+          </div>          
+
         </div>
-       <br>
-        <div id="alignQuestions" class="col">
-          <input type="button" id="addNewTestBtn" class="btn btn-dark" value="Submit">
-          <input type="button" id="publishBtn" class="btn btn-dark" value="Finish">
-        </div>
-    </div>
-</section>
-       
-       <script src="index.js"></script>
-</body>
+      </div>
+    
+    </section>
+    <section  class="buttonGroup">
+      <div id="alignQuestions" class="col">
+        <input
+          type="button"
+          id="submitBtn"
+          class="btn btn-dark"
+          value="Submit"
+        />
+        <input
+          type="button"
+          id="publishBtn"
+          class="btn btn-dark"
+          value="Finish"
+        />
+      </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    ></script>
+
+    <script src="index.js"></script>
+    <script>
+      $(document).ready(function () {
+        toastr.options = {
+          debug: false,
+          newestOnTop: false,
+          positionClass: "toast-top-right",
+          onclick: null,
+          fadeIn: 300,
+          fadeOut: 1000,
+          timeOut: 2000,
+          extendedTimeOut: 1000,
+        };
+        // show when page load
+        toastr.info("Page Loaded!");
+
+        $("#submitBtn").click(function () {
+          // show when the button is clicked
+          toastr.info("Submitting content...");
+          // Do logic
+          toastr.success("Submitted succesfully.");
+        });
+      });
+    </script>
+  </body>
 </html>
