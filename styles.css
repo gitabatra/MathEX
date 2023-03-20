@@ -39,14 +39,6 @@
     font-size: large;
     background-color: #1572A1;
  }
- .testPapers {
-  margin: 5% auto;
-}
-.testPapers > .row  {
-  border:2px solid black;
-  margin: 1% 4%;
-  padding:1% 3%;
-}
 
 .gradient-custom {
   /* fallback for old browsers */
@@ -125,4 +117,8 @@
 
 .givenAns {
   color : #0091EA;
+}
+
+.displayDate {
+  background-color: #BDBDBD;
 }

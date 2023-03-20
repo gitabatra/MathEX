@@ -39,6 +39,7 @@ const app = {
                 break;
             case "admin" :
                 //add js for admin
+                app.getAdmin();
                 break;
             case "newTest" :
                 app.getNewTestInfo();
@@ -50,6 +51,55 @@ const app = {
                 //add code
         }
     },
+
+    getAdmin: () => {
+        const testName = localStorage.getItem("test-name");
+        console.log(testName);
+        const publishEvent = localStorage.getItem("capture-publish");
+        console.log(publishEvent);
+    
+        if (publishEvent) {
+          let testPaperDiv = document.getElementById("testPaperForm");
+    
+          let rowDiv = document.createElement("div");
+          let colDiv1 = document.createElement("div");
+          let colDiv2 = document.createElement("div");
+          let label = document.createElement("label");
+          let header = document.createElement("h2");
+          header.innerText = testName;
+          header.setAttribute("class", "px-4");
+          label.appendChild(header);
+          colDiv1.appendChild(label);
+          colDiv1.setAttribute("class", "col text-end");
+          rowDiv.appendChild(colDiv1);
+    
+          let scoreBtn = document.createElement("button");
+          scoreBtn.innerText = "Scores";
+          
+          let editBtn = document.createElement("button");
+          editBtn.innerText = "Edit";
+          
+    
+          let deleteBtn = document.createElement("button");
+          deleteBtn.innerText = "Delete";
+          
+          scoreBtn.classList.add("btn","btn-dark", "px-4", "mb-2");
+          colDiv2.appendChild(scoreBtn);
+          
+          editBtn.setAttribute("class", "btn btn-dark px-4 mb-2");
+          colDiv2.appendChild(editBtn);
+     
+    
+          deleteBtn.setAttribute("class", "btn btn-dark px-4 mb-2");
+          colDiv2.appendChild(deleteBtn);
+    
+         
+          colDiv2.setAttribute("class", "col text-start");
+          rowDiv.appendChild(colDiv2);
+          rowDiv.setAttribute("class", "row");
+          testPaperDiv.appendChild(rowDiv);
+        }
+      },
 
     getNewTestInfo: () => {
 
@@ -100,6 +150,7 @@ const app = {
 
         document.getElementById("saveBtn").addEventListener("click", (e) => {
             app.checkData(e);
+            //e.preventDefault();
             const questionType = document.getElementById("selectQuestion");
             const selectedQuestion = questionType.options[questionType.selectedIndex].text;
             const noOfDigits = document.getElementById("inputNumber").value;
@@ -109,6 +160,8 @@ const app = {
             if(noOfDigits!="" && firstNumber!="" && secondNumber!=""){
                 console.log("not null");
                 app.displayQuestions(firstNumber,secondNumber);
+                //data-mdb-dismiss="modal"
+                document.getElementById("saveBtn").setAttribute("data-mdb-dismiss","modal");
             }else {
                 e.preventDefault();
             }        
