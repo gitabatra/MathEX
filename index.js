@@ -138,6 +138,7 @@ const app = {
       })
     },
     getNewTestpaper: ()=> {
+        let publishEvent = false;
         const testName = localStorage.getItem("test-name");
         const questionType = localStorage.getItem("question-type");
         const noOfDigits = localStorage.getItem("digits");
@@ -150,7 +151,6 @@ const app = {
 
         document.getElementById("saveBtn").addEventListener("click", (e) => {
             app.checkData(e);
-            //e.preventDefault();
             const questionType = document.getElementById("selectQuestion");
             const selectedQuestion = questionType.options[questionType.selectedIndex].text;
             const noOfDigits = document.getElementById("inputNumber").value;
@@ -165,6 +165,12 @@ const app = {
             }else {
                 e.preventDefault();
             }        
+            })
+           
+           
+            document.getElementById("publishBtn").addEventListener("click", (e) => {
+                publishEvent = true;
+                localStorage.setItem("capture-publish", publishEvent);
             })
     },
 }
