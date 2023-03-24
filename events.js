@@ -1,16 +1,4 @@
 function initEvents() {
-  
- 
-  // $("link#navbar-student-btn").click(function () {
-  //   console.log("open Student Page navbar button event is executing");
-  //   window.location.href = "http://localhost:5500/index.html";
-  // });
-
-  // $("link#navbar-admin-btn").click(function () {
-  //   console.log("open Admin Page navbar button event is executing");
-  //   window.location.href = "http://localhost:5500/admin.html";
-  // });
-
   $("button#open-questionarie-btn").click(function () {
     console.log("open-questionarie button event is executing");
     //alert("Handler for .click() called.");
@@ -22,7 +10,7 @@ function initEvents() {
     window.location.href = "http://localhost:5500/score_record.html";
   });
 
-  $("button#add-new-questionarie-Btn").click(function () {
+  $("button#add-new-questionarie-btn").click(function () {
     console.log("Add new Questionarie button event is executing");
     window.location.href = "http://localhost:5500/addNewTest.html";
   });
@@ -31,4 +19,18 @@ function initEvents() {
     console.log("Edit Questionarie button event is executing");
     window.location.href = "http://localhost:5500/addQuestions.html";
   });
+}
+
+function onChange(obj){
+  var id= $(obj).attr("id");
+  switch(id){
+     case "navbar-student-btn":
+      window.location.href = "http://localhost:5500/index.html";
+     break;
+
+     case "navbar-admin-btn":
+      window.location.href = "http://localhost:5500/admin.html";
+     break;
+
+  }
 }
