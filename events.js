@@ -22,13 +22,16 @@ function initEvents() {
 
   $("input#newTestText").keyup(function () {
     console.log("Enabling plus button on input is executing");
+    testName = $(this).val();
+    localStorage.setItem("testName",testName);
+    console.log("testname is : "+ testName);
     if ($(this).val().trim() != "") {
       console.log("not null");
       $("#addNewTestBtn").prop("disabled", false);
     } else {
       $("#addNewTestBtn").prop("disabled", true);
     }
-  });
+  }); 
 }
 
 function onChange(obj) {
