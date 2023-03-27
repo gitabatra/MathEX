@@ -20,10 +20,10 @@
               <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                        <li class="nav-item px-2">
-                            <a class="nav-link" aria-current="page" href="index.html">Student</a>
+                            <a id="navbar-student-btn" class="nav-link" aria-current="page"  href="#" onclick="onChange(this)">Student</a>
                        </li>
                        <li class="nav-item px-2">
-                            <a class="nav-link active" href="#">Admin</a>
+                            <a id="navbar-admin-btn" class="nav-link active" href="#" onclick="onChange(this)">Admin</a>
                        </li>
                    </ul>
                </div>
@@ -36,7 +36,7 @@
                 <h1>List of Test Papers</h1>
             </div>
             <div class="addTestPapers">
-                <a id="addPaperBtn" class="btn btn-info addTestBtn" href="addNewTest.html" role="button">Add New Test Paper</a>
+                <button id="add-new-questionarie-btn" class="btn btn-info addTestBtn" href="#" role="button">Add New Test Paper</button>
             </div>
             
         </div>
@@ -48,9 +48,9 @@
                          <label><h2 class="px-4"> Test1 - 1-Digit Addition </h2></label>
                      </div>
                      <div class="col text-start">
-                         <button class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
-                         <button class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
-                         <button class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
+                         <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
+                         <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
+                         <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
                      </div>
                  </div>
                 <div class="row">
@@ -58,15 +58,17 @@
                          <label><h2 class="px-4"> Test1 - 2-Digit Addition </h2></label>
                      </div>
                      <div class="col text-start">
-                         <button class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
-                         <button class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
-                         <button class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
+                         <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
+                         <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
+                         <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
                      </div>
                  </div>
          </div>     
         </div>      
     </section>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
-    <script src="index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="index.js"></script>
 </body>
 </html>

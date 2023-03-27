@@ -1,121 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Questions</title>
-     <!--MDBootstrap libraries-->
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet"/>
-    
-     <!--Local Stylesheet-->
-     <link rel="stylesheet" href="styles.css">
-</head>
-<body id="questionPaper">
+    <!--MDBootstrap libraries-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
+      rel="stylesheet"
+    />
+
+    <!--Local Stylesheet-->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body id="questionPaper">
     <header id="navigation-bar">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-           <div class="container-fluid">
-              <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                       <li class="nav-item px-2">
-                            <a class="nav-link" aria-current="page" href="index.html">Student</a>
-                       </li>
-                       <li class="nav-item px-2">
-                            <a class="nav-link active" href="admin.html">Admin</a>
-                       </li>
-                   </ul>
-               </div>
-           </div>
-       </nav>
-       </header>
-       <section id="questionsList">
-        <div class="bigHeading">
-            <h1 id="addHeadingForTest"></h1>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item px-2">
+                <a
+                  id="navbar-student-btn"
+                  class="nav-link"
+                  aria-current="page"
+                  href="#"
+                  onclick="onChange(this)"
+                  >Student</a
+                >
+              </li>
+              <li class="nav-item px-2">
+                <a
+                  id="navbar-admin-btn"
+                  class="nav-link active"
+                  href="#"
+                  onclick="onChange(this)"
+                  >Admin</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
-        <form action="" class="align-items-sm-center">
-            <div id="questionForm" class="form-outline mb-4">
-            </div>
-              <div id="alignQuestions" class="col">
-                <input type="button" id="addNewTestBtn" class="btn btn-dark" value="+" data-mdb-toggle="modal" data-mdb-target="#basicQuestionModal">
-                <input type="button" id="publishBtn" class="btn btn-dark" value="Publish">
+      </nav>
+    </header>
+    <section id="questionsList">
+      <div class="bigHeading">
+        <h1 id="add-heading-questionarie">Test...</h1>
+      </div>
+      <form class="align-items-sm-center">
+        <div id="questionForm" class="mb-4"></div>
+        <div id="alignQuestions" class="col">
+          <input
+            type="button"
+            id="addNewTestBtn"
+            class="btn btn-dark"
+            value="+"
+            data-mdb-toggle="modal"
+            data-mdb-target="#basicQuestionModal"
+          />
+          <input
+            type="button"
+            id="publishBtn"
+            class="btn btn-dark"
+            value="Publish"
+          />
+        </div>
+      </form>
+    </section>
+    <div
+      class="modal fade"
+      id="basicQuestionModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Questions</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-mdb-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="popupForm" method="" class="align-items-center">
+              <div class="mb-4 row">
+                <label for="selectQuestion" class="col-sm-6 col-form-label"
+                  >Select Question Type</label
+                >
+                <div class="col-sm-6">
+                  <label class="visually-hidden" for="inlineFormSelectPref"
+                    >Choose Question</label
+                  >
+                  <select class="form-select" id="selectQuestion" required>
+                    <option value="1">Addition</option>
+                    <option value="2">Subtraction</option>
+                    <option value="3">Multiplication</option>
+                    <option value="4">Division</option>
+                  </select>
+                </div>
               </div>
-        </form>
-       </section>
-       <div class="modal fade" id="basicQuestionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add Questions</h5>
-              <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form id="popupForm" method="get" class="align-items-center needs-validation" novalidate>
 
-                <div class="mb-4 row">
-                    <label for="inputQuestion" class="col-sm-6 col-form-label">Select Question Type</label>
-                    <div class="col-sm-6">
-                     <label class="visually-hidden" for="inlineFormSelectPref">Choose Question</label>
-                    <select class="form-select" id="selectQuestion" required>
-                      <option value="1">Addition</option>
-                      <option value="2">Subtraction</option>
-                      <option value="3">Multiplication</option>
-                      <option value="4">Division</option>
-                    </select>
-                    <div class="valid-feedback">
-                        Looks good!
-                      </div>
-                    </div>
-                  </div>
-                 
-                
-                 <div class="mb-3 row">
-                    <label for="inputNumber" class="col-sm-6 col-form-label">Enter Number of Digits</label>
-                    <div class="col-sm-6">
-                      <input type="number" class="form-control" id="inputNumber" min="1" max="5" placeholder="Enter number of digits" required>
-                      <div class="invalid-feedback">
-                        Please provide valid digit.
-                      </div>
-                    </div>
-                  </div>
-                
-                  <div class="mb-3 row">
-                    <div class="col-sm-6">
-                        <label for="inputNumber" class="col-form-label">Enter Numbers</label>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="row">
-                        <div class="col mb-3">
-                        <input type="number" class="form-control" id="inputNumber1" placeholder="First Number" required>
-                        <div class="invalid-feedback">
-                          Please provide first number.
-                        </div>
-                        <div id="error"></div>
-                      </div>
-                      </div>
-                      <div class="row">
-                        <div class="col mb-3">
-                        <input type="number" class="form-control" id="inputNumber2" placeholder="Second Number" required>
-                        <div class="invalid-feedback">
-                          Please provide second number.
-                        </div>
-                        <div class="error"></div>
-                      </div>
-                      </div>
-                    </div>
-                  </div>
+              <div class="mb-3 row">
+                <label for="inputNumber" class="col-sm-6 col-form-label"
+                  >Enter Number of Digits</label
+                >
+                <div class="col-sm-6">
+                  <input
+                    id="inputNumber"
+                    type="number"
+                    class="form-control"
+                    min="1"
+                    max="5"
+                    placeholder="Enter number of digits"
+                    required
+                  />
+                </div>
+              </div>
 
-                  <div class="modal-footer">
-                    <button type="button" id="saveBtn" class="btn btn-dark">Save</button>
-                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
-                    
+              <div class="mb-3 row">
+                <div class="col-sm-6">
+                  <label for="inputNumbers" class="col-form-label"
+                    >Enter Numbers</label
+                  >
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="col mb-3">
+                      <input
+                        id="inputNumber1"
+                        type="number"
+                        class="form-control"
+                        placeholder="First Number"
+                        required
+                      />
+                    </div>
                   </div>
-                </form>
-            </div>
-            
+                  <div class="row">
+                    <div class="col mb-3">
+                      <input
+                        id="inputNumber2"
+                        type="number"
+                        class="form-control"
+                        placeholder="Second Number"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button id="saveBtn" type="button" class="btn btn-dark">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-mdb-dismiss="modal"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
-       <script src="index.js"></script>
-</body>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
+    ></script>
+    <script type="text/javascript" src="utils.js"></script>
+    <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+  </body>
 </html>
