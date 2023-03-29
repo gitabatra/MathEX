@@ -11,6 +11,9 @@
       rel="stylesheet"
     />
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
       rel="stylesheet"
@@ -43,206 +46,25 @@
       <div id="alignQuestions" class="col">
         <input
           type="button"
-          id="submitBtn"
+          id="check-btn"
           class="btn btn-dark"
-          value="Submit"
+          value="Check"
         />
         <input
           type="button"
-          id="publishBtn"
+          id="publish-btn"
           class="btn btn-dark"
           value="Finish"
         />
       </div>
     </section>
-    <section id="questionsList">
+    <section>
       <div class="bigHeading">
         <h1>Test2 - 2-Digit Addition</h1>
       </div>
 
       <div class="main">
-        <div class="row g-3">
-          <div class="col-sm-6 col-md-4">
-            <div class="card text-center">
-              <div class="card-header">Question 1</div>
-              <div class="card-body">
-                <table class="tableAlign">
-                  <thead>
-                    <td></td>
-                    <td>Carry</td>
-                    <td></td>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td class="text-end">
-                        <input type="text" class="inputBox" />
-                      </td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-center align-bottom">3</td>
-                      <td class="text-center">6</td>
-                    </tr>
-                    <tr>
-                      <td class="text-center align-bottom">+</td>
-                      <td class="text-center align-bottom">1</td>
-                      <td class="text-center">4</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-end align-items-end alignNumbers">
-                        <input class="inputBox" type="text" />
-                      </td>
-                      <td class="alignNumbers">
-                        <input class="inputBox" type="text" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <br />
-                <a href="#" class="btn btn-success ms-3">Check</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-md-4">
-            <div class="card text-center">
-              <div class="card-header">Question 2</div>
-              <div class="card-body">
-                <table class="tableAlign">
-                  <thead>
-                    <td></td>
-                    <td>Carry</td>
-                    <td></td>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td class="text-end">
-                        <input type="text" class="inputBox" />
-                      </td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-center align-bottom">2</td>
-                      <td class="text-center">8</td>
-                    </tr>
-                    <tr>
-                      <td class="text-center align-bottom">+</td>
-                      <td class="text-center align-bottom">5</td>
-                      <td class="text-center">3</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-end align-items-end alignNumbers">
-                        <input class="inputBox" type="text" />
-                      </td>
-                      <td class="alignNumbers">
-                        <input class="inputBox" type="text" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <br />
-                <a href="#" class="btn btn-success ms-3">Check</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-md-4">
-            <div class="card text-center">
-              <div class="card-header">Question 3</div>
-              <div class="card-body">
-                <table class="tableAlign">
-                  <thead>
-                    <td></td>
-                    <td>Carry</td>
-                    <td></td>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td class="text-end">
-                        <input type="text" class="inputBox" />
-                      </td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-center align-bottom">4</td>
-                      <td class="text-center">4</td>
-                    </tr>
-                    <tr>
-                      <td class="text-center align-bottom">+</td>
-                      <td class="text-center align-bottom">3</td>
-                      <td class="text-center">7</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-end align-items-end alignNumbers">
-                        <input class="inputBox" type="text" />
-                      </td>
-                      <td class="alignNumbers">
-                        <input class="inputBox" type="text" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <br />
-                <a href="#" class="btn btn-success ms-3">Check</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-md-4">
-            <div class="card text-center">
-              <div class="card-header">Question 4</div>
-              <div class="card-body">
-                <table class="tableAlign">
-                  <thead>
-                    <td></td>
-                    <td>Carry</td>
-                    <td></td>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td class="text-end">
-                        <input type="text" class="inputBox" />
-                      </td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-center align-bottom">4</td>
-                      <td class="text-center">4</td>
-                    </tr>
-                    <tr>
-                      <td class="text-center align-bottom">+</td>
-                      <td class="text-center align-bottom">3</td>
-                      <td class="text-center">7</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td class="text-end align-items-end alignNumbers">
-                        <input class="inputBox" type="text" />
-                      </td>
-                      <td class="alignNumbers">
-                        <input class="inputBox" type="text" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <br />
-                <a href="#" class="btn btn-success ms-3">Check</a>
-              </div>
-            </div>
-          </div>          
-
-        </div>
+        <div class="row g-3" id="questions-list" ></div>
       </div>
     
     </section>
@@ -250,13 +72,13 @@
       <div id="alignQuestions" class="col">
         <input
           type="button"
-          id="submitBtn"
+          id="check-btn"
           class="btn btn-dark"
-          value="Submit"
+          value="Check"
         />
         <input
           type="button"
-          id="publishBtn"
+          id="publish-btn"
           class="btn btn-dark"
           value="Finish"
         />
@@ -274,6 +96,7 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     ></script>
     <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="element-interactions.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <script>
       $(document).ready(function () {
