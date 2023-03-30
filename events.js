@@ -20,6 +20,19 @@ function initEvents() {
     window.location.href = "http://localhost:5500/addQuestions.html";
   });
 
+  $("input#publish-btn").click(function () {
+    console.log("Publish event is executing");
+    window.location.href = "http://localhost:5500/admin.html";
+  });
+
+  $("input#check-btn").click(function () {
+    console.log("Checking the Questionaries event is executing");
+    $("i#question-1-correct").show();
+    $("i#question-2-correct").show();
+    $("i#question-3-wrong").show();
+    $("i#question-4-wrong").show();
+  });
+
   $("input#newTestText").keyup(function () {
     console.log("Enabling plus button on input is executing");
     testName = $(this).val();
