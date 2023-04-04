@@ -1,12 +1,13 @@
+var publishEventClickCount = 0;
+
 function initEvents() {
-  $("button#open-questionarie-btn").click(function () {
+  $(document).on("click", "button#open-questionarie-btn", function () {
     console.log("open-questionarie button event is executing");
-    //alert("Handler for .click() called.");
-    window.location.replace("http://localhost:5500/studentQuestionary.html");
+    window.location.href = "http://localhost:5500/studentQuestionary.html";
   });
 
-  $("button#open-score-record-btn").click(function () {
-    console.log("open score record button event is executing");
+  $(document).on("click", "button#open-score-record-btn", function () {
+    console.log("open score button event is executing");
     window.location.href = "http://localhost:5500/score_record.html";
   });
 
@@ -15,14 +16,62 @@ function initEvents() {
     window.location.href = "http://localhost:5500/addNewTest.html";
   });
 
-  $("button#open-edit-questionarie-btn").click(function () {
+  $(document).on("click", "button#open-edit-questionarie-btn", function () {
     console.log("Edit Questionarie button event is executing");
     window.location.href = "http://localhost:5500/addQuestions.html";
   });
 
-  $("input#publish-btn").click(function () {
+  $("input#student-questionarie-finish-btn").click(function () {
+    console.log("Finish Questionarie button event is executing");
+    window.location.href = "http://localhost:5500/index.html";
+  });
+
+  $("input#publish-btn").click(function (event) {
+    console.log(event.delegateTarget);
     console.log("Publish event is executing");
+    const isPublishBtnClicked = true;
+    //publishEventClickCount = publishEventClickCount + 1;
+    //console.log(publishEventClickCount);
+    localStorage.setItem("isPublishBtnClicked", isPublishBtnClicked);
+    //localStorage.setItem("publishEventClickCount", publishEventClickCount);
     window.location.href = "http://localhost:5500/admin.html";
+  });
+
+  $("button#pop-up-submit-btn").click(function () {
+    console.log("Pop-up Submit button event is executing");
+    const questionType = $("#select-question-type :selected").text();
+    console.log(questionType);
+    localStorage.setItem("questionType", questionType);
+    var noOfDigits = $("#inputNumber").val();
+    console.log(noOfDigits);
+    var firstNum = $("#inputNumber1").val();
+    console.log(firstNum);
+    var secondNum = $("#inputNumber2").val();
+    console.log(secondNum);
+    localStorage.setItem("noOfDigits",noOfDigits);
+    localStorage.setItem("firstNumber",firstNum);
+    localStorage.setItem("secondNumber",secondNum);
+    //window.location.href = "http://localhost:5500/addQuestions.html";
+  });
+
+  $("#pop-up-save-btn").click(function () {
+    console.log("Submitting form....");
+    const questionType = $("#select-question-type :selected").text();
+    console.log(questionType);
+    localStorage.setItem("questionType", questionType);
+    const noOfDigits = $("#inputNumber").val();
+    console.log(noOfDigits);
+    const firstNum = $("#inputNumber1").val();
+    console.log(firstNum);
+    const secondNum = $("#inputNumber2").val();
+    console.log(secondNum);
+    if (noOfDigits != "" && firstNum != "" && secondNum != "") {
+      console.log("not null");
+      displayQuestions(firstNum, secondNum, questionType);
+      $("#basicQuestionModal").modal("hide");
+    } else {
+      console.log("Input Values are null");
+    }
   });
 
   $("input#check-btn").click(function () {
@@ -36,15 +85,15 @@ function initEvents() {
   $("input#newTestText").keyup(function () {
     console.log("Enabling plus button on input is executing");
     testName = $(this).val();
-    localStorage.setItem("testName",testName);
-    console.log("testname is : "+ testName);
+    localStorage.setItem("testName", testName);
+    console.log("testname is : " + testName);
     if ($(this).val().trim() != "") {
       console.log("not null");
       $("#addNewTestBtn").prop("disabled", false);
     } else {
       $("#addNewTestBtn").prop("disabled", true);
     }
-  }); 
+  });
 }
 
 function onChange(obj) {

@@ -1,5 +1,7 @@
 function initElements() {
   initQuestions();
+  initQuestionarie();
+  initQuestionsList();
 }
 
 function initQuestions() {
@@ -9,7 +11,7 @@ function initQuestions() {
 
 function createDummyQuestions() {
   console.log("Creating questions...");
-  for (let i=0; i <= 5; i++) {
+  for (let i = 0; i <= 5; i++) {
     console.log("Creating question: ", i);
     $("div#questions-list").append(`
     <div id="question-col-${i}" class="col-sm-6 col-md-4">
@@ -59,4 +61,69 @@ function createDummyQuestions() {
     </div>
       `);
   }
+}
+
+function initQuestionarie() {
+  console.log("Initialize Test Name....");
+  const publishEventCaptured = localStorage.getItem("isPublishBtnClicked");
+  let publishEventClickCount = localStorage.getItem("publishEventClickCount");
+  console.log(publishEventClickCount);
+  if (publishEventCaptured) {
+    // for(let i)
+    createQuestionaries();
+  }
+}
+
+function createQuestionaries() {
+  console.log("Creating test Paper grid on Admin Page");
+  const questionarieName = localStorage.getItem("testName");
+  console.log(questionarieName);
+  $("div#questionarie-grid")
+    .append(`<div class="row questionarie-row-${publishEventClickCount}">
+  <div class="col text-end">
+      <label><h2 class="px-4"> ${questionarieName} </h2></label>
+  </div>
+  <div class="col text-start">
+      <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
+      <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
+      <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
+  </div>
+</div>`);
+
+$("div#test-paper-list").append(` <div class="row">
+<div class="col">
+    <label><h2 class="px-4">${questionarieName}</h2></label>
+    <button id="open-questionarie-btn" class="btn btn-success px-4 mb-2">Go <i class="fas fa-angle-double-right"></i></button>
+</div>
+</div>`);
+}
+
+function initQuestionsList() {
+  const testName = localStorage.getItem("testName");
+  console.log(testName);
+  $("#add-heading-questionarie").text(testName);
+  console.log($("add-heading-questionarie").text);
+  const firstNumber = localStorage.getItem("firstNumber");
+  console.log(firstNumber);
+  const secondNumber = localStorage.getItem("secondNumber");
+  console.log(secondNumber);
+  const inputQuestionType = localStorage.getItem("questionType");
+  displayQuestions(firstNumber, secondNumber, inputQuestionType);
+}
+
+function displayQuestions(firstNum, secondNum, inputQuestionType) {
+  let operationType;
+  if(inputQuestionType === "Addition"){
+    operationType = " + ";
+  } else if(inputQuestionType === "Subtraction") {
+    operationType = " - ";
+  } else if(inputQuestionType === "Multiplication") {
+    operationType = " x ";
+  } else if(inputQuestionType === "Division"){
+    operationType = " / ";
+  }
+  const ques = firstNum + operationType + secondNum + " = ? ";
+  $("div#question-from-popup").append(`<div class="alignQuestions">
+  <label>${ques}</label>
+  </div>`);
 }
