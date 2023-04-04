@@ -99,21 +99,16 @@ $("div#test-paper-list").append(` <div class="row">
 }
 
 function initQuestionsList() {
-  const params = new URL(document.location).searchParams;
-  console.log(params);
-  //const questionType =params.get("inputQuestionType"); 
-  const noOfDigits = params.get("numOfDigits");
-  console.log(noOfDigits);
-  const firstNum = params.get("firstNumber");
-  console.log(firstNum);
-  const secondNum = params.get("secondNumber");
-  console.log(secondNum);
   const testName = localStorage.getItem("testName");
   console.log(testName);
   $("#add-heading-questionarie").text(testName);
   console.log($("add-heading-questionarie").text);
+  const firstNumber = localStorage.getItem("firstNumber");
+  console.log(firstNumber);
+  const secondNumber = localStorage.getItem("secondNumber");
+  console.log(secondNumber);
   const inputQuestionType = localStorage.getItem("questionType");
-  displayQuestions(firstNum, secondNum, inputQuestionType);
+  displayQuestions(firstNumber, secondNumber, inputQuestionType);
 }
 
 function displayQuestions(firstNum, secondNum, inputQuestionType) {

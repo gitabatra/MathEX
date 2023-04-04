@@ -30,22 +30,31 @@ function initEvents() {
     console.log(event.delegateTarget);
     console.log("Publish event is executing");
     const isPublishBtnClicked = true;
-    publishEventClickCount = publishEventClickCount + 1;
-    console.log(publishEventClickCount);
+    //publishEventClickCount = publishEventClickCount + 1;
+    //console.log(publishEventClickCount);
     localStorage.setItem("isPublishBtnClicked", isPublishBtnClicked);
-    localStorage.setItem("publishEventClickCount", publishEventClickCount);
+    //localStorage.setItem("publishEventClickCount", publishEventClickCount);
     window.location.href = "http://localhost:5500/admin.html";
   });
 
-  $("button#pop-up-submit-btn").click(function (e) {
+  $("button#pop-up-submit-btn").click(function () {
     console.log("Pop-up Submit button event is executing");
     const questionType = $("#select-question-type :selected").text();
     console.log(questionType);
     localStorage.setItem("questionType", questionType);
+    var noOfDigits = $("#inputNumber").val();
+    console.log(noOfDigits);
+    var firstNum = $("#inputNumber1").val();
+    console.log(firstNum);
+    var secondNum = $("#inputNumber2").val();
+    console.log(secondNum);
+    localStorage.setItem("noOfDigits",noOfDigits);
+    localStorage.setItem("firstNumber",firstNum);
+    localStorage.setItem("secondNumber",secondNum);
     //window.location.href = "http://localhost:5500/addQuestions.html";
   });
 
-  $("#pop-up-save-btn").click(function (e) {
+  $("#pop-up-save-btn").click(function () {
     console.log("Submitting form....");
     const questionType = $("#select-question-type :selected").text();
     console.log(questionType);
@@ -61,7 +70,7 @@ function initEvents() {
       displayQuestions(firstNum, secondNum, questionType);
       $("#basicQuestionModal").modal("hide");
     } else {
-      e.preventDefault();
+      console.log("Input Values are null");
     }
   });
 
