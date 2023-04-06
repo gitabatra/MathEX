@@ -51,57 +51,6 @@ function refreshQuestionarieList() {
       console.log("The following Id not found", questionarieId);
     }
   }
-  // console.log("Creating questions...");
-  // for (let i = 0; i <= 5; i++) {
-  //   console.log("Creating question: ", i);
-  //   $("div#questions-list").append(`
-  //   <div id="question-col-${i}" class="col-sm-6 col-md-4">
-  //       <div class="card text-center">
-  //         <div class="card-header">Question 1</div>
-  //         <div class="card-body">
-  //           <table class="tableAlign">
-  //             <thead>
-  //               <td></td>
-  //               <td>Carry</td>
-  //               <td></td>
-  //             </thead>
-  //             <tbody>
-  //               <tr>
-  //                 <td></td>
-  //                 <td class="text-end">
-  //                   <input type="text" class="inputBox" />
-  //                 </td>
-  //                 <td></td>
-  //               </tr>
-  //               <tr>
-  //                 <td></td>
-  //                 <td class="text-center align-bottom">3</td>
-  //                 <td class="text-center">6</td>
-  //               </tr>
-  //               <tr>
-  //                 <td class="text-center align-bottom">+</td>
-  //                 <td class="text-center align-bottom">1</td>
-  //                 <td class="text-center">4</td>
-  //               </tr>
-  //               <tr>
-  //                 <td></td>
-  //                 <td class="text-end align-items-end alignNumbers">
-  //                   <input class="inputBox" type="text" />
-  //                 </td>
-  //                 <td class="alignNumbers">
-  //                   <input class="inputBox" type="text" />
-  //                 </td>
-  //               </tr>
-  //             </tbody>
-  //           </table>
-  //           <br />
-  //           <i id="question-${i}-correct" class="fas fa-check text-success correctness-indicator"></i>
-  //           <i id="question-${i}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
-  //         </div>
-  //       </div>
-  //   </div>
-  //     `);
-  // }
 }
 
 function refreshQuestionsList() {
@@ -112,60 +61,131 @@ function refreshQuestionsList() {
   if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
     let questionarieObject = questionaries[questionarieId];
     console.log("Questions for Questionarie: ", questionarieId, questionarieObject["questions"]);
+    let countQuestion =1;
     for (const questionId in questionarieObject["questions"]) {
       console.log("Rendering Question ", questionId, " for questionarie ", questionarieId)
-      console.log(questionarieObject["questions"]);
-      //${}.append()
-    // $("div#questions-list").append(`
-    // <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
-    //     <div class="card text-center">
-    //       <div class="card-header">Question 1</div>
-    //       <div class="card-body">
-    //         <table class="tableAlign">
-    //           <thead>
-    //             <td></td>
-    //             <td>Carry</td>
-    //             <td></td>
-    //           </thead>
-    //           <tbody>
-    //             <tr>
-    //               <td></td>
-    //               <td class="text-end">
-    //                 <input type="text" class="inputBox" />
-    //               </td>
-    //               <td></td>
-    //             </tr>
-    //             <tr>
-    //               <td></td>
-    //               <td class="text-center align-bottom"></td>
-    //               <td class="text-center">6</td>
-    //             </tr>
-    //             <tr>
-    //               <td class="text-center align-bottom">+</td>
-    //               <td class="text-center align-bottom">1</td>
-    //               <td class="text-center">4</td>
-    //             </tr>
-    //             <tr>
-    //               <td></td>
-    //               <td class="text-end align-items-end alignNumbers">
-    //                 <input class="inputBox" type="text" />
-    //               </td>
-    //               <td class="alignNumbers">
-    //                 <input class="inputBox" type="text" />
-    //               </td>
-    //             </tr>
-    //           </tbody>
-    //         </table>
-    //         <br />
-    //         <i id="question-${i}-correct" class="fas fa-check text-success correctness-indicator"></i>
-    //         <i id="question-${i}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
-    //       </div>
-    //     </div>
-    // </div>
-    //   `);
+      console.log("Number of Digits.... ",questionarieObject.questions[questionId].ndigit);
+      let nDigits = questionarieObject.questions[questionId].ndigit;
+      let firstNum = JSON.stringify(questionarieObject.questions[questionId].num1);
+      let secondNum = JSON.stringify(questionarieObject.questions[questionId].num2);
+      let questionType = questionarieObject.questions[questionId].type;
+      if(nDigits === 1){
+        appendOneDigitQuestions(questionId,countQuestion,questionType,firstNum,secondNum);
+      }else if(nDigits === 2){  
+        appendTwoDigitQuestions(questionId,countQuestion,questionType,firstNum,secondNum);
+      }else if(nDigits === 3){
+        //appendThreeDigitQuestions(questionId,countQuestion,questionType,firstNum,secondNum);
+      }else if(nDigits === 4){
+        //appendFourDigitQuestions(questionId,countQuestion,questionType,firstNum,secondNum);
+      }
+      countQuestion = countQuestion +1;
+      }
     }
   }
-}
+
+  function  appendOneDigitQuestions(questionId,countQuestion,questionType,firstNum,secondNum) {
+    let onesDigitFirstNum = firstNum;
+    let onesDigitSecondNum = secondNum;
+    $("div#questions-list").append(`
+    <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
+        <div class="card text-center">
+          <div class="card-header">Question ${countQuestion}</div>
+          <div class="card-body">
+            <table class="tableAlign">
+              <tbody>
+              <tr>
+                <td></td>
+                <td class="text-center">${onesDigitFirstNum}</td>
+              </tr>
+              <tr>
+                <td class="text-center align-bottom">${questionType}</td>
+                <td class="text-center">${onesDigitSecondNum}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="text-end align-items-end alignNumbers">
+                  <input class="inputBox" type="text" />
+                </td>
+              </tr>
+            </tbody>
+            </table>
+            <br />
+            <i id="question-${countQuestion}-correct" class="fas fa-check text-success correctness-indicator"></i>
+            <i id="question-${countQuestion}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
+          </div>
+        </div>
+    </div>
+      `);
+  }
+
+  function   appendTwoDigitQuestions(questionId,countQuestion,questionType,firstNum,secondNum) {
+    let onesDigitFirstNum,tensDigitFirstNum,onesDigitSecondNum,tensDigitSecondNum;
+    if(firstNum.length<2){
+      tensDigitFirstNum = 0;
+      onesDigitFirstNum = firstNum[0];
+    }
+    else{
+      tensDigitFirstNum = firstNum[0];
+      onesDigitFirstNum = firstNum[1];
+    }
+    console.log("FirstNumber OneDigit: ",onesDigitFirstNum);
+    console.log("FirstNumber tensDigit: ",tensDigitFirstNum);
+    if(secondNum.length<2){
+      tensDigitSecondNum = 0;
+      onesDigitSecondNum = secondNum[0];
+    }
+    else {
+      tensDigitSecondNum = secondNum[0];
+      onesDigitSecondNum = secondNum[1];
+    }
+    $("div#questions-list").append(`
+    <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
+        <div class="card text-center">
+          <div class="card-header">Question ${countQuestion}</div>
+          <div class="card-body">
+            <table class="tableAlign">
+              <thead>
+                <td></td>
+                <td>Carry</td>
+                <td></td>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td class="text-end">
+                    <input type="text" class="inputBox" />
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td class="text-center align-bottom">${tensDigitFirstNum}</td>
+                  <td class="text-center">${onesDigitFirstNum}</td>
+                </tr>
+                <tr>
+                  <td class="text-center align-bottom">${questionType}</td>
+                  <td class="text-center align-bottom">${tensDigitSecondNum}</td>
+                  <td class="text-center">${onesDigitSecondNum}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td class="text-end align-items-end alignNumbers">
+                    <input class="inputBox" type="text" />
+                  </td>
+                  <td class="alignNumbers">
+                    <input class="inputBox" type="text" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <i id="question-${countQuestion}-correct" class="fas fa-check text-success correctness-indicator"></i>
+            <i id="question-${countQuestion}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
+          </div>
+        </div>
+    </div>
+      `);
+  }
 
 function initQuestionarie() {
   console.log("Initialize Test Name....");

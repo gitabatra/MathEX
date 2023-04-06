@@ -27,11 +27,11 @@ function initLocalStorage(){
             "qs-20230405-03": {
                 name: "Test 3", 
                 questions: {
-                    "q-20230405-01": {ndigit:2, num1: 13, num2: 28,type: "+"},
-                    "q-20230405-02": {ndigit:2, num1: 16, num2: 68,type: "+"},
-                    "q-20230405-03": {ndigit:2, num1: 51, num2: 9,type: "+"},
-                    "q-20230405-04": {ndigit:2, num1: 48, num2: 36,type: "+"},
-                    "q-20230405-05": {ndigit:2, num1: 27, num2: 74,type: "+"}                 
+                    "q-20230405-01": {ndigit:2, num1: 3, num2: 68,type: "+"},
+                    "q-20230405-02": {ndigit:2, num1: 46, num2: 6,type: "+"},
+                    "q-20230405-03": {ndigit:2, num1: 50, num2: 91,type: "+"},
+                    "q-20230405-04": {ndigit:2, num1: 8, num2: 39,type: "+"},
+                    "q-20230405-05": {ndigit:2, num1: 17, num2: 84,type: "+"}                 
                 }
             }
         };
