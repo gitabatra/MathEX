@@ -1,25 +1,25 @@
 var publishEventClickCount = 0;
 
 function initEvents() {
-  $(document).on("click", "button#open-questionarie-btn", function () {
-    console.log("open-questionarie button event is executing");
-    window.location.href = "http://localhost:5500/studentQuestionary.html";
-  });
+  // $(document).on("click", "button#open-questionarie-btn", function () {
+  //   console.log("open-questionarie button event is executing");
+  //   window.location.href = "http://localhost:5500/studentQuestionary.html";
+  // });
 
-  $(document).on("click", "button#open-score-record-btn", function () {
-    console.log("open score button event is executing");
-    window.location.href = "http://localhost:5500/score_record.html";
-  });
+  // $(document).on("click", "button#open-score-record-btn", function () {
+  //   console.log("open score button event is executing");
+  //   window.location.href = "http://localhost:5500/score_record.html";
+  // });
 
   $("button#add-new-questionarie-btn").click(function () {
     console.log("Add new Questionarie button event is executing");
     window.location.href = "http://localhost:5500/addNewTest.html";
   });
 
-  $(document).on("click", "button#open-edit-questionarie-btn", function () {
-    console.log("Edit Questionarie button event is executing");
-    window.location.href = "http://localhost:5500/addQuestions.html";
-  });
+  // $(document).on("click", "button#open-edit-questionarie-btn", function () {
+  //   console.log("Edit Questionarie button event is executing");
+  //   window.location.href = "http://localhost:5500/addQuestions.html";
+  // });
 
   $("input#student-questionarie-finish-btn").click(function () {
     console.log("Finish Questionarie button event is executing");
@@ -51,28 +51,32 @@ function initEvents() {
     localStorage.setItem("noOfDigits",noOfDigits);
     localStorage.setItem("firstNumber",firstNum);
     localStorage.setItem("secondNumber",secondNum);
-    //window.location.href = "http://localhost:5500/addQuestions.html";
   });
 
-  $("#pop-up-save-btn").click(function () {
-    console.log("Submitting form....");
-    const questionType = $("#select-question-type :selected").text();
-    console.log(questionType);
-    localStorage.setItem("questionType", questionType);
-    const noOfDigits = $("#inputNumber").val();
-    console.log(noOfDigits);
-    const firstNum = $("#inputNumber1").val();
-    console.log(firstNum);
-    const secondNum = $("#inputNumber2").val();
-    console.log(secondNum);
-    if (noOfDigits != "" && firstNum != "" && secondNum != "") {
-      console.log("not null");
-      displayQuestions(firstNum, secondNum, questionType);
-      $("#basicQuestionModal").modal("hide");
-    } else {
-      console.log("Input Values are null");
-    }
-  });
+  
+
+
+  // $("#pop-up-save-btn").click(function (e) {
+  //   console.log("Submitting form....");
+  //   const questionType = $("#select-question-type :selected").text();
+  //   console.log(questionType);
+  //   localStorage.setItem("questionType", questionType);
+  //   const noOfDigits = $("#inputNumber").val();
+  //   console.log(noOfDigits);
+  //   const firstNum = $("#inputNumber1").val();
+  //   console.log(firstNum);
+  //   const secondNum = $("#inputNumber2").val();
+  //   console.log(secondNum);
+  //   if (noOfDigits != "" && firstNum != "" && secondNum != "") {
+  //     console.log("not null");
+  //     //checkInputDigitValue(noOfDigits);
+  //     //displayQuestions(noOfDigits,firstNum, secondNum, questionType);
+  //     //$("#basicQuestionModal").modal("hide");
+  //   } else {
+  //     console.log("Input Values are null");
+  //     e.preventDefault();
+  //   }
+  // });
 
   $("input#check-btn").click(function () {
     console.log("Checking the Questionaries event is executing");
@@ -108,3 +112,27 @@ function onChange(obj) {
       break;
   }
 }
+
+$("#inputNumber").change(function(){
+  let inputDigit = parseInt($("#inputNumber").val());
+console.log("input change");
+console.log(inputDigit);
+$('#inputNumber1').attr('data-parsley-min', 1);
+$('#inputNumber2').attr('data-parsley-min', 1);
+if(inputDigit === 1) {
+  console.log("digit 1");
+  $('#inputNumber1').attr('data-parsley-max', 9);  
+  $('#inputNumber2').attr('data-parsley-max', 9);
+  //$('#inputNumber2').attr('data-parsley-error-message', "The value should be between 1 an 9.");
+} else if(inputDigit === 2) {
+  console.log("digit 2");
+  $('#inputNumber1').attr('data-parsley-max', 99);
+  $('#inputNumber2').attr('data-parsley-max', 99);
+} else if(inputDigit === 3) {
+  $('#inputNumber1').attr('data-parsley-max', 999);
+  $('#inputNumber2').attr('data-parsley-max', 999);
+} else if (inputDigit === 4) {
+  $('#inputNumber1').attr('data-parsley-max', 9999);
+  $('#inputNumber2').attr('data-parsley-max', 9999);
+}
+});

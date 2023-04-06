@@ -11,6 +11,8 @@
       rel="stylesheet"
     />
 
+    <link href="https://parsleyjs.org/src/parsley.css" rel="stylesheet"/>
+
     <!--Local Stylesheet-->
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -87,7 +89,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form id="popupForm" method="" class="align-items-center">
+            <form id="popupForm" class="align-items-center" data-parsley-validate>
               <div class="mb-4 row">
                 <label for="selectQuestion" class="col-sm-6 col-form-label"
                   >Select Question Type</label
@@ -96,7 +98,7 @@
                   <label class="visually-hidden" for="inlineFormSelectPref"
                     >Choose Question</label
                   >
-                  <select class="form-select" id="select-question-type" required>
+                  <select class="form-select" id="select-question-type" required="">
                     <option value="1">Addition</option>
                     <option value="2">Subtraction</option>
                     <option value="3">Multiplication</option>
@@ -116,8 +118,7 @@
                     class="form-control"
                     min="1"
                     max="5"
-                    placeholder="Enter number of digits"
-                    required
+                    data-parsley-trigger="change" placeholder="Enter number of digits" required=""
                   />
                 </div>
               </div>
@@ -136,7 +137,7 @@
                         type="number"
                         class="form-control"
                         placeholder="First Number"
-                        required
+                        required=""
                       />
                     </div>
                   </div>
@@ -147,7 +148,7 @@
                         type="number"
                         class="form-control"
                         placeholder="Second Number"
-                        required
+                        required=""
                       />
                     </div>
                   </div>
@@ -155,7 +156,7 @@
               </div>
 
               <div class="modal-footer">
-                <button id="pop-up-save-btn" type="button" class="btn btn-dark">
+                <button id="pop-up-submit-btn" type="submit" class="btn btn-dark">
                   Save
                 </button>
                 <button
@@ -181,6 +182,8 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
     ></script>
+    <script type="text/javascript" src="https://parsleyjs.org/dist/parsley.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="events.js"></script>
     <script type="text/javascript" src="element-interactions.js"></script>
     <script type="text/javascript" src="index.js"></script>
