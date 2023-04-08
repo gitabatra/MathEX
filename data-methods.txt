@@ -1,0 +1,56 @@
+// Based on arrays
+// pros: easy to implement and iterate with forloops
+// cons: dificult search and edit
+questionaries = [
+    { 
+        name: "test 1" , 
+        questions: [
+            {
+                n1: 1,
+                n2: 2,
+                type: "+",
+                n_digits: 1
+            }
+        ]
+    },
+    { 
+        name: "test 1" , 
+        questions: [
+            {
+                n1: 1,
+                n2: 2,
+                type: "+",
+                n_digits: 1
+            }
+        ]
+    },
+];
+
+// Based on dictionaries/objects/JSONs
+// pros: easy search easy edit
+// cons: unique id to avoid overriding
+// pros: nested objects (noSQL, e.g. Firebase-Firestore)
+questionaries = {
+    "q-20230405-05" : { 
+        name: "test 1" , 
+        questions: {
+            q1: {
+                n1: 1,
+                n2: 2,
+                type: "+",
+                n_digits: 1
+            }
+        }
+    },
+    idTest2 : { 
+        name: "test 1" , 
+        questions: {
+            q2 : {
+                n1: 1,
+                n2: 2,
+                type: "+",
+                n_digits: 1
+            }
+    }
+    },
+}

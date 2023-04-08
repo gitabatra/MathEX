@@ -51,7 +51,7 @@
         <h1 id="add-heading-questionarie">Test...</h1>
       </div>
       <form class="align-items-sm-center">
-        <div id="question-from-popup" class="mb-4"></div>
+        <div id="add-question-from-popupdata" class="mb-4"></div>
         <div id="alignQuestions" class="col">
           <input
             type="button"
@@ -89,7 +89,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form id="popupForm" class="align-items-center" data-parsley-validate>
+            <form id="popup-form" class="align-items-center" data-parsley-validate>
               <div class="mb-4 row">
                 <label for="selectQuestion" class="col-sm-6 col-form-label"
                   >Select Question Type</label
@@ -98,11 +98,11 @@
                   <label class="visually-hidden" for="inlineFormSelectPref"
                     >Choose Question</label
                   >
-                  <select class="form-select" id="select-question-type" required="">
-                    <option value="1">Addition</option>
-                    <option value="2">Subtraction</option>
-                    <option value="3">Multiplication</option>
-                    <option value="4">Division</option>
+                  <select class="form-select" id="select-question-type" name="type" required="">
+                    <option value="+">Addition</option>
+                    <option value="-">Subtraction</option>
+                    <option value="x">Multiplication</option>
+                    <option value="/">Division</option>
                   </select>
                 </div>
               </div>
@@ -116,6 +116,7 @@
                     id="inputNumber"
                     type="number"
                     class="form-control"
+                    name="nDigit"
                     min="1"
                     max="5"
                     data-parsley-trigger="change" placeholder="Enter number of digits" required=""
@@ -136,6 +137,7 @@
                         id="inputNumber1"
                         type="number"
                         class="form-control"
+                        name="num1"
                         placeholder="First Number"
                         required=""
                       />
@@ -147,6 +149,7 @@
                         id="inputNumber2"
                         type="number"
                         class="form-control"
+                        name="num2"
                         placeholder="Second Number"
                         required=""
                       />

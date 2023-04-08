@@ -67,17 +67,17 @@
             <div class="modal-body">
               <!--Form-->
 
-              <form id="popupForm" action="./addQuestions.html" method="get" class="align-items-center" data-parsley-validate>
+              <form id="popup-form" action="./addQuestions.html" method="get" class="align-items-center" data-parsley-validate>
 
                 <div class="mb-4 row">
                     <label for="inputQuestion" class="col-sm-6 col-form-label">Select Question Type</label>
                     <div class="col-sm-6">
                      <label class="visually-hidden" for="inlineFormSelectPref">Choose Question</label>
-                    <select class="form-select" id="select-question-type" name="inputQuestionType" required="">
-                      <option value="1">Addition</option>
-                      <option value="2">Subtraction</option>
-                      <option value="3">Multiplication</option>
-                      <option value="4">Division</option>
+                    <select class="form-select" id="select-question-type" name="type" required="">
+                      <option value="+">Addition</option>
+                      <option value="-">Subtraction</option>
+                      <option value="x">Multiplication</option>
+                      <option value="/">Division</option>
                     </select>
                     </div>
                   </div>
@@ -86,7 +86,7 @@
                  <div class="mb-3 row">
                     <label for="inputNumber" class="col-sm-6 col-form-label">Enter Number of Digits</label>
                     <div class="col-sm-6">
-                      <input type="number" class="form-control" id="inputNumber" name="numOfDigits" min="1" max="5" data-parsley-trigger="change" placeholder="Enter number of digits" required="">
+                      <input type="number" class="form-control" id="inputNumber" name="nDigit" min="1" max="5" data-parsley-trigger="change" placeholder="Enter number of digits" required="">
                     </div>
                   </div>
                 
@@ -97,12 +97,12 @@
                     <div class="col-sm-6">
                       <div class="row">
                         <div class="col mb-3">
-                        <input type="number" class="form-control" id="inputNumber1" name="firstNumber" placeholder="First Number" required="">
+                        <input type="number" class="form-control" id="inputNumber1" name="num1" placeholder="First Number" required="">
                       </div>
                       </div>
                       <div class="row">
                         <div class="col mb-3">
-                        <input type="number" class="form-control" id="inputNumber2" name="secondNumber" placeholder="Second Number" required="">
+                        <input type="number" class="form-control" id="inputNumber2" name="num2" placeholder="Second Number" required="">
                       </div>
                       </div>
                     </div>
@@ -126,42 +126,6 @@
     <script type="text/javascript" src="events.js"></script>
     <script type="text/javascript" src="element-interactions.js"></script>
     <script type="text/javascript" src="index.js"></script>
-    <script type="text/javascript">
-  
-    //   $("#inputNumber").change(function(){
-    //     let inputDigit = parseInt($("#inputNumber").val());
-    //   console.log("input change");
-    //   const fnumber = parseInt($("#inputNumber1").val());
-    //   console.log(inputDigit);
-    //   console.log(fnumber);
-    //   if(inputDigit === 1) {
-    //     console.log("digit 1");
-    //     $('#inputNumber1').attr('data-parsley-min', 1);
-    //     $('#inputNumber1').attr('data-parsley-max', 9);  
-    //     $('#inputNumber2').attr('data-parsley-min', 1);
-    //     $('#inputNumber2').attr('data-parsley-max', 9);
-    //     //$('#inputNumber2').attr('data-parsley-error-message', "The value should be between 1 an 9.");
-    //   } else if(inputDigit === 2) {
-    //     console.log("digit 2");
-    //     $('#inputNumber1').attr('data-parsley-min', 10);
-    //     $('#inputNumber1').attr('data-parsley-max', 99);
-    //     $('#inputNumber2').attr('data-parsley-min', 10);
-    //     $('#inputNumber2').attr('data-parsley-max', 99);
-    //   } else if(inputDigit === 3) {
-    //     $('#inputNumber1').attr('data-parsley-min', 100);
-    //     $('#inputNumber1').attr('data-parsley-max', 999);
-    //     $('#inputNumber2').attr('data-parsley-min', 100);
-    //     $('#inputNumber2').attr('data-parsley-max', 999);
-    //   } else if (inputDigit === 4) {
-    //     $('#inputNumber1').attr('data-parsley-min', 1000);
-    //     $('#inputNumber1').attr('data-parsley-max', 9999);
-    //     $('#inputNumber2').attr('data-parsley-min', 1000);
-    //     $('#inputNumber2').attr('data-parsley-max', 9999);
-    //   }
-    // });
-    // //$('#popupForm').parsley();
-    
-      </script>  
 
 </body>
 </html>
