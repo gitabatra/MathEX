@@ -60,4 +60,11 @@ function appendDataToQuestionarie(){
 
     questionaries = Object.assign(newQuestionarie, questionaries);
     console.log("After append questionarie: ",questionaries);
+    return questionaries;
+}
+
+function refreshQuestionarieLocalStorage(questionaries) {
+    console.log("Refreshed Questionary on Publish: ", questionaries)
+    localStorage.setItem("questionaries", JSON.stringify(questionaries));
+    console.log("refreshed Questionaries List: ",questionaries);
 }

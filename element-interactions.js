@@ -1,7 +1,7 @@
 function initElements() {
   initLocalStorage();
   initQuestions();
-  appendDataToQuestionarie();
+  //appendDataToQuestionarie();
   //initQuestionsList();
 }
 
@@ -42,8 +42,9 @@ function refreshQuestionarieList() {
       <a href="/addQuestions.html?questionarie-id=${questionarieId}">
       <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
       </a>
-      
+      <a href="#" key="${questionarieId}">
       <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
+      <a>
      
   </div>
 </div>`);
@@ -51,6 +52,26 @@ function refreshQuestionarieList() {
       console.log("The following Id not found", questionarieId);
     }
   }
+}
+
+
+function appendQuestionsToList(popupData){
+  let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+  let urlParams = new URLSearchParams(window.location.search);
+  let questionarieId = urlParams.get("questionarie-id");
+  let questionarieObject = questionaries[questionarieId];
+  console.log("appending new Question Data to questionaries",questionarieObject["questions"]);
+  let qlength = Object.keys(questionarieObject["questions"]).length;
+  console.log("Number of Questions in this list",qlength);
+  //if (qlength === 0){}
+  let newQuestionKey = "q-20230405-0"+(qlength+1);
+  console.log("New Question Key: ",newQuestionKey);
+  let newQuestion = {[newQuestionKey] : popupData};
+  console.log("New Question : ", newQuestion);
+  questionarieObject["questions"] = Object.assign(newQuestion, questionarieObject["questions"]);
+  console.log(questionarieObject["questions"]);
+  questionaries[questionarieId] = Object.assign(questionarieObject, questionaries[questionarieId]);
+  console.log(questionaries);
 }
 
 function refreshQuestionsList() {
@@ -150,11 +171,21 @@ function checkQuestionarie() {
         questionarieObject.questions[questionId].num2
       );
       let questionType = questionarieObject.questions[questionId].type;
-      let givenAnswer = questionarieObject.questions[questionId].givenAns;
-      let correctAnswer = questionarieObject.questions[questionId].correctAns;
-      console.log("Given Answer: ", givenAnswer);
-      console.log("Correct Answer: ", correctAnswer);
-      if (givenAnswer === correctAnswer) {
+      //let givenAnswer = questionarieObject.questions[questionId].givenAns;
+      let correctAnswer = parseInt(questionarieObject.questions[questionId].correctAns);
+      let inputAnswer;
+      if(nDigits === 1){
+        inputAnswer = ($("#ones-digit-"+`${questionId}`).val().trim());
+        questionarieObject.questions[questionId].givenAns = inputAnswer;
+        inputAnswer = parseInt(questionarieObject.questions[questionId].givenAns);
+        console.log();
+      } else if(nDigits === 2){
+        onesDigitAns = $("#ones-digit-"+`${questionId}`).val().trim();
+        tensDigitAns = $("#tens-digit-"+`${questionId}`).val().trim();
+        inputAnswer = parseInt(tensDigitAns+onesDigitAns);
+        questionarieObject.questions[questionId].givenAns = inputAnswer;
+      }
+      if (inputAnswer === correctAnswer) {
         $("i#question-" + `${questionId}` + "-correct").show();
       } else {
         $("i#question-" + `${questionId}` + "-wrong").show();
@@ -312,7 +343,7 @@ function appendOneDigitQuestions(
               <tr>
                 <td></td>
                 <td class="text-end align-items-end alignNumbers">
-                  <input id="ones-digit" class="inputBox" type="text" />
+                  <input id="ones-digit-${questionId}" class="inputBox" type="text" />
                 </td>
               </tr>
             </tbody>
@@ -385,10 +416,10 @@ function appendTwoDigitQuestions(
                 <tr>
                   <td></td>
                   <td class="text-end align-items-end alignNumbers">
-                    <input id="tens-digit" class="inputBox" type="text" />
+                    <input id="tens-digit-${questionId}" class="inputBox" type="text" />
                   </td>
                   <td class="alignNumbers">
-                    <input id="ones-digit" class="inputBox" type="text" />
+                    <input id="ones-digit-${questionId}" class="inputBox" type="text" />
                   </td>
                 </tr>
               </tbody>
