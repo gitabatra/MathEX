@@ -3,5 +3,6 @@ $(document).ready(function () {
   console.log("Initializing Events");
   initEvents();
   initElements();
+  initLocalStorage();
 });
 
