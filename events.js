@@ -36,11 +36,10 @@ function initEvents() {
   $("input#publish-btn").click(function (event) {
     console.log(event.delegateTarget);
     console.log("Publish event is executing");
-    const isPublishBtnClicked = true;
-    //appendDataToQuestionarie();
-    let questionarieObj = appendDataToQuestionarie();
-    refreshQuestionarieLocalStorage(questionarieObj);
-    refreshQuestionarieList();
+    //const isPublishBtnClicked = true;
+    //let questionarieObj = appendDataToQuestionarie();
+    //refreshQuestionarieLocalStorage(questionarieObj);
+    //refreshQuestionarieList();
     window.location.href = "http://localhost:5500/admin.html";
   });
 
@@ -68,6 +67,20 @@ function initEvents() {
     }
   });
 
+  // $("button#pop-up-submit-btn").click(function (event) {
+  //   console.log("PopUp Submit button is executing");
+  //   // get all the inputs.
+  //   let testName = $("input#new-questionarie-name").val();
+  //   console.log("Test Name in Submit Button", testName);
+  //   let $inputs = $("#popup-form :input");
+
+  //   let popupData = {};
+  //   $inputs.each(function () {
+  //     popupData[this.name] = $(this).val();
+  //     console.log(popupData[this.name]);
+  //   });
+  // });
+
   $("button#pop-up-submit-btn").click(function (event) {
     //alert( "Handler for .submit() called." );
     //event.preventDefault();
@@ -94,8 +107,8 @@ function initEvents() {
       correctAns = parseInt(popupData["num1"]) / parseInt(popupData["num2"]);
     }
     popupData["correctAns"] = correctAns;
-    console.log("Popup Data Values", popupData);
-    appendQuestionsToList(popupData);
+    //appendQuestionsToList(popupData);
+    //$("#basicQuestionModal").modal("hide");
   });
 
   $("input#student-questionarie-check-btn").click(function () {

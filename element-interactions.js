@@ -70,8 +70,14 @@ function appendQuestionsToList(popupData){
   console.log("New Question : ", newQuestion);
   questionarieObject["questions"] = Object.assign(newQuestion, questionarieObject["questions"]);
   console.log(questionarieObject["questions"]);
-  questionaries[questionarieId] = Object.assign(questionarieObject, questionaries[questionarieId]);
-  console.log(questionaries);
+  //questionaries[questionarieId] = Object.assign(questionarieObject, questionaries[questionarieId]);
+  console.log(questionaries[questionarieId].questions);
+  localStorage.setItem(questionaries[questionarieId].questions,(questionarieObject["questions"]));
+  console.log("Popup Data Values", popupData.ndigit);
+  if(popupData.ndigit === "1"){
+    console.log("Appending Question to the Questionarie....");
+    appendOneDigitQuestions(newQuestionKey,(qlength+1),parseInt(popupData.type),parseInt(popupData.num1),parseInt(popupData.num2));
+  }
 }
 
 function refreshQuestionsList() {
@@ -323,8 +329,13 @@ function appendOneDigitQuestions(
   firstNum,
   secondNum
 ) {
+  
+  console.log("Appending one digit Questions----");
+  console.log("questionId",questionId);
   let onesDigitFirstNum = firstNum;
+  console.log("First Digit--- ",onesDigitFirstNum);
   let onesDigitSecondNum = secondNum;
+  console.log("onesDigitSecondNum Digit--- ",onesDigitSecondNum);
   $("div#questions-list").append(`
     <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
         <div class="card text-center">
