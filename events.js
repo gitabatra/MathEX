@@ -14,18 +14,23 @@ function initEvents() {
     window.location.href = "http://localhost:5500/addNewTest.html";
   });
 
-  // $(document).on("click", "button#open-edit-questionarie-btn", function () {
-  //   console.log("Edit Questionarie button event is executing");
-  //   window.location.href = "http://localhost:5500/addQuestions.html";
-  // });
+  $(document).on("click", "button#open-edit-questionarie-btn", function () {
+    console.log("Edit Questionarie button event is executing");
+    
+   // window.location.href = "http://localhost:5500/addQuestions.html";
+  });
 
   $(document).on("click", "button#delete-questionarie-btn", function () {
     console.log("Delete Questionarie button event is executing");
     let questionaryKey = $(this).parent().attr("key");
     let targetId = $("div#questionarie-grid-item-" + questionaryKey);
+    console.log("Removing object with id : ", targetId, " and key ", questionaryKey);
     targetId.remove();
     console.log(targetId);
-    localStorage.removeItem(JSON.stringify(questionaryKey));
+
+    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+    delete questionaries[questionaryKey];
+    localStorage.setItem("questionaries", JSON.stringify(questionaries))
   });
 
   $("input#student-questionarie-finish-btn").click(function () {
@@ -36,11 +41,29 @@ function initEvents() {
   $("input#publish-btn").click(function (event) {
     console.log(event.delegateTarget);
     console.log("Publish event is executing");
+    let questionarieId = new URLSearchParams(window.location.search).get("questionarie-id");
+    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+
+    $("div#add-question-from-popupdata").children().each(function(idx, itm) {
+      let quesitonId = itm.id.replace('question-','')
+      let operationArr = $(itm).text().trim().split(" ");
+      let firstNumber = parseInt(operationArr[0]);
+      let operator = operationArr[1];
+      let secondNumber = parseInt(operationArr[2]);
+      console.log("Operation of question ", questionarieId, quesitonId, firstNumber, operator, secondNumber)
+      
+      Object.assign(questionaries[questionarieId]["questions"][quesitonId], { num1: firstNumber, num2: secondNumber, type: operator});
+      // questionaries[questionarieId]["questions"][quesitonId]["num1"];
+      // questionaries[questionarieId]["questions"][quesitonId]["num2"];
+      // questionaries[questionarieId]["questions"][quesitonId]["type"];
+    });
+
+    // localStorage.setItem("questionaries", JSON.stringify(questionaries))
     //const isPublishBtnClicked = true;
     //let questionarieObj = appendDataToQuestionarie();
     //refreshQuestionarieLocalStorage(questionarieObj);
     //refreshQuestionarieList();
-    window.location.href = "http://localhost:5500/admin.html";
+    // window.location.href = "http://localhost:5500/admin.html";
   });
 
   $("#inputNumber").change(function () {
@@ -83,11 +106,14 @@ function initEvents() {
 
   $("button#pop-up-submit-btn").click(function (event) {
     //alert( "Handler for .submit() called." );
-    //event.preventDefault();
+    event.preventDefault();
 
     // get all the inputs.
     let testName = $("input#new-questionarie-name").val();
     console.log("Test Name in Submit Button", testName);
+
+    let questionarieId = new URLSearchParams(window.location.search).get("questionarie-id");
+    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
     let $inputs = $("#popup-form :input");
 
     let popupData = {};
@@ -107,8 +133,11 @@ function initEvents() {
       correctAns = parseInt(popupData["num1"]) / parseInt(popupData["num2"]);
     }
     popupData["correctAns"] = correctAns;
+    //console.log("Operation of question ", questionarieId, quesitonId, firstNumber, popupData["type"], secondNumber)
+      
+    //   Object.assign(questionaries[questionarieId]["questions"][quesitonId], { num1: firstNumber, num2: secondNumber, type: operator});
     //appendQuestionsToList(popupData);
-    //$("#basicQuestionModal").modal("hide");
+    $("#basicQuestionModal").modal("hide");
   });
 
   $("input#student-questionarie-check-btn").click(function () {

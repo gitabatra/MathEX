@@ -114,9 +114,9 @@ function refreshQuestionsList() {
       );
       let questionType = questionarieObject.questions[questionId].type;
       //insertQuestionsForAdmin
-      const ques = firstNum + questionType + secondNum + " = ? ";
-      $("div#add-question-from-popupdata").append(`<div class="alignQuestions">
-      <label>${ques}</label>
+      const ques = firstNum + " " + questionType + " " + secondNum + " = ? ";
+      $("div#add-question-from-popupdata").append(`<div id=question-${questionId} class="alignQuestions">
+        ${ques}
       </div>`);
 
       if (nDigits === 1) {

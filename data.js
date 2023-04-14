@@ -1,11 +1,10 @@
-//Global Variable
-var questionaries = {};
 function initLocalStorage(){
     console.log("Initializing Questionaries Array");
-    let questionaries = [
-        {name: "1", q: []}
-    ];
-    questionaries = {
+    if(localStorage.getItem("questionaries") != null){
+        console.log("Avoiding Quesitonarie initialization because values already exist.");
+        return;
+    }
+    let questionaries = {
             "qs-20230405-01": {
                 name: "Test 1", 
                 questions: {
