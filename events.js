@@ -14,23 +14,51 @@ function initEvents() {
     window.location.href = "http://localhost:5500/addNewTest.html";
   });
 
-  $(document).on("click", "button#open-edit-questionarie-btn", function () {
-    console.log("Edit Questionarie button event is executing");
-    
-   // window.location.href = "http://localhost:5500/addQuestions.html";
-  });
+  // $(document).on("click", "button#open-edit-questionarie-btn", function () {
+  //   console.log("Edit Questionarie button event is executing");
+
+  //  // window.location.href = "http://localhost:5500/addQuestions.html";
+  // });
 
   $(document).on("click", "button#delete-questionarie-btn", function () {
     console.log("Delete Questionarie button event is executing");
     let questionaryKey = $(this).parent().attr("key");
     let targetId = $("div#questionarie-grid-item-" + questionaryKey);
-    console.log("Removing object with id : ", targetId, " and key ", questionaryKey);
+    console.log(
+      "Removing object with id : ",
+      targetId,
+      " and key ",
+      questionaryKey
+    );
     targetId.remove();
     console.log(targetId);
 
     let questionaries = JSON.parse(localStorage.getItem("questionaries"));
     delete questionaries[questionaryKey];
-    localStorage.setItem("questionaries", JSON.stringify(questionaries))
+    localStorage.setItem("questionaries", JSON.stringify(questionaries));
+  });
+
+  $(document).on("click", "a#delete-question-link", function () {
+    console.log("Delete Question from List event is executing");
+    let questionKey = $(this).attr("key");
+    let targetId = $("div#question-" + questionKey);
+    console.log(
+      "Removing object with id : ",
+      targetId,
+      " and key ",
+      questionKey
+    );
+    targetId.remove();
+
+    //get questionarie from URL
+    let questionarieId = new URLSearchParams(window.location.search).get(
+      "questionarie-id"
+    );
+    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+    console.log(questionaries[questionarieId]["questions"][questionKey]);
+
+    delete questionaries[questionarieId]["questions"][questionKey];
+    localStorage.setItem("questionaries", JSON.stringify(questionaries));
   });
 
   $("input#student-questionarie-finish-btn").click(function () {
@@ -41,22 +69,37 @@ function initEvents() {
   $("input#publish-btn").click(function (event) {
     console.log(event.delegateTarget);
     console.log("Publish event is executing");
-    let questionarieId = new URLSearchParams(window.location.search).get("questionarie-id");
+    let questionarieId = new URLSearchParams(window.location.search).get(
+      "questionarie-id"
+    );
     let questionaries = JSON.parse(localStorage.getItem("questionaries"));
 
-    $("div#add-question-from-popupdata").children().each(function(idx, itm) {
-      let quesitonId = itm.id.replace('question-','')
-      let operationArr = $(itm).text().trim().split(" ");
-      let firstNumber = parseInt(operationArr[0]);
-      let operator = operationArr[1];
-      let secondNumber = parseInt(operationArr[2]);
-      console.log("Operation of question ", questionarieId, quesitonId, firstNumber, operator, secondNumber)
-      
-      Object.assign(questionaries[questionarieId]["questions"][quesitonId], { num1: firstNumber, num2: secondNumber, type: operator});
-      // questionaries[questionarieId]["questions"][quesitonId]["num1"];
-      // questionaries[questionarieId]["questions"][quesitonId]["num2"];
-      // questionaries[questionarieId]["questions"][quesitonId]["type"];
-    });
+    $("div#add-question-from-popupdata")
+      .children()
+      .each(function (idx, itm) {
+        let quesitonId = itm.id.replace("question-", "");
+        let operationArr = $(itm).text().trim().split(" ");
+        let firstNumber = parseInt(operationArr[0]);
+        let operator = operationArr[1];
+        let secondNumber = parseInt(operationArr[2]);
+        console.log(
+          "Operation of question ",
+          questionarieId,
+          quesitonId,
+          firstNumber,
+          operator,
+          secondNumber
+        );
+
+        Object.assign(questionaries[questionarieId]["questions"][quesitonId], {
+          num1: firstNumber,
+          num2: secondNumber,
+          type: operator,
+        });
+        // questionaries[questionarieId]["questions"][quesitonId]["num1"];
+        // questionaries[questionarieId]["questions"][quesitonId]["num2"];
+        // questionaries[questionarieId]["questions"][quesitonId]["type"];
+      });
 
     // localStorage.setItem("questionaries", JSON.stringify(questionaries))
     //const isPublishBtnClicked = true;
@@ -104,45 +147,62 @@ function initEvents() {
   //   });
   // });
 
-  $("button#pop-up-submit-btn").click(function (event) {
+  $("button#pop-up-submit-save-btn").click(function (event) {
     //alert( "Handler for .submit() called." );
-    event.preventDefault();
+    // event.preventDefault();
 
     // get all the inputs.
     let testName = $("input#new-questionarie-name").val();
     console.log("Test Name in Submit Button", testName);
 
-    let questionarieId = new URLSearchParams(window.location.search).get("questionarie-id");
-    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
     let $inputs = $("#popup-form :input");
-
     let popupData = {};
     $inputs.each(function () {
       popupData[this.name] = $(this).val();
       console.log(popupData[this.name]);
+      console.log(typeof popupData[this.name]);
     });
-    let correctAns = null;
-    popupData["givenAns"] = "";
-    if (popupData["type"] === "+") {
-      correctAns = parseInt(popupData["num1"]) + parseInt(popupData["num2"]);
-    } else if (popupData["type"] === "-") {
-      correctAns = parseInt(popupData["num1"]) - parseInt(popupData["num2"]);
-    } else if (popupData["type"] === "x") {
-      correctAns = parseInt(popupData["num1"]) * parseInt(popupData["num2"]);
-    } else if (popupData["type"] === "/") {
-      correctAns = parseInt(popupData["num1"]) / parseInt(popupData["num2"]);
+
+    if (
+      popupData["ndigit"] != "" &&
+      popupData["num1"] != "" &&
+      popupData["num2"] != ""
+    ) {
+      console.log("Pop up object data is not empty", popupData);
+      event.preventDefault();
+      let correctAns = null;
+      popupData["num1"] = parseInt(popupData["num1"]);
+      popupData["num2"] = parseInt(popupData["num2"]);
+      popupData["ndigit"] = parseInt(popupData["ndigit"]);
+      // console.log(
+      //   " Pop up Data Number 1: ",
+      //   popupData["num1"],
+      //   "Number 2",
+      //   popupData["num2"]
+      // );
+
+      popupData["givenAns"] = "";
+      if (popupData["type"] === "+") {
+        correctAns = popupData["num1"] + popupData["num2"];
+      } else if (popupData["type"] === "-") {
+        correctAns = popupData["num1"] - popupData["num2"];
+      } else if (popupData["type"] === "x") {
+        correctAns = popupData["num1"] * popupData["num2"];
+      } else if (popupData["type"] === "/") {
+        correctAns = popupData["num1"] / popupData["num2"];
+      }
+      popupData["correctAns"] = correctAns;
+
+      console.log("PopupData : ", popupData);
+      appendQuestionsToList(popupData);
+      $("#basicQuestionModal").modal("hide");
+    } else {
+      console.log("Please enter valid data");
     }
-    popupData["correctAns"] = correctAns;
-    //console.log("Operation of question ", questionarieId, quesitonId, firstNumber, popupData["type"], secondNumber)
-      
-    //   Object.assign(questionaries[questionarieId]["questions"][quesitonId], { num1: firstNumber, num2: secondNumber, type: operator});
-    //appendQuestionsToList(popupData);
-    $("#basicQuestionModal").modal("hide");
   });
 
   $("input#student-questionarie-check-btn").click(function () {
     console.log("Checking the Questionaries event is executing");
-
     checkQuestionarie();
   });
 

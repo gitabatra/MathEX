@@ -11,6 +11,12 @@
       rel="stylesheet"
     />
 
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
     <link href="https://parsleyjs.org/src/parsley.css" rel="stylesheet"/>
 
     <!--Local Stylesheet-->
@@ -51,8 +57,9 @@
         <h1 id="add-heading-questionarie">Test...</h1>
       </div>
       <form class="align-items-sm-center">
-        <div id="add-question-from-popupdata" class="mb-4"></div>
-        <div id="alignQuestions" class="col">
+        <div id="add-question-from-popupdata" class="mb-4">
+        </div>
+        <div id="question-list" class="col">
           <input
             type="button"
             id="add-new-Questionarie-btn"
@@ -155,7 +162,7 @@
               </div>
 
               <div class="modal-footer">
-                <button id="pop-up-submit-btn" type="submit" class="btn btn-dark">
+                <button id="pop-up-submit-save-btn" type="submit" class="btn btn-dark">
                   Save
                 </button>
                 <button
