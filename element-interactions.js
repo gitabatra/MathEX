@@ -62,23 +62,24 @@ function appendQuestionsToList(popupData){
   let questionarieObject = questionaries[questionarieId];
   console.log("appending new Question Data to questionaries",questionarieObject["questions"]);
   let qlength = Object.keys(questionarieObject["questions"]).length;
+  console.log("Question Keys", Object.keys(questionarieObject["questions"])[qlength-1]);
   console.log("Number of Questions in this list",qlength);
-  //if (qlength === 0){}
-  let newQuestionKey = "q-20230405-0"+(qlength+1);
+  qlength = Object.keys(questionarieObject["questions"])[qlength-1].slice(-1);
+  //console.log("QLength --- : ", parseInt(qlength));
+  let newQuestionKey = "q-20230405-0"+(parseInt(qlength)+1);
   console.log("New Question Key: ",newQuestionKey);
-  let newQuestion = {[newQuestionKey] : popupData};
-  console.log("New Question : ", newQuestion);
-  questionarieObject["questions"] = Object.assign(newQuestion, questionarieObject["questions"]);
-  console.log(questionarieObject["questions"]);
-  //questionaries[questionarieId] = Object.assign(questionarieObject, questionaries[questionarieId]);
   console.log(questionaries[questionarieId].questions);
-  localStorage.setItem(questionaries[questionarieId].questions,(questionarieObject["questions"]));
-  console.log("Popup Data Values", popupData.ndigit);
-  if(popupData.ndigit === "1"){
-    console.log("Appending Question to the Questionarie....");
-    appendOneDigitQuestions(newQuestionKey,(qlength+1),parseInt(popupData.type),parseInt(popupData.num1),parseInt(popupData.num2));
-  }
+
+  questionarieObject["questions"][newQuestionKey] = popupData;
+  console.log(questionarieObject["questions"][newQuestionKey]);
+
+  Object.assign(questionaries[questionarieId], questionarieObject);
+  console.log(questionaries[questionarieId]);
+
+  localStorage.setItem("questionaries", JSON.stringify(questionaries));
+  location.reload(true);
 }
+
 
 function refreshQuestionsList() {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
@@ -114,9 +115,12 @@ function refreshQuestionsList() {
       );
       let questionType = questionarieObject.questions[questionId].type;
       //insertQuestionsForAdmin
-      const ques = firstNum + questionType + secondNum + " = ? ";
-      $("div#add-question-from-popupdata").append(`<div class="alignQuestions">
-      <label>${ques}</label>
+      const ques = firstNum + " " + questionType + " " + secondNum + " = ? ";
+      $("div#add-question-from-popupdata").append(`<div id="question-${questionId}" class="alignQuestions">
+        ${ques} 
+        
+        <a id="delete-question-link" href="#" key="${questionId}" class="text-dark"><i class="fas fa-trash-alt ms-5"></i></a>   
+    
       </div>`);
 
       if (nDigits === 1) {
