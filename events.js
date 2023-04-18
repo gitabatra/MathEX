@@ -78,7 +78,7 @@ function initEvents() {
       day: "numeric",
       month: "long"
     };
-    //currentDate = currentDate.toLocaleDateString("en-US",options);
+   
     console.log(currentDate.toLocaleDateString("en-US",options));
     $("#date-questionarie-attempt-"+questionarieId).text(currentDate.toLocaleDateString("en-US",options));
 
@@ -87,6 +87,7 @@ function initEvents() {
     });
     
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
+    refreshScoreRecord();
    
     // console.log("button#open-score-questionarie-btn-"+questionarieId);
     

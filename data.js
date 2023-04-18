@@ -20,11 +20,11 @@ function initLocalStorage(){
             "qs-20230405-02": {
                 name: "Test 2", 
                 questions: {
-                    "q-20230405-01": {ndigit:3, num1: 131, num2: 284,type: "+", givenAns: "", correctAns: 41},
-                    "q-20230405-02": {ndigit:3, num1: 116, num2: 168,type: "+", givenAns: "", correctAns: 84},
-                    "q-20230405-03": {ndigit:3, num1: 511, num2: 9,type: "+", givenAns: "", correctAns: 60},
-                    "q-20230405-04": {ndigit:3, num1: 418, num2: 36,type: "+", givenAns: "", correctAns: 84},
-                    "q-20230405-05": {ndigit:3, num1: 217, num2: 74,type: "+", givenAns: "", correctAns: 101}                 
+                    "q-20230405-01": {ndigit:3, num1: 131, num2: 284,type: "+", givenAns: "", correctAns: 415},
+                    "q-20230405-02": {ndigit:3, num1: 116, num2: 168,type: "+", givenAns: "", correctAns: 284},
+                    "q-20230405-03": {ndigit:3, num1: 511, num2: 9,type: "+", givenAns: "", correctAns: 520},
+                    "q-20230405-04": {ndigit:3, num1: 418, num2: 36,type: "+", givenAns: "", correctAns: 454},
+                    "q-20230405-05": {ndigit:3, num1: 217, num2: 74,type: "+", givenAns: "", correctAns: 291}                 
                 },
                 dateQuestionarie: "",
                 score: ""
@@ -46,30 +46,3 @@ function initLocalStorage(){
 
     console.log("Checking Questionaries Array", JSON.parse(localStorage.getItem("questionaries")));
 }
-
-// function appendDataToQuestionarie(){
-//     questionaries = JSON.parse(localStorage.getItem("questionaries"));
-//     console.log("Before append questionarie: ",questionaries);
-//     let newQuestionarie = { 
-//         "qs-20230405-04": {
-//         name: "Test 4", 
-//         questions: {
-//             "q-20230405-01": {ndigit:1, num1: 8, num2: 6,type: "-", givenAns: 2, correctAns: 2},
-//             "q-20230405-02": {ndigit:1, num1: 7, num2: 1,type: "-", givenAns: 6, correctAns: 6},
-//             "q-20230405-03": {ndigit:1, num1: 9, num2: 2,type: "-", givenAns: 6, correctAns: 7},
-//             "q-20230405-04": {ndigit:1, num1: 4, num2: 0,type: "-", givenAns: 4, correctAns: 4},
-//             "q-20230405-05": {ndigit:1, num1: 5, num2: 5,type: "-", givenAns: 0, correctAns: 0}                 
-//         }
-//     }};
-   
-
-//     questionaries = Object.assign(newQuestionarie, questionaries);
-//     console.log("After append questionarie: ",questionaries);
-//     return questionaries;
-// }
-
-// function refreshQuestionarieLocalStorage(questionaries) {
-//     console.log("Refreshed Questionary on Publish: ", questionaries)
-//     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-//     console.log("refreshed Questionaries List: ",questionaries);
-// }

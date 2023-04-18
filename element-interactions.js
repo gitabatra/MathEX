@@ -1,8 +1,6 @@
 function initElements() {
   //initLocalStorage();
   initQuestions();
-  //appendDataToQuestionarie();
-  //initQuestionsList();
 }
 
 function initQuestions() {
@@ -12,17 +10,6 @@ function initQuestions() {
   $("i.correctness-indicator").hide();
 }
 
-// function appendScoreBtnForQuestionarie(questionarieId){
-//   console.log("Appending score button on finishing the test");
-//   console.log("questionary: ",questionarieId);
-
-//       $("div#questionarie-list-col-"+questionarieId).append(`
-//               <a id="score-record-${questionarieId}" href="/score_record.html?questionarie-id=${questionarieId}">
-//                 <button id="open-score-questionarie-btn-${questionarieId}" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>   
-//               </a>     
-//       `);
-
-// }
 
 function refreshQuestionarieList() {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
@@ -152,15 +139,6 @@ function refreshQuestionsList() {
     
       </div>`);
 
-      if (nDigits === 1) {
-        appendOneDigitQuestions(
-          questionId,
-          countQuestion,
-          questionType,
-          firstNum,
-          secondNum
-        );
-      }else {
         appendQuestions(
               questionId,
               countQuestion,
@@ -169,20 +147,6 @@ function refreshQuestionsList() {
               firstNum,
               secondNum
             );
-      } 
-      // } else if (nDigits === 2) {
-      //   appendTwoDigitQuestions(
-      //     questionId,
-      //     countQuestion,
-      //     questionType,
-      //     firstNum,
-      //     secondNum
-      //   );
-      // } else if (nDigits === 3) {
-      //   //appendThreeDigitQuestions(questionId,countQuestion,questionType,firstNum,secondNum);
-      // } else if (nDigits === 4) {
-      //   //appendFourDigitQuestions(questionId,countQuestion,questionType,firstNum,secondNum);
-      // }
       countQuestion = countQuestion + 1;
     }
   }
@@ -228,16 +192,23 @@ function checkQuestionarie() {
       if(nDigits === 1){
         inputAnswer = parseInt($("#ones-digit-"+`${questionId}`).val().trim());
         console.log("Given Answer: ",inputAnswer);
-        Object.assign(questionaries[questionarieId]["questions"][questionId], {
-          givenAns: inputAnswer
-        });
-        
-        localStorage.setItem("questionaries", JSON.stringify(questionaries));
-        console.log("Question: ", questionaries[questionarieId]);
       } else if(nDigits === 2){
         onesDigitAns = $("#ones-digit-"+`${questionId}`).val().trim();
         tensDigitAns = $("#tens-digit-"+`${questionId}`).val().trim();
         inputAnswer = parseInt(tensDigitAns+onesDigitAns);
+        questionarieObject.questions[questionId].givenAns = inputAnswer;
+      } else if(nDigits === 3){
+        onesDigitAns = $("#ones-digit-"+`${questionId}`).val().trim();
+        tensDigitAns = $("#tens-digit-"+`${questionId}`).val().trim();
+        hundredDigitAns = $("#hundred-digit-"+`${questionId}`).val().trim();
+        inputAnswer = parseInt(hundredDigitAns+tensDigitAns+onesDigitAns);
+        questionarieObject.questions[questionId].givenAns = inputAnswer;
+      } else {
+        onesDigitAns = $("#ones-digit-"+`${questionId}`).val().trim();
+        tensDigitAns = $("#tens-digit-"+`${questionId}`).val().trim();
+        hundredDigitAns = $("#hundred-digit-"+`${questionId}`).val().trim();
+        thousandDigitAns = $("#thousand-digit-"+`${questionId}`).val().trim();
+        inputAnswer = parseInt(thousandDigitAns+hundredDigitAns+tensDigitAns+onesDigitAns);
         questionarieObject.questions[questionId].givenAns = inputAnswer;
       }
       if (inputAnswer === correctAnswer) {
@@ -248,6 +219,12 @@ function checkQuestionarie() {
         $("i#question-" + `${questionId}` + "-wrong").show();
         $("i#question-" + `${questionId}` + "-correct").hide();
       }
+      Object.assign(questionaries[questionarieId]["questions"][questionId], {
+        givenAns: inputAnswer
+      });
+      
+      //localStorage.setItem("questionaries", JSON.stringify(questionaries));
+      console.log("Question: ", questionaries[questionarieId]);
     }
     console.log("Coorect Questions: ",correctCount);
     Object.assign(questionaries[questionarieId], {
@@ -360,70 +337,29 @@ function refreshScoreRecord() {
       console.log(question);
       console.log("Given Answer: ", givenAnswer);
       console.log("Correct Answer: ", correctAnswer);
-      // if (givenAnswer === correctAnswer) {
-      //   $("i#question-" + `${questionId}` + "-correct").show();
-      // } else {
-      //   $("i#question-" + `${questionId}` + "-wrong").show();
-      // }
+     
       $("div#score-accordion-body-" + `${questionarieId}`)
         .append(`<div class="row">
         <div class="col-4">${question}</div>
-        <div class="col-4 correctAns">Coorect Answer - ${correctAnswer}</div>
+        <div class="col-4 correctAns">Correct Answer - ${correctAnswer}</div>
         <div class="col-4 givenAns">
           Given Answer -  ${givenAnswer}
-          <i id="question-${questionId}-correct" class="fas fa-check text-success correctness-indicator"></i>
-          <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
+          <i id="question-${questionId}-correct" class="fas fa-check text-success"></i>
+          <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger"></i>
         </div>
       </div>`);
+      if (givenAnswer === correctAnswer) {
+        console.log("Score Record Check -- Question is Correct");
+        $("i#question-" + `${questionId}` + "-correct").show();
+        $("i#question-" + `${questionId}` + "-wrong").hide();
+      } else {
+        console.log("Score Record Check -- Question is Wrong");
+        $("i#question-" + `${questionId}` + "-wrong").show();
+        $("i#question-" + `${questionId}` + "-correct").hide();
+      }
       countQuestion = countQuestion + 1;
     }
   }
-}
-
-function appendOneDigitQuestions(
-  questionId,
-  countQuestion,
-  questionType,
-  firstNum,
-  secondNum
-) {
-  
-  console.log("Appending one digit Questions----");
-  console.log("questionId",questionId);
-  let onesDigitFirstNum = firstNum;
-  console.log("First Digit--- ",onesDigitFirstNum);
-  let onesDigitSecondNum = secondNum;
-  console.log("onesDigitSecondNum Digit--- ",onesDigitSecondNum);
-  $("div#questions-list").append(`
-    <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
-        <div class="card text-center">
-          <div class="card-header">Question ${countQuestion}</div>
-          <div class="card-body">
-            <table class="tableAlign">
-              <tbody>
-              <tr>
-                <td></td>
-                <td class="text-center">${onesDigitFirstNum}</td>
-              </tr>
-              <tr>
-                <td class="text-center align-bottom">${questionType}</td>
-                <td class="text-center">${onesDigitSecondNum}</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td class="text-end align-items-end alignNumbers">
-                  <input id="ones-digit-${questionId}" class="inputBox" type="text" />
-                </td>
-              </tr>
-            </tbody>
-            </table>
-            <br />
-            <i id="question-${questionId}-correct" class="fas fa-check text-success correctness-indicator"></i>
-            <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
-          </div>
-        </div>
-    </div>
-      `);
 }
 
 function appendQuestions(
@@ -557,151 +493,67 @@ function appendQuestions(
         </div>
     </div>
       `);
-      // if(nDigits == 2){
-
-      // }
-      
-      if(questionType == "+"){
+        $("input#carry-input-thousand-" + `${questionId}`).hide();
+        $("input#carry-input-hundred-" + `${questionId}`).hide();
+        $("input#carry-input-tens-" + `${questionId}`).hide();
         $("input#carry-input-ones-" + `${questionId}`).hide();
-        if((onesDigitFirstNum+onesDigitSecondNum)<9){
-          console.log("Ones Digit total is greater than 9");
-          //carry-input-${questionId}
-          $("input#carry-input-tens-" + `${questionId}`).hide();
-          $("td#carry-text-" + `${questionId}`).hide();
-        }else{
-          $("input#carry-input-tens-" + `${questionId}`).show();
-          $("td#carry-text-" + `${questionId}`).show();
-        }
-      } else if(questionType == "-"){
-        console.log("Subtraction Questionarie");
-        console.log("digits : ",onesDigitFirstNum,onesDigitSecondNum);
-        $("td#carry-text-" + `${questionId}`).text("");
+
+        $("input#thousand-digit-" + `${questionId}`).hide();
+        $("input#hundred-digit-" + `${questionId}`).hide();
+        $("input#tens-digit-" + `${questionId}`).hide();
+        $("input#ones-digit-" + `${questionId}`).hide();
+       if(nDigits == 1){
+        $("input#ones-digit-" + `${questionId}`).show();
+       } else if(nDigits == 2){
+        $("input#carry-input-tens-" + `${questionId}`).show();
+        $("input#carry-input-ones-" + `${questionId}`).show();
+
+        $("input#ones-digit-" + `${questionId}`).show();
+        $("input#tens-digit-" + `${questionId}`).show();
+       } else if(nDigits == 3){
+        $("input#carry-input-tens-" + `${questionId}`).show();
+        $("input#carry-input-ones-" + `${questionId}`).show();
+        $("input#carry-input-hundred-" + `${questionId}`).show();
+
+        $("input#ones-digit-" + `${questionId}`).show();
+        $("input#tens-digit-" + `${questionId}`).show();
+        $("input#hundred-digit-" + `${questionId}`).show();
+       }else {
+        $("input#carry-input-thousand-" + `${questionId}`).show();
+        $("input#carry-input-hundred-" + `${questionId}`).show();
+        $("input#carry-input-tens-" + `${questionId}`).show();
+        $("input#carry-input-ones-" + `${questionId}`).show();
+
+        $("input#thousand-digit-" + `${questionId}`).show();
+        $("input#hundred-digit-" + `${questionId}`).show();
+        $("input#tens-digit-" + `${questionId}`).show();
+        $("input#ones-digit-" + `${questionId}`).show();
+
+       }
+      
+      // if(questionType == "+"){
+      //   $("input#carry-input-ones-" + `${questionId}`).hide();
+      //   if((onesDigitFirstNum+onesDigitSecondNum)<9){
+      //     console.log("Ones Digit total is greater than 9");
+      //     //carry-input-${questionId}
+      //     $("input#carry-input-tens-" + `${questionId}`).hide();
+      //     $("td#carry-text-" + `${questionId}`).hide();
+      //   }else{
+      //     $("input#carry-input-tens-" + `${questionId}`).show();
+      //     $("td#carry-text-" + `${questionId}`).show();
+      //   }
+      // } else if(questionType == "-"){
+      //   console.log("Subtraction Questionarie");
+      //   console.log("digits : ",onesDigitFirstNum,onesDigitSecondNum);
+      //   $("td#carry-text-" + `${questionId}`).text("");
         
-        if(onesDigitFirstNum >= onesDigitSecondNum){
-          console.log(onesDigitFirstNum+"is greater than"+onesDigitSecondNum);
-          $("input#carry-input-ones-" + `${questionId}`).hide();
-        }else{
-          $("input#carry-input-ones-" + `${questionId}`).show();
-        }
-      }
+      //   if(onesDigitFirstNum >= onesDigitSecondNum){
+      //     console.log(onesDigitFirstNum+"is greater than"+onesDigitSecondNum);
+      //     $("input#carry-input-ones-" + `${questionId}`).hide();
+      //   }else{
+      //     $("input#carry-input-ones-" + `${questionId}`).show();
+      //   }
+      // }
       
 }
 
-// function appendTwoDigitQuestions(
-//   questionId,
-//   countQuestion,
-//   questionType,
-//   firstNum,
-//   secondNum
-// ) {
-//   let onesDigitFirstNum,
-//     tensDigitFirstNum,
-//     onesDigitSecondNum,
-//     tensDigitSecondNum;
-//   if (firstNum.length < 2) {
-//     tensDigitFirstNum = "";
-//     onesDigitFirstNum = firstNum[0];
-//   } else {
-//     tensDigitFirstNum = firstNum[0];
-//     onesDigitFirstNum = firstNum[1];
-//   }
-//   console.log("FirstNumber OneDigit: ", onesDigitFirstNum);
-//   console.log("FirstNumber tensDigit: ", tensDigitFirstNum);
-//   if (secondNum.length < 2) {
-//     tensDigitSecondNum = "";
-//     onesDigitSecondNum = secondNum[0];
-//   } else {
-//     tensDigitSecondNum = secondNum[0];
-//     onesDigitSecondNum = secondNum[1];
-//   }
-//   $("div#questions-list").append(`
-//     <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
-//         <div class="card text-center">
-//           <div class="card-header">Question ${countQuestion}</div>
-//           <div class="card-body">
-//             <table class="tableAlign">
-//               <thead>
-//                 <td></td>
-//                 <td id="carry-text-${questionId}">Carry</td>
-//                 <td id="carry-text-${questionId}">Carry</td>
-//                 <td></td>
-//               </thead>
-//               <tbody>
-//                 <tr>
-//                   <td></td>
-//                   <td class="text-end">
-//                   <td><input id="carry-input-hundreds-${questionId}" type="text" class="inputBox" /></td>
-//                     <input id="carry-input-tens-${questionId}" type="text" class="inputBox" />
-//                   </td>
-//                   <td><input id="carry-input-ones-${questionId}" type="text" class="inputBox" /></td>
-                  
-//                 </tr>
-//                 <tr>
-//                   <td></td>
-//                   <td class="text-center align-bottom">${hundredDigitFirstNum}</td>
-//                   <td class="text-center align-bottom">${tensDigitFirstNum}</td>
-//                   <td class="text-center">${onesDigitFirstNum}</td>
-//                 </tr>
-//                 <tr>
-//                   <td class="text-center align-bottom">${questionType}</td>
-//                   <td class="text-center align-bottom">${hundredDigitSecondNum}</td>
-//                   <td class="text-center align-bottom">${tensDigitSecondNum}</td>
-//                   <td class="text-center">${onesDigitSecondNum}</td>
-//                 </tr>
-//                 <tr>
-//                   <td></td>
-//                   <td class="text-end align-items-end alignNumbers">
-//                     <input id="hundred-digit-${questionId}" class="inputBox" type="text" />
-//                   </td>
-//                   <td class="text-end align-items-end alignNumbers">
-//                     <input id="tens-digit-${questionId}" class="inputBox" type="text" />
-//                   </td>
-//                   <td class="alignNumbers">
-//                     <input id="ones-digit-${questionId}" class="inputBox" type="text" />
-//                   </td>
-//                 </tr>
-//               </tbody>
-//             </table>
-//             <br />
-//             <i id="question-${questionId}-correct" class="fas fa-check text-success correctness-indicator"></i>
-//             <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
-//           </div>
-//         </div>
-//     </div>
-//       `);
-      
-//       if(questionType == "+"){
-//         $("input#carry-input-ones-" + `${questionId}`).hide();
-//         if((onesDigitFirstNum+onesDigitSecondNum)<9){
-//           console.log("Ones Digit total is greater than 9");
-//           //carry-input-${questionId}
-//           $("input#carry-input-tens-" + `${questionId}`).hide();
-//           $("td#carry-text-" + `${questionId}`).hide();
-//         }else{
-//           $("input#carry-input-tens-" + `${questionId}`).show();
-//           $("td#carry-text-" + `${questionId}`).show();
-//         }
-//       } else if(questionType == "-"){
-//         console.log("Subtraction Questionarie");
-//         console.log("digits : ",onesDigitFirstNum,onesDigitSecondNum);
-//         $("td#carry-text-" + `${questionId}`).text("");
-        
-//         if(onesDigitFirstNum >= onesDigitSecondNum){
-//           console.log(onesDigitFirstNum+"is greater than"+onesDigitSecondNum);
-//           $("input#carry-input-ones-" + `${questionId}`).hide();
-//         }else{
-//           $("input#carry-input-ones-" + `${questionId}`).show();
-//         }
-//       }
-      
-// }
-
-// function initQuestionarie() {
-//   console.log("Initialize Test Name....");
-//   const publishEventCaptured = localStorage.getItem("isPublishBtnClicked");
-//   let publishEventClickCount = localStorage.getItem("publishEventClickCount");
-//   console.log(publishEventClickCount);
-//   if (publishEventCaptured) {
-//     createQuestionaries();
-//   }
-// }
