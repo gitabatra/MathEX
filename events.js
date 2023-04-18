@@ -14,6 +14,8 @@ function initEvents() {
     window.location.href = "http://localhost:5500/addNewTest.html";
   });
 
+ 
+
   // $(document).on("click", "button#open-edit-questionarie-btn", function () {
   //   console.log("Edit Questionarie button event is executing");
 
@@ -63,7 +65,37 @@ function initEvents() {
 
   $("input#student-questionarie-finish-btn").click(function () {
     console.log("Finish Questionarie button event is executing");
-    window.location.href = "http://localhost:5500/index.html";
+    //alert("Have you checked your questions before finishing?");
+    let questionarieId = new URLSearchParams(window.location.search).get(
+      "questionarie-id"
+    );
+    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+    console.log("questionarieid: ",questionaries[questionarieId]);
+
+    let currentDate = new Date();
+    const options= {
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    };
+    //currentDate = currentDate.toLocaleDateString("en-US",options);
+    console.log(currentDate.toLocaleDateString("en-US",options));
+    $("#date-questionarie-attempt-"+questionarieId).text(currentDate.toLocaleDateString("en-US",options));
+
+    Object.assign(questionaries[questionarieId], {
+      dateQuestionarie: currentDate.toLocaleDateString("en-US",options)
+    });
+    
+    localStorage.setItem("questionaries", JSON.stringify(questionaries));
+   
+    // console.log("button#open-score-questionarie-btn-"+questionarieId);
+    
+    //$("button#open-score-questionarie-btn-"+questionarieId).show();
+    //appendScoreBtnForQuestionarie(questionarieId);
+
+    //localStorage.setItem("questionaries", JSON.stringify(questionaries));
+  
+    //window.location.href = "http://localhost:5500/index.html";
   });
 
   $("input#publish-btn").click(function (event) {
@@ -133,19 +165,96 @@ function initEvents() {
     }
   });
 
-  // $("button#pop-up-submit-btn").click(function (event) {
-  //   console.log("PopUp Submit button is executing");
-  //   // get all the inputs.
-  //   let testName = $("input#new-questionarie-name").val();
-  //   console.log("Test Name in Submit Button", testName);
-  //   let $inputs = $("#popup-form :input");
+  $("button#pop-up-submit-btn").click(function (event) {
+    console.log("PopUp Submit button on AddNewTest page is executing");
+    //event.preventDefault();
+    let testName = $("input#new-questionarie-name").val();
+    console.log("Test Name in Submit Button", testName);
+    
+    //Check if the testname is already taken up then alert else make new questionarie and save to localstorage
+    let isTestNameAlreadyTaken = false;
+    isTestNameAlreadyTaken = checkQuestionaryName(testName);
+    console.log(isTestNameAlreadyTaken);
+    if(isTestNameAlreadyTaken){
+      alert("Questionarie with the given name already exist. Please change the name");
+    } else{   
+      let $inputs = $("#popup-form :input");
+      let popupData = {};
+      $inputs.each(function () {
+        popupData[this.name] = $(this).val();
+        console.log(popupData[this.name]);
+      //appendQuestionsToList(popupData);
+      });
+      if (
+        popupData["ndigit"] != "" &&
+        popupData["num1"] != "" &&
+        popupData["num2"] != ""
+      ) {
+        console.log("Pop up object data is not empty", popupData);
+        event.preventDefault();
+        let correctAns = null;
+        popupData["num1"] = parseInt(popupData["num1"]);
+        popupData["num2"] = parseInt(popupData["num2"]);
+        popupData["ndigit"] = parseInt(popupData["ndigit"]);
+  
+        popupData["givenAns"] = "";
+        if (popupData["type"] === "+") {
+          correctAns = popupData["num1"] + popupData["num2"];
+        } else if (popupData["type"] === "-") {
+          correctAns = popupData["num1"] - popupData["num2"];
+        } else if (popupData["type"] === "x") {
+          correctAns = popupData["num1"] * popupData["num2"];
+        } else if (popupData["type"] === "/") {
+          correctAns = popupData["num1"] / popupData["num2"];
+        }
+        popupData["correctAns"] = correctAns;
+  
+        console.log("PopupData : ", popupData);
+        let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+        let qlength = Object.keys(questionaries).length;
 
-  //   let popupData = {};
-  //   $inputs.each(function () {
-  //     popupData[this.name] = $(this).val();
-  //     console.log(popupData[this.name]);
-  //   });
-  // });
+      console.log("Object Keys",Object.keys(questionaries),"Length of Questionaries ",qlength);
+      qlength = Object.keys(questionaries)[qlength-1].slice(-1);
+      console.log("QLength --- : ", parseInt(qlength));
+      let newQuestionarieKey = "qs-20230405-0"+(parseInt(qlength)+1);
+      console.log("New Questionarie Key: ",newQuestionarieKey);
+ 
+      let newQuestionariesObj = {[newQuestionarieKey] : {"name": testName, "questions":{"q-20230405-01" : {"ndigit" : popupData.ndigit, 
+      "num1": popupData.num1, "num2": popupData.num2, "type": popupData.type, "givenAns":"","correctAns": popupData.correctAns}}, dateQuestionarie:"",score:""}}
+      //let newQuestionariesObj = {[newQuestionarieKey] : {"name": testName, "questions":{"q-20230405-01" : {}}}};
+      console.log("New Questionarie", newQuestionariesObj);
+    
+      Object.assign(questionaries, newQuestionariesObj);
+      console.log(questionaries);
+
+      window.location.href = "./addQuestions.html?questionarie-id="+newQuestionarieKey;
+      //location.reload(true);
+    
+      localStorage.setItem("questionaries", JSON.stringify(questionaries));
+      }    
+    }
+  
+  });
+
+  function checkQuestionaryName(testName){
+    console.log("Checking Questionarie name already exist or not");
+    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+    console.log(testName);
+    console.log("createQuestionaries: ", questionaries);
+  
+    for (const questionarieId in questionaries) {
+      if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
+        let questionarieObject = questionaries[questionarieId];
+        console.log(questionarieObject.name);
+        let questionarieName = questionarieObject["name"].toLowerCase().replace(" ","");
+        let inputTestName = testName.toLowerCase().replace(" ","");
+        if (questionarieName == inputTestName) {
+          console.log("testname already exists");
+          return true;
+        }
+      }
+    }
+  }
 
   $("button#pop-up-submit-save-btn").click(function (event) {
     //alert( "Handler for .submit() called." );
@@ -174,12 +283,6 @@ function initEvents() {
       popupData["num1"] = parseInt(popupData["num1"]);
       popupData["num2"] = parseInt(popupData["num2"]);
       popupData["ndigit"] = parseInt(popupData["ndigit"]);
-      // console.log(
-      //   " Pop up Data Number 1: ",
-      //   popupData["num1"],
-      //   "Number 2",
-      //   popupData["num2"]
-      // );
 
       popupData["givenAns"] = "";
       if (popupData["type"] === "+") {
@@ -209,13 +312,13 @@ function initEvents() {
   $("input#new-questionarie-name").keyup(function () {
     console.log("Enabling plus button on input is executing");
     testName = $(this).val();
-    //localStorage.setItem("testName", testName);
+   
     console.log("testname is : " + testName);
     if ($(this).val().trim() != "") {
       console.log("not null");
-      $("#addNewTestBtn").prop("disabled", false);
+      $("#add-new-questionarie-test-btn").prop("disabled", false);
     } else {
-      $("#addNewTestBtn").prop("disabled", true);
+      $("#add-new-questionarie-test-btn").prop("disabled", true);
     }
   });
 }
