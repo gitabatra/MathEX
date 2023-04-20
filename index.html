@@ -58,5 +58,31 @@
     <script type="text/javascript" src="events.js"></script>
     <script type="text/javascript" src="element-interactions.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <script>
+         $(document).ready(function () {
+        toastr.options = {
+          debug: false,
+          newestOnTop: false,
+          positionClass: "toast-top-right",
+          progressBar: true,
+          onclick: null,
+          fadeIn: 300,
+          fadeOut: 3000,
+          timeOut: 2000,
+          extendedTimeOut: 1000,
+        };
+        // show when page load
+        toastr.info("You can Click Go Button to start the test");
+        
+
+        $(".scoreCheckMsg").mouseenter(function () {
+          // show when the button is clicked
+          //toastr.info("Checking answers...");
+         
+          toastr.success("You can Check your score here.");
+        });
+        
+      });
+    </script>
 </body>
 </html>

@@ -29,7 +29,7 @@ function refreshQuestionarieList() {
               <a href="/studentQuestionary.html?questionarie-id=${questionarieId}">
                 <button id="open-questionarie-btn-${questionarieId}" class="btn btn-success px-4 mb-2">Go <i class="fas fa-angle-double-right"></i></button>   
               </a>
-              <a ${hide_score_button} id="score-record-${questionarieId}" href="/score_record.html?questionarie-id=${questionarieId}">
+              <a ${hide_score_button} id="score-record-${questionarieId}" class="scoreCheckMsg" href="/score_record.html?questionarie-id=${questionarieId}">
               <button id="open-score-questionarie-btn-${questionarieId}" class="btn btn-info px-4 mb-2 score-indicator">Scores <i class="fas fa-star"></i></button>   
             </a>   
             
