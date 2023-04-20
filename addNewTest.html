@@ -86,7 +86,7 @@
                  <div class="mb-3 row">
                     <label for="inputNumber" class="col-sm-6 col-form-label">Enter Number of Digits</label>
                     <div class="col-sm-6 ">
-                      <input type="number" class="form-control" id="inputNumber" name="ndigit" min="1" max="5" data-parsley-trigger="change" placeholder="Enter number of digits" required="">
+                      <input type="number" class="form-control" id="inputNumber" name="ndigit" min="1" max="4" data-parsley-trigger="change" placeholder="Enter number of digits" required="">
                     </div>
                   </div>
                 
@@ -116,12 +116,21 @@
         </div>
       </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+  integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+  crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
     <script type="text/javascript" src="https://parsleyjs.org/dist/parsley.min.js"></script>
     <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="events.js"></script>
     <script type="text/javascript" src="element-interactions.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <script>
+        $(document).ready(function () {
+          $('#basicQuestionModal').draggable();
+     });
+    </script>
 
 </body>
 </html>

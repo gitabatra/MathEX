@@ -65,7 +65,6 @@ function initEvents() {
 
   $("input#student-questionarie-finish-btn").click(function () {
     console.log("Finish Questionarie button event is executing");
-    //alert("Have you checked your questions before finishing?");
     let questionarieId = new URLSearchParams(window.location.search).get(
       "questionarie-id"
     );
@@ -87,17 +86,10 @@ function initEvents() {
     });
     
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    refreshScoreRecord();
-   
-    // console.log("button#open-score-questionarie-btn-"+questionarieId);
-    
-    //$("button#open-score-questionarie-btn-"+questionarieId).show();
-    //appendScoreBtnForQuestionarie(questionarieId);
-
-    //localStorage.setItem("questionaries", JSON.stringify(questionaries));
-  
-    //window.location.href = "http://localhost:5500/index.html";
+    window.location.href = "http://localhost:5500/index.html";
   });
+
+ 
 
   $("input#publish-btn").click(function (event) {
     console.log(event.delegateTarget);
@@ -150,19 +142,40 @@ function initEvents() {
     $("#inputNumber2").attr("data-parsley-min", 1);
     if (inputDigit === 1) {
       console.log("digit 1");
-      $("#inputNumber1").attr("data-parsley-max", 9);
+        $("#inputNumber1").attr("data-parsley-max", 9);
+      //if ($("#inputNumber2").val().trim()>9){
+      //  console.log($("#inputNumber2").val().trim());
       $("#inputNumber2").attr("data-parsley-max", 9);
+     // }
       //$('#inputNumber2').attr('data-parsley-error-message', "The value should be between 1 an 9.");
     } else if (inputDigit === 2) {
-      console.log("digit 2");
+     //console.log("digit 2");
+      //if ($("#inputNumber1").val().trim()>99){
+      //  console.log($("#inputNumber1").val().trim());
       $("#inputNumber1").attr("data-parsley-max", 99);
+      //}
+      //if ($("#inputNumber2").val().trim()>99){
+      //  console.log($("#inputNumber2").val().trim());
       $("#inputNumber2").attr("data-parsley-max", 99);
+      //}
     } else if (inputDigit === 3) {
+      //if ($("#inputNumber1").val().trim()>999){
+      //  console.log($("#inputNumber1").val().trim());
       $("#inputNumber1").attr("data-parsley-max", 999);
+      //}
+      //if ($("#inputNumber2").val().trim()>999){
+      //  console.log($("#inputNumber2").val().trim());
       $("#inputNumber2").attr("data-parsley-max", 999);
+      //}
     } else if (inputDigit === 4) {
+      //if ($("#inputNumber1").val().trim()>9999){
+     //   console.log($("#inputNumber1").val().trim());
       $("#inputNumber1").attr("data-parsley-max", 9999);
+     // }
+     // if ($("#inputNumber2").val().trim()>9999){
+     //   console.log($("#inputNumber2").val().trim());
       $("#inputNumber2").attr("data-parsley-max", 9999);
+     // }
     }
   });
 
@@ -258,13 +271,6 @@ function initEvents() {
   }
 
   $("button#pop-up-submit-save-btn").click(function (event) {
-    //alert( "Handler for .submit() called." );
-    // event.preventDefault();
-
-    // get all the inputs.
-    let testName = $("input#new-questionarie-name").val();
-    console.log("Test Name in Submit Button", testName);
-
     let $inputs = $("#popup-form :input");
     let popupData = {};
     $inputs.each(function () {
@@ -279,7 +285,7 @@ function initEvents() {
       popupData["num2"] != ""
     ) {
       console.log("Pop up object data is not empty", popupData);
-      event.preventDefault();
+      //event.preventDefault();
       let correctAns = null;
       popupData["num1"] = parseInt(popupData["num1"]);
       popupData["num2"] = parseInt(popupData["num2"]);
@@ -308,6 +314,8 @@ function initEvents() {
   $("input#student-questionarie-check-btn").click(function () {
     console.log("Checking the Questionaries event is executing");
     checkQuestionarie();
+    //Enable Finish Button
+     $("input#student-questionarie-finish-btn").prop("disabled",false);
   });
 
   $("input#new-questionarie-name").keyup(function () {

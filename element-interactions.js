@@ -20,6 +20,8 @@ function refreshQuestionarieList() {
     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
      
       let questionarieObject = questionaries[questionarieId];
+      //let hide_score_button = (('score' in questionarieObject)  &&(questionarieObject["score"] == "") ) ? "" : "hidden";
+      let hide_score_button = ((questionarieObject["score"] == "") ) ? "hidden" : "";
       $("div#questionarie-list").append(`
       <div id="questionarie-list-item-${questionarieId}" class="row">
           <div id="questionarie-list-col-${questionarieId}" class="col">
@@ -27,19 +29,13 @@ function refreshQuestionarieList() {
               <a href="/studentQuestionary.html?questionarie-id=${questionarieId}">
                 <button id="open-questionarie-btn-${questionarieId}" class="btn btn-success px-4 mb-2">Go <i class="fas fa-angle-double-right"></i></button>   
               </a>
-              <a id="score-record-${questionarieId}" href="/score_record.html?questionarie-id=${questionarieId}">
-              <button id="open-score-questionarie-btn-${questionarieId}" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>   
+              <a ${hide_score_button} id="score-record-${questionarieId}" href="/score_record.html?questionarie-id=${questionarieId}">
+              <button id="open-score-questionarie-btn-${questionarieId}" class="btn btn-info px-4 mb-2 score-indicator">Scores <i class="fas fa-star"></i></button>   
             </a>   
             
           </div>
       </div>
       `);
-
-      // //Hide Score button initially
-      // $("button#open-score-questionarie-btn-"+questionarieId).hide();
-      // //$("button#open-score-questionarie-btn-"+questionarieId).prop("disabled",true);
-      // //$("a#score-record-"+questionarieId).addClass('disabled');
-
       $("div#questionarie-grid")
         .append(`<div id="questionarie-grid-item-${questionarieId}" class="row">
   <div class="col text-end">
@@ -65,6 +61,7 @@ function refreshQuestionarieList() {
   }
 }
 
+//Appending questions to Questionarie by taking input from pop up
 
 function appendQuestionsToList(popupData){
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
@@ -90,12 +87,12 @@ function appendQuestionsToList(popupData){
   console.log(questionaries[questionarieId]);
 
   localStorage.setItem("questionaries", JSON.stringify(questionaries));
- // $("#popup-form").attr("action","./addQuestions.html?questionarie-id="+questionarieId);
-  window.location.href = "./addQuestions.html?questionarie-id="+questionarieId;
+  //refreshQuestionsList();
+   window.location.href = "./addQuestions.html?questionarie-id="+questionarieId;
   //location.reload(true);
-
 }
 
+//Refresh QuestionList
 
 function refreshQuestionsList() {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
@@ -152,6 +149,8 @@ function refreshQuestionsList() {
   }
 }
 
+//Checking Questionarie for Student
+
 function checkQuestionarie() {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
   let urlParams = new URLSearchParams(window.location.search);
@@ -188,20 +187,31 @@ function checkQuestionarie() {
       );
       let questionType = questionarieObject.questions[questionId].type;
       let correctAnswer = parseInt(questionarieObject.questions[questionId].correctAns);
-      let inputAnswer;
+      let inputAnswer =0;
       if(nDigits === 1){
         inputAnswer = parseInt($("#ones-digit-"+`${questionId}`).val().trim());
+        if(isNaN(inputAnswer) || inputAnswer == null){
+          inputAnswer = "";
+        }
+        questionarieObject.questions[questionId].givenAns = inputAnswer;
         console.log("Given Answer: ",inputAnswer);
       } else if(nDigits === 2){
         onesDigitAns = $("#ones-digit-"+`${questionId}`).val().trim();
         tensDigitAns = $("#tens-digit-"+`${questionId}`).val().trim();
         inputAnswer = parseInt(tensDigitAns+onesDigitAns);
+        if(isNaN(inputAnswer) || inputAnswer == null){
+          inputAnswer = "";
+        }
         questionarieObject.questions[questionId].givenAns = inputAnswer;
       } else if(nDigits === 3){
         onesDigitAns = $("#ones-digit-"+`${questionId}`).val().trim();
         tensDigitAns = $("#tens-digit-"+`${questionId}`).val().trim();
         hundredDigitAns = $("#hundred-digit-"+`${questionId}`).val().trim();
         inputAnswer = parseInt(hundredDigitAns+tensDigitAns+onesDigitAns);
+        console.log("Given Answer: ",inputAnswer);
+        if(isNaN(inputAnswer) || inputAnswer == null){
+          inputAnswer = "";
+        }
         questionarieObject.questions[questionId].givenAns = inputAnswer;
       } else {
         onesDigitAns = $("#ones-digit-"+`${questionId}`).val().trim();
@@ -209,6 +219,9 @@ function checkQuestionarie() {
         hundredDigitAns = $("#hundred-digit-"+`${questionId}`).val().trim();
         thousandDigitAns = $("#thousand-digit-"+`${questionId}`).val().trim();
         inputAnswer = parseInt(thousandDigitAns+hundredDigitAns+tensDigitAns+onesDigitAns);
+        if(isNaN(inputAnswer) || inputAnswer == null){
+          inputAnswer = "";
+        }
         questionarieObject.questions[questionId].givenAns = inputAnswer;
       }
       if (inputAnswer === correctAnswer) {
@@ -226,7 +239,7 @@ function checkQuestionarie() {
       //localStorage.setItem("questionaries", JSON.stringify(questionaries));
       console.log("Question: ", questionaries[questionarieId]);
     }
-    console.log("Coorect Questions: ",correctCount);
+    console.log("Correct Questions: ",correctCount);
     Object.assign(questionaries[questionarieId], {
       score: correctCount+" / "+ totalQuestions 
     });
@@ -234,6 +247,9 @@ function checkQuestionarie() {
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
   }
 }
+
+
+//Score -Record
 
 function refreshScoreRecord() {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
@@ -362,6 +378,7 @@ function refreshScoreRecord() {
   }
 }
 
+// Append Questions to Student Questionarie
 function appendQuestions(
   questionId,
   countQuestion,
@@ -433,6 +450,14 @@ function appendQuestions(
     <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
         <div class="card text-center">
           <div class="card-header">Question ${countQuestion}</div>
+          <div id="borrow-subtraction" class="ui-widget-content">
+                  <i  id="" class="fas fa-sm fa-slash draggable"></i>
+                  <i  id="" class="fas fa-sm fa-slash draggable"></i>
+                  <i  id="" class="fas fa-sm fa-slash draggable"></i>
+                  <i  id="" class="fas fa-sm fa-slash draggable"></i>
+                  <span class="draggable"><input id="carry-input" type="text" class="inputBox"/></span>   
+          </div>
+
           <div class="card-body">
             <table class="tableAlign">
               <thead>
@@ -445,12 +470,12 @@ function appendQuestions(
               <tbody>
                 <tr>
                   <td></td>
-                  <td class="text-end mx-0 px-0"><input id="carry-input-thousand-${questionId}" type="text" class="inputBox" /></td>
-                  <td class="text-end mx-0 px-0"><input id="carry-input-hundred-${questionId}" type="text" class="inputBox" /></td>
+                  <td class="text-end mx-0 px-0"><input id="carry-input-thousand-${questionId}" type="text" class="inputBox"/></td>
+                  <td class="text-end mx-0 px-0"><input id="carry-input-hundred-${questionId}" type="text" class="inputBox"/></td>
                   <td class="text-end mx-0 px-0">
-                    <input id="carry-input-tens-${questionId}" type="text" class="inputBox" />
+                  <input id="carry-input-tens-${questionId}" type="text" class="inputBox"/>
                   </td>
-                  <td class="text-end mx-0 px-0"><input id="carry-input-ones-${questionId}" type="text" class="inputBox" /></td>
+                  <td class="text-end mx-0 px-0"><input id="carry-input-ones-${questionId}" type="text" class="inputBox"/></td>
                   
                 </tr>
                 <tr>
@@ -493,43 +518,13 @@ function appendQuestions(
         </div>
     </div>
       `);
-        $("input#carry-input-thousand-" + `${questionId}`).hide();
-        $("input#carry-input-hundred-" + `${questionId}`).hide();
-        $("input#carry-input-tens-" + `${questionId}`).hide();
-        $("input#carry-input-ones-" + `${questionId}`).hide();
+     
+      $( ".draggable" ).draggable({cancel: null});
+      $("div#borrow-subtraction").hide();
 
-        $("input#thousand-digit-" + `${questionId}`).hide();
-        $("input#hundred-digit-" + `${questionId}`).hide();
-        $("input#tens-digit-" + `${questionId}`).hide();
-        $("input#ones-digit-" + `${questionId}`).hide();
-       if(nDigits == 1){
-        $("input#ones-digit-" + `${questionId}`).show();
-       } else if(nDigits == 2){
-        $("input#carry-input-tens-" + `${questionId}`).show();
-        $("input#carry-input-ones-" + `${questionId}`).show();
+      hideInputBoxForDigits(questionId, nDigits);
 
-        $("input#ones-digit-" + `${questionId}`).show();
-        $("input#tens-digit-" + `${questionId}`).show();
-       } else if(nDigits == 3){
-        $("input#carry-input-tens-" + `${questionId}`).show();
-        $("input#carry-input-ones-" + `${questionId}`).show();
-        $("input#carry-input-hundred-" + `${questionId}`).show();
-
-        $("input#ones-digit-" + `${questionId}`).show();
-        $("input#tens-digit-" + `${questionId}`).show();
-        $("input#hundred-digit-" + `${questionId}`).show();
-       }else {
-        $("input#carry-input-thousand-" + `${questionId}`).show();
-        $("input#carry-input-hundred-" + `${questionId}`).show();
-        $("input#carry-input-tens-" + `${questionId}`).show();
-        $("input#carry-input-ones-" + `${questionId}`).show();
-
-        $("input#thousand-digit-" + `${questionId}`).show();
-        $("input#hundred-digit-" + `${questionId}`).show();
-        $("input#tens-digit-" + `${questionId}`).show();
-        $("input#ones-digit-" + `${questionId}`).show();
-
-       }
+     
       
       // if(questionType == "+"){
       //   $("input#carry-input-ones-" + `${questionId}`).hide();
@@ -556,4 +551,44 @@ function appendQuestions(
       // }
       
 }
+
+function hideInputBoxForDigits(questionId, nDigits){
+  $("input#carry-input-thousand-" + `${questionId}`).hide();
+  $("input#carry-input-hundred-" + `${questionId}`).hide();
+  $("input#carry-input-tens-" + `${questionId}`).hide();
+  $("input#carry-input-ones-" + `${questionId}`).hide();
+
+  $("input#thousand-digit-" + `${questionId}`).hide();
+  $("input#hundred-digit-" + `${questionId}`).hide();
+  $("input#tens-digit-" + `${questionId}`).hide();
+  $("input#ones-digit-" + `${questionId}`).hide();
+ if(nDigits == 1){
+  $("input#ones-digit-" + `${questionId}`).show();
+ } else if(nDigits == 2){
+  $("input#carry-input-tens-" + `${questionId}`).show();
+  $("input#carry-input-ones-" + `${questionId}`).show();
+
+  $("input#ones-digit-" + `${questionId}`).show();
+  $("input#tens-digit-" + `${questionId}`).show();
+ } else if(nDigits == 3){
+  $("input#carry-input-tens-" + `${questionId}`).show();
+  $("input#carry-input-ones-" + `${questionId}`).show();
+  $("input#carry-input-hundred-" + `${questionId}`).show();
+
+  $("input#ones-digit-" + `${questionId}`).show();
+  $("input#tens-digit-" + `${questionId}`).show();
+  $("input#hundred-digit-" + `${questionId}`).show();
+ }else {
+  $("input#carry-input-thousand-" + `${questionId}`).show();
+  $("input#carry-input-hundred-" + `${questionId}`).show();
+  $("input#carry-input-tens-" + `${questionId}`).show();
+  $("input#carry-input-ones-" + `${questionId}`).show();
+
+  $("input#thousand-digit-" + `${questionId}`).show();
+  $("input#hundred-digit-" + `${questionId}`).show();
+  $("input#tens-digit-" + `${questionId}`).show();
+  $("input#ones-digit-" + `${questionId}`).show();
+}
+
+ }
 
