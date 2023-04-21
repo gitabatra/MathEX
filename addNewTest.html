@@ -9,6 +9,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet"/>
 
     <link href="https://parsleyjs.org/src/parsley.css" rel="stylesheet"/>
+
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    rel="stylesheet"
+  />
     
     <!--Local Stylesheet-->
     <link rel="stylesheet" href="styles.css">
@@ -67,7 +72,7 @@
             <div class="modal-body">
               <!--Form-->
 
-              <form id="popup-form" action="./addQuestions.html" method="get" class="align-items-center" data-parsley-validate>
+              <form id="popup-form" action="" method="get" class="align-items-center" data-parsley-validate>
 
                 <div class="mb-4 row">
                     <label for="inputQuestion" class="col-sm-6 col-form-label">Select Question Type</label>
@@ -122,6 +127,10 @@
   crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
     <script type="text/javascript" src="https://parsleyjs.org/dist/parsley.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    ></script>
     <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="events.js"></script>
     <script type="text/javascript" src="element-interactions.js"></script>
@@ -130,6 +139,21 @@
         $(document).ready(function () {
           $('#basicQuestionModal').draggable();
      });
+     $(document).ready(function () {
+        toastr.options = {
+          debug: false,
+          newestOnTop: false,
+          positionClass: "toast-top-right",
+          progressBar: true,
+          onclick: null,
+          fadeIn: 300,
+          fadeOut: 3000,
+          timeOut: 3000,
+          extendedTimeOut: 1000,
+        };
+        // show when page load
+        toastr.info("You can create new Questionary by clicking on + button");
+      });
     </script>
 
 </body>

@@ -15,7 +15,8 @@ function initLocalStorage(){
                     "q-20230405-05": {ndigit:1, num1: 7, num2: 4,type: "+", givenAns: "", correctAns: 11}
                 },
                 dateQuestionarie: "",
-                score: ""
+                score: "",
+                isQuestionariePublished: true
             },
             "qs-20230405-02": {
                 name: "Test 2", 
@@ -27,7 +28,8 @@ function initLocalStorage(){
                     "q-20230405-05": {ndigit:3, num1: 217, num2: 74,type: "+", givenAns: "", correctAns: 291}                 
                 },
                 dateQuestionarie: "",
-                score: ""
+                score: "",
+                isQuestionariePublished: true
             },
             "qs-20230405-03": {
                 name: "Test 3", 
@@ -39,7 +41,8 @@ function initLocalStorage(){
                     "q-20230405-05": {ndigit:2, num1: 17, num2: 84,type: "+", givenAns: "", correctAns: 101}                 
                 },
                 dateQuestionarie: "",
-                score: ""
+                score: "",
+                isQuestionariePublished: true
             }
         };
     localStorage.setItem("questionaries", JSON.stringify(questionaries));

@@ -98,40 +98,11 @@ function initEvents() {
       "questionarie-id"
     );
     let questionaries = JSON.parse(localStorage.getItem("questionaries"));
-
-    $("div#add-question-from-popupdata")
-      .children()
-      .each(function (idx, itm) {
-        let quesitonId = itm.id.replace("question-", "");
-        let operationArr = $(itm).text().trim().split(" ");
-        let firstNumber = parseInt(operationArr[0]);
-        let operator = operationArr[1];
-        let secondNumber = parseInt(operationArr[2]);
-        console.log(
-          "Operation of question ",
-          questionarieId,
-          quesitonId,
-          firstNumber,
-          operator,
-          secondNumber
-        );
-
-        Object.assign(questionaries[questionarieId]["questions"][quesitonId], {
-          num1: firstNumber,
-          num2: secondNumber,
-          type: operator,
-        });
-        // questionaries[questionarieId]["questions"][quesitonId]["num1"];
-        // questionaries[questionarieId]["questions"][quesitonId]["num2"];
-        // questionaries[questionarieId]["questions"][quesitonId]["type"];
-      });
-
-    // localStorage.setItem("questionaries", JSON.stringify(questionaries))
-    //const isPublishBtnClicked = true;
-    //let questionarieObj = appendDataToQuestionarie();
-    //refreshQuestionarieLocalStorage(questionarieObj);
-    //refreshQuestionarieList();
-    // window.location.href = "http://localhost:5500/admin.html";
+    console.log(questionaries[questionarieId].isQuestionariePublished);
+    Object.assign(questionaries[questionarieId], {
+      isQuestionariePublished: true});
+    localStorage.setItem("questionaries", JSON.stringify(questionaries));
+ 
   });
 
   $("#inputNumber").change(function () {
@@ -186,12 +157,12 @@ function initEvents() {
     console.log("Test Name in Submit Button", testName);
     
     //Check if the testname is already taken up then alert else make new questionarie and save to localstorage
-    let isTestNameAlreadyTaken = false;
-    isTestNameAlreadyTaken = checkQuestionaryName(testName);
-    console.log(isTestNameAlreadyTaken);
-    if(isTestNameAlreadyTaken){
-      alert("Questionarie with the given name already exist. Please change the name");
-    } else{   
+    // let isTestNameAlreadyTaken = false;
+    // isTestNameAlreadyTaken = checkQuestionaryName(testName);
+    // console.log(isTestNameAlreadyTaken);
+    // if(isTestNameAlreadyTaken){
+    //   alert("Questionarie with the given name already exist. Please change the name");
+    // } else{   
       let $inputs = $("#popup-form :input");
       let popupData = {};
       $inputs.each(function () {
@@ -234,7 +205,7 @@ function initEvents() {
       console.log("New Questionarie Key: ",newQuestionarieKey);
  
       let newQuestionariesObj = {[newQuestionarieKey] : {"name": testName, "questions":{"q-20230405-01" : {"ndigit" : popupData.ndigit, 
-      "num1": popupData.num1, "num2": popupData.num2, "type": popupData.type, "givenAns":"","correctAns": popupData.correctAns}}, dateQuestionarie:"",score:""}}
+      "num1": popupData.num1, "num2": popupData.num2, "type": popupData.type, "givenAns":"","correctAns": popupData.correctAns}}, dateQuestionarie:"",score:"",isQuestionariePublished:false}}
       //let newQuestionariesObj = {[newQuestionarieKey] : {"name": testName, "questions":{"q-20230405-01" : {}}}};
       console.log("New Questionarie", newQuestionariesObj);
     
@@ -246,7 +217,7 @@ function initEvents() {
     
       localStorage.setItem("questionaries", JSON.stringify(questionaries));
       }    
-    }
+   // }
   
   });
 
@@ -255,6 +226,7 @@ function initEvents() {
     let questionaries = JSON.parse(localStorage.getItem("questionaries"));
     console.log(testName);
     console.log("createQuestionaries: ", questionaries);
+    let isTestNameAvailable = false;
   
     for (const questionarieId in questionaries) {
       if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
@@ -264,10 +236,15 @@ function initEvents() {
         let inputTestName = testName.toLowerCase().replace(" ","");
         if (questionarieName == inputTestName) {
           console.log("testname already exists");
-          return true;
+          toastr.warning("Test with the given name already exist. Please change the name");
+          isTestNameAvailable = true;
+        } else {
+          //toastr.success("Test name is available");
+          console.log("Questionary name is available");
         }
       }
     }
+     return isTestNameAvailable;
   }
 
   $("button#pop-up-submit-save-btn").click(function (event) {
@@ -320,15 +297,19 @@ function initEvents() {
 
   $("input#new-questionarie-name").keyup(function () {
     console.log("Enabling plus button on input is executing");
-    testName = $(this).val();
+    let testName = $(this).val();
+    let isTestNameAlreadyTaken;
+    isTestNameAlreadyTaken = checkQuestionaryName(testName);
+    console.log("Tast name is taken or not: ",isTestNameAlreadyTaken);
    
     console.log("testname is : " + testName);
-    if ($(this).val().trim() != "") {
+    if ($(this).val().trim() != "" && (!isTestNameAlreadyTaken)) {
       console.log("not null");
       $("#add-new-questionarie-test-btn").prop("disabled", false);
-    } else {
+    } else { 
       $("#add-new-questionarie-test-btn").prop("disabled", true);
     }
+   
   });
 }
 
