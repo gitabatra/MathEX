@@ -1,5 +1,4 @@
 function initElements() {
-  //initLocalStorage();
   initQuestions();
 }
 
@@ -18,7 +17,7 @@ function refreshQuestionarieList() {
     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
       let questionarieObject = questionaries[questionarieId];
       //let hide_score_button = (('score' in questionarieObject)  &&(questionarieObject["score"] == "") ) ? "" : "hidden";
-      console.log(questionarieObject.isQuestionariePublished);
+      console.log("questionary object: ",questionarieObject,"published: ",questionarieObject["isQuestionariePublished"]);
       if (!(questionarieObject.isQuestionariePublished)) {
         console.log("Publish button is not clicked.........................");
       } else {
@@ -69,7 +68,7 @@ function refreshQuestionarieList() {
 
 //Appending questions to Questionarie by taking input from pop up
 
-function appendQuestionsToList(popupData) {
+function appendNewQuestionToList(popupData) {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
   let urlParams = new URLSearchParams(window.location.search);
   let questionarieId = urlParams.get("questionarie-id");
@@ -80,18 +79,18 @@ function appendQuestionsToList(popupData) {
     questionarieObject["questions"]
   );
   let qlength = Object.keys(questionarieObject["questions"]).length;
+  console.log("Question Length: ",qlength);
   console.log(
     "Question Keys",
     Object.keys(questionarieObject["questions"])[qlength - 1]
   );
-  console.log("Number of Questions in this list", qlength);
-  if (qlength > 0) {
-    qlength = Object.keys(questionarieObject["questions"])[qlength - 1].slice(
-      -1
-    );
-  }
 
-  //console.log("QLength --- : ", parseInt(qlength));
+  if(qlength>0){
+    qlength = Object.keys(questionarieObject["questions"])[qlength - 1].substring(12);
+  }
+  
+  console.log("Number of Questions in this list", qlength);
+  console.log("QLength --- : ", parseInt(qlength));
   let newQuestionKey = "q-20230405-0" + (parseInt(qlength) + 1);
   console.log("New Question Key: ", newQuestionKey);
   console.log(questionaries[questionarieId].questions);
@@ -99,18 +98,16 @@ function appendQuestionsToList(popupData) {
   questionarieObject["questions"][newQuestionKey] = popupData;
   console.log(questionarieObject["questions"][newQuestionKey]);
 
+  appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);
+
   Object.assign(questionaries[questionarieId], questionarieObject);
   console.log(questionaries[questionarieId]);
 
   localStorage.setItem("questionaries", JSON.stringify(questionaries));
-  //refreshQuestionsList();
-  window.location.href =
-    "./addQuestions.html?questionarie-id=" + questionarieId;
-  //location.reload(true);
 }
 
-//Refresh QuestionList
 
+//Refresh QuestionList
 function refreshQuestionsList() {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
   let urlParams = new URLSearchParams(window.location.search);
@@ -144,17 +141,11 @@ function refreshQuestionsList() {
         questionarieObject.questions[questionId].num2
       );
       let questionType = questionarieObject.questions[questionId].type;
-      //insertQuestionsForAdmin
-      const ques = firstNum + " " + questionType + " " + secondNum + " = ? ";
-      $("div#add-question-from-popupdata")
-        .append(`<div id="question-${questionId}" class="alignQuestions">
-        ${ques} 
-        
-        <a id="delete-question-link" href="#" key="${questionId}" class="text-dark"><i class="fas fa-trash-alt ms-5"></i></a>   
+      //insert Questions for Admin
+      appendQuestionForAdmin(questionId, questionType, firstNum, secondNum);
     
-      </div>`);
-
-      appendQuestions(
+      //insert Questions for Student
+      appendQuestionsForStudent(
         questionId,
         countQuestion,
         nDigits,
@@ -162,13 +153,26 @@ function refreshQuestionsList() {
         firstNum,
         secondNum
       );
+      }
       countQuestion = countQuestion + 1;
-    }
+   // }
   }
 }
 
-//Checking Questionarie for Student
+ //insert Questions for Admin
+function appendQuestionForAdmin(questionId, questionType, firstNum, secondNum){
+  const ques = firstNum + " " + questionType + " " + secondNum + " = ? ";
+  $("div#add-question-from-popupdata")
+    .append(`<div id="question-${questionId}" class="alignQuestions">
+    ${ques} 
+    
+    <a id="delete-question-link" href="#" key="${questionId}" class="text-dark"><i class="fas fa-trash-alt ms-5"></i></a>   
 
+  </div>`);
+}
+
+
+//Checking Questionarie for Student to prepare result
 function checkQuestionarie() {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
   let urlParams = new URLSearchParams(window.location.search);
@@ -293,7 +297,6 @@ function checkQuestionarie() {
 }
 
 //Score -Record
-
 function refreshScoreRecord() {
   let questionaries = JSON.parse(localStorage.getItem("questionaries"));
   let urlParams = new URLSearchParams(window.location.search);
@@ -394,8 +397,7 @@ function refreshScoreRecord() {
         " " +
         secondNum;
       console.log(question);
-      console.log("Given Answer: ", givenAnswer);
-      console.log("Correct Answer: ", correctAnswer);
+      console.log("Given Answer: ", givenAnswer,"Correct Answer: ", correctAnswer);
 
       $("div#score-accordion-body-" + `${questionarieId}`)
         .append(`<div class="row">
@@ -422,7 +424,7 @@ function refreshScoreRecord() {
 }
 
 // Append Questions to Student Questionarie
-function appendQuestions(
+function appendQuestionsForStudent(
   questionId,
   countQuestion,
   nDigits,
@@ -431,81 +433,10 @@ function appendQuestions(
   secondNum
 ) {
   console.log("Appending Questions...............");
-  let onesDigitFirstNum,
-    tensDigitFirstNum,
-    hundredDigitFirstNum,
-    thousandDigitFirstNum,
-    onesDigitSecondNum,
-    tensDigitSecondNum,
-    hundredDigitSecondNum,
-    thousandDigitSecondNum;
-
   let firstNumLength = firstNum.length;
   let secondNumLength = secondNum.length;
-
-  if (firstNumLength == 1) {
-    thousandDigitFirstNum = "";
-    hundredDigitFirstNum = "";
-    tensDigitFirstNum = "";
-    onesDigitFirstNum = firstNum[0];
-  } else if (firstNumLength == 2) {
-    thousandDigitFirstNum = "";
-    hundredDigitFirstNum = "";
-    tensDigitFirstNum = firstNum[0];
-    onesDigitFirstNum = firstNum[1];
-  } else if (firstNumLength == 3) {
-    thousandDigitFirstNum = "";
-    hundredDigitFirstNum = firstNum[0];
-    tensDigitFirstNum = firstNum[1];
-    onesDigitFirstNum = firstNum[2];
-  } else {
-    thousandDigitFirstNum = firstNum[0];
-    hundredDigitFirstNum = firstNum[1];
-    tensDigitFirstNum = firstNum[2];
-    onesDigitFirstNum = firstNum[3];
-  }
-  console.log(
-    "thousand: ",
-    thousandDigitFirstNum,
-    "hundred: ",
-    hundredDigitFirstNum,
-    "tens: ",
-    tensDigitFirstNum,
-    "ones: ",
-    onesDigitFirstNum
-  );
-
-  if (secondNumLength == 1) {
-    thousandDigitSecondNum = "";
-    hundredDigitSecondNum = "";
-    tensDigitSecondNum = "";
-    onesDigitSecondNum = secondNum[0];
-  } else if (secondNumLength == 2) {
-    thousandDigitSecondNum = "";
-    hundredDigitSecondNum = "";
-    tensDigitSecondNum = secondNum[0];
-    onesDigitSecondNum = secondNum[1];
-  } else if (secondNumLength == 3) {
-    thousandDigitSecondNum = "";
-    hundredDigitSecondNum = secondNum[0];
-    tensDigitSecondNum = secondNum[1];
-    onesDigitSecondNum = secondNum[2];
-  } else {
-    thousandDigitSecondNum = secondNum[0];
-    hundredDigitSecondNum = secondNum[1];
-    tensDigitSecondNum = secondNum[2];
-    onesDigitSecondNum = secondNum[3];
-  }
-  console.log(
-    "thousand: ",
-    thousandDigitSecondNum,
-    "hundred: ",
-    hundredDigitSecondNum,
-    "tens: ",
-    tensDigitSecondNum,
-    "ones: ",
-    onesDigitSecondNum
-  );
+  let firstNumber = getDigits(firstNumLength,firstNum);
+  let secondNumber = getDigits(secondNumLength,secondNum);
 
   $("div#questions-list").append(`
     <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
@@ -516,7 +447,6 @@ function appendQuestions(
                   <i  id="" class="fas fa-sm fa-slash draggable"></i>
                   <i  id="" class="fas fa-sm fa-slash draggable"></i>
                   <i  id="" class="fas fa-sm fa-slash draggable"></i>
-                  <span class="draggable"><input id="carry-input" type="text" class="inputBox"/></span>   
           </div>
 
           <div class="card-body">
@@ -541,17 +471,17 @@ function appendQuestions(
                 </tr>
                 <tr>
                   <td></td>
-                  <td class="text-center align-bottom">${thousandDigitFirstNum}</td>
-                  <td class="text-center align-bottom">${hundredDigitFirstNum}</td>
-                  <td class="text-center align-bottom">${tensDigitFirstNum}</td>
-                  <td class="text-center">${onesDigitFirstNum}</td>
+                  <td class="text-center align-bottom">${firstNumber.thousandDigit}</td>
+                  <td class="text-center align-bottom">${firstNumber.hundredDigit}</td>
+                  <td class="text-center align-bottom">${firstNumber.tensDigit}</td>
+                  <td class="text-center">${firstNumber.onesDigit}</td>
                 </tr>
                 <tr>
                   <td class="text-center align-bottom">${questionType}</td>
-                  <td class="text-center align-bottom">${thousandDigitSecondNum}</td>
-                  <td class="text-center align-bottom">${hundredDigitSecondNum}</td>
-                  <td class="text-center align-bottom">${tensDigitSecondNum}</td>
-                  <td class="text-center">${onesDigitSecondNum}</td>
+                  <td class="text-center align-bottom">${secondNumber.thousandDigit}</td>
+                  <td class="text-center align-bottom">${secondNumber.hundredDigit}</td>
+                  <td class="text-center align-bottom">${secondNumber.tensDigit}</td>
+                  <td class="text-center">${secondNumber.onesDigit}</td>
                 </tr>
                 <tr>
                 <tr>
@@ -582,6 +512,7 @@ function appendQuestions(
 
   $(".draggable").draggable({ cancel: null });
   $("div#borrow-subtraction").hide();
+  
   hideInputBoxForDigits(questionId, nDigits);
   
 
@@ -608,6 +539,28 @@ function appendQuestions(
   //     $("input#carry-input-ones-" + `${questionId}`).show();
   //   }
   // }
+}
+
+//Get Digits from input Number
+function getDigits(numberLength,number){
+  let numberObj = {thousandDigit:"", hundredDigit:"", tensDigit:"", onesDigit:""};
+
+  if (numberLength == 1) {
+    numberObj.onesDigit = number[0];
+  } else if (numberLength == 2) {
+    numberObj.tensDigit = number[0];
+    numberObj.onesDigit = number[1];
+  } else if (numberLength == 3) {
+    numberObj.hundredDigit = number[0];
+    numberObj.tensDigit = number[1];
+    numberObj.onesDigit = number[2];
+  } else {
+    numberObj.thousandDigit = number[0];
+    numberObj.hundredDigit = number[1];
+    numberObj.tensDigit = number[2];
+    numberObjonesDigit = number[3];
+  }
+  return (numberObj);
 }
 
 function hideInputBoxForDigits(questionId, nDigits) {
