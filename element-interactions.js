@@ -212,66 +212,36 @@ function checkQuestionarie() {
         questionarieObject.questions[questionId].correctAns
       );
       let inputAnswer = 0;
-      if (nDigits === 1) {
-        inputAnswer = parseInt(
-          $("#ones-digit-" + `${questionId}`)
-            .val()
-            .trim()
-        );
-        if (isNaN(inputAnswer) || inputAnswer == null) {
-          inputAnswer = "";
-        }
-        questionarieObject.questions[questionId].givenAns = inputAnswer;
-        console.log("Given Answer: ", inputAnswer);
-      } else if (nDigits === 2) {
         onesDigitAns = $("#ones-digit-" + `${questionId}`)
           .val()
           .trim();
+        console.log("One Digit: ",onesDigitAns);
+
         tensDigitAns = $("#tens-digit-" + `${questionId}`)
           .val()
           .trim();
-        inputAnswer = parseInt(tensDigitAns + onesDigitAns);
-        if (isNaN(inputAnswer) || inputAnswer == null) {
-          inputAnswer = "";
-        }
-        questionarieObject.questions[questionId].givenAns = inputAnswer;
-      } else if (nDigits === 3) {
-        onesDigitAns = $("#ones-digit-" + `${questionId}`)
-          .val()
-          .trim();
-        tensDigitAns = $("#tens-digit-" + `${questionId}`)
-          .val()
-          .trim();
+        console.log("Tens Digit: ",tensDigitAns);
+
         hundredDigitAns = $("#hundred-digit-" + `${questionId}`)
           .val()
           .trim();
-        inputAnswer = parseInt(hundredDigitAns + tensDigitAns + onesDigitAns);
-        console.log("Given Answer: ", inputAnswer);
-        if (isNaN(inputAnswer) || inputAnswer == null) {
-          inputAnswer = "";
-        }
-        questionarieObject.questions[questionId].givenAns = inputAnswer;
-      } else {
-        onesDigitAns = $("#ones-digit-" + `${questionId}`)
-          .val()
-          .trim();
-        tensDigitAns = $("#tens-digit-" + `${questionId}`)
-          .val()
-          .trim();
-        hundredDigitAns = $("#hundred-digit-" + `${questionId}`)
-          .val()
-          .trim();
+        console.log("Hundred Digit: ",hundredDigitAns);
+        
         thousandDigitAns = $("#thousand-digit-" + `${questionId}`)
           .val()
           .trim();
+        console.log("Thousand Digit: ",thousandDigitAns);
+
         inputAnswer = parseInt(
           thousandDigitAns + hundredDigitAns + tensDigitAns + onesDigitAns
         );
-        if (isNaN(inputAnswer) || inputAnswer == null) {
-          inputAnswer = "";
-        }
-        questionarieObject.questions[questionId].givenAns = inputAnswer;
+
+      if (isNaN(inputAnswer) || inputAnswer == null) {
+        inputAnswer = "";
       }
+      questionarieObject.questions[questionId].givenAns = inputAnswer;
+      console.log("Given Answer: ", inputAnswer);
+
       if (inputAnswer === correctAnswer) {
         correctCount = correctCount + 1;
         $("i#question-" + `${questionId}` + "-correct").show();
@@ -284,7 +254,6 @@ function checkQuestionarie() {
         givenAns: inputAnswer,
       });
 
-      //localStorage.setItem("questionaries", JSON.stringify(questionaries));
       console.log("Question: ", questionaries[questionarieId]);
     }
     console.log("Correct Questions: ", correctCount);
