@@ -98,6 +98,8 @@ function appendNewQuestionToList(popupData) {
   questionarieObject["questions"][newQuestionKey] = popupData;
   console.log(questionarieObject["questions"][newQuestionKey]);
 
+  console.log("PopUpData Number 1: ",popupData.num1,"Number 2: ", popupData.num2);
+
   appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);
 
   Object.assign(questionaries[questionarieId], questionarieObject);
@@ -134,13 +136,10 @@ function refreshQuestionsList() {
         questionarieObject.questions[questionId].ndigit
       );
       let nDigits = questionarieObject.questions[questionId].ndigit;
-      let firstNum = JSON.stringify(
-        questionarieObject.questions[questionId].num1
-      );
-      let secondNum = JSON.stringify(
-        questionarieObject.questions[questionId].num2
-      );
+      let firstNum = JSON.stringify(questionarieObject.questions[questionId].num1);
+      let secondNum = JSON.stringify(questionarieObject.questions[questionId].num2);
       let questionType = questionarieObject.questions[questionId].type;
+      console.log("First Number: ",firstNum,"Second Number: ",secondNum);
       //insert Questions for Admin
       appendQuestionForAdmin(questionId, questionType, firstNum, secondNum);
     
@@ -153,8 +152,9 @@ function refreshQuestionsList() {
         firstNum,
         secondNum
       );
-      }
       countQuestion = countQuestion + 1;
+      }
+      
    // }
   }
 }
@@ -162,6 +162,8 @@ function refreshQuestionsList() {
  //insert Questions for Admin
 function appendQuestionForAdmin(questionId, questionType, firstNum, secondNum){
   const ques = firstNum + " " + questionType + " " + secondNum + " = ? ";
+
+  console.log("Append Question for Admin------- : ",ques);
   $("div#add-question-from-popupdata")
     .append(`<div id="question-${questionId}" class="alignQuestions">
     ${ques} 
@@ -200,14 +202,14 @@ function checkQuestionarie() {
         "Number of Digits.... ",
         questionarieObject.questions[questionId].ndigit
       );
-      let nDigits = questionarieObject.questions[questionId].ndigit;
-      let firstNum = JSON.stringify(
-        questionarieObject.questions[questionId].num1
-      );
-      let secondNum = JSON.stringify(
-        questionarieObject.questions[questionId].num2
-      );
-      let questionType = questionarieObject.questions[questionId].type;
+      // let nDigits = questionarieObject.questions[questionId].ndigit;
+      // let firstNum = JSON.stringify(
+      //   questionarieObject.questions[questionId].num1
+      // );
+      // let secondNum = JSON.stringify(
+      //   questionarieObject.questions[questionId].num2
+      // );
+      // let questionType = questionarieObject.questions[questionId].type;
       let correctAnswer = parseInt(
         questionarieObject.questions[questionId].correctAns
       );
@@ -347,12 +349,8 @@ function refreshScoreRecord() {
         questionarieObject.questions[questionId].ndigit
       );
       let nDigits = questionarieObject.questions[questionId].ndigit;
-      let firstNum = JSON.stringify(
-        questionarieObject.questions[questionId].num1
-      );
-      let secondNum = JSON.stringify(
-        questionarieObject.questions[questionId].num2
-      );
+      let firstNum = questionarieObject.questions[questionId].num1;
+      let secondNum = questionarieObject.questions[questionId].num2;
       let questionType = questionarieObject.questions[questionId].type;
       let givenAnswer = questionarieObject.questions[questionId].givenAns;
       let correctAnswer = questionarieObject.questions[questionId].correctAns;
@@ -402,6 +400,8 @@ function appendQuestionsForStudent(
   secondNum
 ) {
   console.log("Appending Questions...............");
+  console.log("First No: ",firstNum,"type of first no: ",typeof(firstNum));
+
   let firstNumLength = firstNum.length;
   let secondNumLength = secondNum.length;
   let firstNumber = getDigits(firstNumLength,firstNum);

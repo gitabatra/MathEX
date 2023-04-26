@@ -20,16 +20,15 @@ function initEvents() {
   //   "questionarie-id"
   // );
   // let questionaries = JSON.parse(localStorage.getItem("questionaries"));
-  
+
   // Object.assign(questionaries[questionarieId], {
   //   isQuestionariePublished: false,
   // });
   // localStorage.setItem("questionaries", JSON.stringify(questionaries));
   // console.log("Edit Button Click -- Is Questionarie Piblished: ",questionaries[questionarieId].isQuestionariePublished);
-  
+
   //  // window.location.href = "http://localhost:5500/addQuestions.html";
   // });
-
 
   $(document).on("click", "button#delete-questionarie-btn", function () {
     console.log("Delete Questionarie button event is executing");
@@ -139,7 +138,7 @@ function initEvents() {
 
   $("button#pop-up-submit-btn").click(function (event) {
     console.log("PopUp Submit button on AddNewTest page is executing");
-    //event.preventDefault();
+  
     let testName = $("input#new-questionarie-name").val();
     console.log("Test Name in Submit Button", testName);
 
@@ -159,7 +158,7 @@ function initEvents() {
       if (qlength > 0) {
         qlength = Object.keys(questionaries)[qlength - 1].substring(13);
       }
-      
+
       console.log("QLength --- : ", parseInt(qlength));
       let newQuestionarieKey = "qs-20230405-0" + (parseInt(qlength) + 1);
       console.log("New Questionarie Key: ", newQuestionarieKey);
@@ -188,10 +187,10 @@ function initEvents() {
       Object.assign(questionaries, newQuestionariesObj);
       console.log(questionaries);
 
+      localStorage.setItem("questionaries", JSON.stringify(questionaries));
+
       window.location.href =
         "./addQuestions.html?questionarie-id=" + newQuestionarieKey;
-
-      localStorage.setItem("questionaries", JSON.stringify(questionaries));
     }
     // }
   });
@@ -253,13 +252,15 @@ function initEvents() {
         popupData["num1"].substr(popupData.ndigit),
         popupData["num2"].substr(popupData.ndigit)
       );
-      console.log("Type of Question", popupData["type"]);
-      if (popupData["type"] == "-") {
-        if (popupData["num1"] < popupData["num2"]) {
-          let number1 = popupData["num1"];
-          popupData["num1"] = parseInt(popupData["num2"]);
-          popupData["num2"] = parseInt(number1);
-        }
+
+      if (
+        parseInt(popupData["num1"]) < parseInt(popupData["num2"]) &&
+        popupData["type"] == "-"
+      ) {
+        console.log("Number 1 is smaller than number 2");
+        let number1 = parseInt(popupData["num1"]);
+        popupData["num1"] = parseInt(popupData["num2"]);
+        popupData["num2"] = number1;
       } else {
         popupData["num1"] = parseInt(popupData["num1"]);
         popupData["num2"] = parseInt(popupData["num2"]);
@@ -286,11 +287,9 @@ function initEvents() {
   $("button#pop-up-submit-save-btn").click(function (event) {
     console.log("Pop up Save Btn event is executing...");
     let popupData = fetchPopUpData(event);
-    //if(popupData!=null){
     console.log("PopupData : ", popupData);
     appendNewQuestionToList(popupData);
     $("#basicQuestionModal").modal("hide");
-    // }
   });
 
   $("input#student-questionarie-check-btn").click(function () {
