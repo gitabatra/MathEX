@@ -47,20 +47,21 @@
         <input
           type="button"
           id="student-questionarie-check-btn"
-          class="btn btn-dark"
+          class="btn btn-dark checkBtn"
           value="Check"
         />
         <input
           type="button"
           id="student-questionarie-finish-btn"
-          class="btn btn-dark"
+          class="btn btn-dark submitBtn"
           value="Finish"
+          disabled="true"
         />
       </div>
     </section>
     <section>
       <div class="bigHeading">
-        <h1>Test2 - 2-Digit Addition</h1>
+        <h1 id="add-heading-questionarie">Test</h1>
       </div>
 
       <div class="main">
@@ -73,19 +74,24 @@
         <input
           type="button"
           id="student-questionarie-check-btn"
-          class="btn btn-dark"
+          class="btn btn-dark checkBtn"
           value="Check"
         />
         <input
           type="button"
           id="student-questionarie-finish-btn"
-          class="btn btn-dark"
+          class="btn btn-dark submitBtn"
           value="Finish"
+          disabled="true"
         />
       </div>
     </section>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+    crossorigin="anonymous"></script>
 
     <script
       type="text/javascript"
@@ -105,20 +111,33 @@
           debug: false,
           newestOnTop: false,
           positionClass: "toast-top-right",
+          progressBar: true,
           onclick: null,
           fadeIn: 300,
-          fadeOut: 1000,
-          timeOut: 2000,
+          fadeOut: 3000,
+          timeOut: 3000,
           extendedTimeOut: 1000,
         };
         // show when page load
-        toastr.info("Page Loaded!");
+        toastr.info("Page Loaded");
+        
 
-        $("#submitBtn").click(function () {
+        $(".checkBtn").click(function () {
           // show when the button is clicked
-          toastr.info("Submitting content...");
+          toastr.info("Checking answers...");
           // Do logic
-          toastr.success("Submitted succesfully.");
+          console.log("Checking the Questionaries event is executing");
+         
+          toastr.success("Checked succesfully.");
+        });
+        $(".submitBtn").mouseenter(function () {
+          // show when the button is clicked
+          
+          toastr.warning("Please Check your Questions before Click on Finish!");
+          // Do logic
+          console.log("Checking the Questionaries event is executing");
+         
+          //toastr.success("Submitted succesfully.");
         });
       });
     </script>

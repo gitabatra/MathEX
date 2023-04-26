@@ -9,6 +9,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet"/>
 
     <link href="https://parsleyjs.org/src/parsley.css" rel="stylesheet"/>
+
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    rel="stylesheet"
+  />
     
     <!--Local Stylesheet-->
     <link rel="stylesheet" href="styles.css">
@@ -48,7 +53,7 @@
                     </div> 
                   </div>
                   <div class="col mt-3">
-                      <input type="button" id="addNewTestBtn" class="btn btn-dark addBtn" value="+" disabled="true" data-mdb-toggle="modal" data-mdb-target="#basicQuestionModal">
+                      <input type="button" id="add-new-questionarie-test-btn" class="btn btn-dark addBtn" value="+" disabled="true" data-mdb-toggle="modal" data-mdb-target="#basicQuestionModal">
                   </div>
               </div>  
               </div>
@@ -67,7 +72,7 @@
             <div class="modal-body">
               <!--Form-->
 
-              <form id="popup-form" action="./addQuestions.html" method="get" class="align-items-center" data-parsley-validate>
+              <form id="popup-form" action="" method="get" class="align-items-center" data-parsley-validate>
 
                 <div class="mb-4 row">
                     <label for="inputQuestion" class="col-sm-6 col-form-label">Select Question Type</label>
@@ -86,7 +91,7 @@
                  <div class="mb-3 row">
                     <label for="inputNumber" class="col-sm-6 col-form-label">Enter Number of Digits</label>
                     <div class="col-sm-6 ">
-                      <input type="number" class="form-control" id="inputNumber" name="ndigit" min="1" max="5" data-parsley-trigger="change" placeholder="Enter number of digits" required="">
+                      <input type="number" class="form-control" id="inputNumber" name="ndigit" min="1" max="4" data-parsley-trigger="change" placeholder="Enter number of digits" required="">
                     </div>
                   </div>
                 
@@ -116,12 +121,40 @@
         </div>
       </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+  integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+  crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
     <script type="text/javascript" src="https://parsleyjs.org/dist/parsley.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    ></script>
     <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="events.js"></script>
     <script type="text/javascript" src="element-interactions.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <script>
+        $(document).ready(function () {
+          $('#basicQuestionModal').draggable();
+     });
+     $(document).ready(function () {
+        toastr.options = {
+          debug: false,
+          newestOnTop: false,
+          positionClass: "toast-top-right",
+          progressBar: true,
+          onclick: null,
+          fadeIn: 300,
+          fadeOut: 3000,
+          timeOut: 3000,
+          extendedTimeOut: 1000,
+        };
+        // show when page load
+        toastr.info("You can create new Questionary by clicking on + button");
+      });
+    </script>
 
 </body>
 </html>
