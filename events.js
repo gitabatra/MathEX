@@ -73,10 +73,8 @@ function initEvents() {
 
   $("input#student-questionarie-finish-btn").click(function () {
     console.log("Finish Questionarie button event is executing");
-    let questionarieId = new URLSearchParams(window.location.search).get(
-      "questionarie-id"
-    );
-    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+    let questionarieId = getQuestionarieID();
+    let questionaries = getQuestionaries();
     console.log("questionarieid: ", questionaries[questionarieId]);
 
     let currentDate = new Date();
@@ -102,10 +100,8 @@ function initEvents() {
   $("input#publish-btn").click(function (event) {
     console.log(event.delegateTarget);
     console.log("Publish event is executing");
-    let questionarieId = new URLSearchParams(window.location.search).get(
-      "questionarie-id"
-    );
-    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+    let questionarieId = getQuestionarieID();
+    let questionaries = getQuestionaries();
     console.log(questionaries[questionarieId].isQuestionariePublished);
     Object.assign(questionaries[questionarieId], {
       isQuestionariePublished: true,

@@ -10,7 +10,7 @@ function initQuestions() {
 }
 
 function refreshQuestionarieList() {
-  let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+  let questionaries = getQuestionaries();
   console.log("createQuestionaries: ", questionaries);
 
   for (const questionarieId in questionaries) {
@@ -27,38 +27,10 @@ function refreshQuestionarieList() {
         );
         let hide_score_button =
           questionarieObject["score"] == "" ? "hidden" : "";
-        $("div#questionarie-list").append(`
-      <div id="questionarie-list-item-${questionarieId}" class="row">
-          <div id="questionarie-list-col-${questionarieId}" class="col">
-              <label><h2 class="px-4"> ${questionarieObject["name"]} </h2></label>
-              <a href="/studentQuestionary.html?questionarie-id=${questionarieId}">
-                <button id="open-questionarie-btn-${questionarieId}" class="btn btn-success px-4 mb-2">Go <i class="fas fa-angle-double-right"></i></button>   
-              </a>
-              <a ${hide_score_button} id="score-record-${questionarieId}" class="scoreCheckMsg" href="/score_record.html?questionarie-id=${questionarieId}">
-              <button id="open-score-questionarie-btn-${questionarieId}" class="btn btn-info px-4 mb-2 score-indicator">Scores <i class="fas fa-star"></i></button>   
-            </a>   
-            
-          </div>
-      </div>
-      `);
+        $("div#questionarie-list").append(questionarieListItem(questionarieId, questionarieObject["name"], hide_score_button));
     }
         $("div#questionarie-grid")
-          .append(`<div id="questionarie-grid-item-${questionarieId}" class="row">
-         <div class="col text-end">
-          <label><h2 class="px-4"> ${questionarieObject["name"]} </h2></label>
-        </div>
-         <div class="col text-start">
-          <a href="/score_record.html?questionarie-id=${questionarieId}">
-            <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
-          </a>
-          <a href="/addQuestions.html?questionarie-id=${questionarieId}">
-            <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
-          </a>
-          <a href="#" key="${questionarieId}">
-            <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
-          <a>
-         </div>
-         </div>`);
+          .append(questionarieListItemAdmin(questionarieId, questionarieObject["name"]));
      
     } else {
       console.log("The following Id not found", questionarieId);
@@ -69,9 +41,8 @@ function refreshQuestionarieList() {
 //Appending questions to Questionarie by taking input from pop up
 
 function appendNewQuestionToList(popupData) {
-  let questionaries = JSON.parse(localStorage.getItem("questionaries"));
-  let urlParams = new URLSearchParams(window.location.search);
-  let questionarieId = urlParams.get("questionarie-id");
+  let questionaries = getQuestionaries();
+  let questionarieId = getQuestionarieID();
   console.log("questionarieId", questionarieId);
   let questionarieObject = questionaries[questionarieId];
   console.log(
@@ -102,18 +73,19 @@ function appendNewQuestionToList(popupData) {
 
   appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);
 
-  Object.assign(questionaries[questionarieId], questionarieObject);
-  console.log(questionaries[questionarieId]);
+  setQuestionary(questionarieId, questionarieObject);
 
-  localStorage.setItem("questionaries", JSON.stringify(questionaries));
+  // Object.assign(questionaries[questionarieId], questionarieObject);
+  // console.log(questionaries[questionarieId]);
+
+  // localStorage.setItem("questionaries", JSON.stringify(questionaries));
 }
 
 
 //Refresh QuestionList
 function refreshQuestionsList() {
-  let questionaries = JSON.parse(localStorage.getItem("questionaries"));
-  let urlParams = new URLSearchParams(window.location.search);
-  let questionarieId = urlParams.get("questionarie-id");
+  let questionaries = getQuestionaries();
+  let questionarieId = getQuestionarieID();
   console.log("Rendering Questions for Questionarie: ", questionarieId);
   if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
     let questionarieObject = questionaries[questionarieId];
@@ -176,9 +148,8 @@ function appendQuestionForAdmin(questionId, questionType, firstNum, secondNum){
 
 //Checking Questionarie for Student to prepare result
 function checkQuestionarie() {
-  let questionaries = JSON.parse(localStorage.getItem("questionaries"));
-  let urlParams = new URLSearchParams(window.location.search);
-  let questionarieId = urlParams.get("questionarie-id");
+  let questionaries = getQuestionaries();
+  let questionarieId = getQuestionarieID();
   console.log("Checking Questions for Questionarie: ", questionarieId);
   if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
     let questionarieObject = questionaries[questionarieId];
@@ -269,9 +240,8 @@ function checkQuestionarie() {
 
 //Score -Record
 function refreshScoreRecord() {
-  let questionaries = JSON.parse(localStorage.getItem("questionaries"));
-  let urlParams = new URLSearchParams(window.location.search);
-  let questionarieId = urlParams.get("questionarie-id");
+  let questionaries = getQuestionaries();
+  let questionarieId = getQuestionarieID();
   console.log("Initializing score record for Questionarie: ", questionarieId);
   if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
     let questionarieObject = questionaries[questionarieId];
@@ -430,12 +400,12 @@ function appendQuestionsForStudent(
               <tbody>
                 <tr>
                   <td></td>
-                  <td class="text-end mx-0 px-0"><input id="carry-input-thousand-${questionId}" type="text" class="inputBox"/></td>
-                  <td class="text-end mx-0 px-0"><input id="carry-input-hundred-${questionId}" type="text" class="inputBox"/></td>
+                  <td class="text-end mx-0 px-0"><input id="carry-input-thousand-${questionId}" type="text" maxlength="1" class="inputBox" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></td>
+                  <td class="text-end mx-0 px-0"><input id="carry-input-hundred-${questionId}" type="text" maxlength="1" class="inputBox" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></td>
                   <td class="text-end mx-0 px-0">
-                  <input id="carry-input-tens-${questionId}" type="text" class="inputBox"/>
+                  <input id="carry-input-tens-${questionId}" type="text" maxlength="1" class="inputBox" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
                   </td>
-                  <td class="text-end mx-0 px-0"><input id="carry-input-ones-${questionId}" type="text" class="inputBox"/></td>
+                  <td class="text-end mx-0 px-0"><input id="carry-input-ones-${questionId}" type="text" maxlength="1" class="inputBox" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></td>
                   
                 </tr>
                 <tr>
@@ -456,16 +426,16 @@ function appendQuestionsForStudent(
                 <tr>
                   <td></td>
                   <td class="text-end mx-0 px-0">
-                  <input id="thousand-digit-${questionId}" class="inputBox" type="text" />
+                  <input id="thousand-digit-${questionId}" class="inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
                 </td>
                   <td class="text-end mx-0 px-0">
-                    <input id="hundred-digit-${questionId}" class="inputBox" type="text" />
+                    <input id="hundred-digit-${questionId}" class="inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
                   </td>
                   <td class="text-end mx-0 px-0">
-                    <input id="tens-digit-${questionId}" class="inputBox" type="text" />
+                    <input id="tens-digit-${questionId}" class="inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
                   </td>
                   <td class="mx-0 px-0">
-                    <input id="ones-digit-${questionId}" class="inputBox" type="text" />
+                    <input id="ones-digit-${questionId}" class="inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
                   </td>
                   </tr>
                 </tr>
@@ -527,8 +497,9 @@ function getDigits(numberLength,number){
     numberObj.thousandDigit = number[0];
     numberObj.hundredDigit = number[1];
     numberObj.tensDigit = number[2];
-    numberObjonesDigit = number[3];
+    numberObj.onesDigit = number[3];
   }
+  
   return (numberObj);
 }
 

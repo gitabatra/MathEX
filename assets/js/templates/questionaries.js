@@ -1,0 +1,32 @@
+function questionarieListItem(questionarieId, questionarieName, hideScoreButton) {
+    return `<div id="questionarie-list-item-${questionarieId}" class="row">
+        <div id="questionarie-list-col-${questionarieId}" class="col">
+            <label><h2 class="px-4"> ${questionarieName} </h2></label>
+            <a href="/studentQuestionary.html?questionarie-id=${questionarieId}">
+            <button id="open-questionarie-btn-${questionarieId}" class="btn btn-success px-4 mb-2">Go <i class="fas fa-angle-double-right"></i></button>   
+            </a>
+            <a ${hideScoreButton} id="score-record-${questionarieId}" class="scoreCheckMsg" href="/score_record.html?questionarie-id=${questionarieId}">
+            <button id="open-score-questionarie-btn-${questionarieId}" class="btn btn-info px-4 mb-2 score-indicator">Scores <i class="fas fa-star"></i></button>   
+        </a>   
+        </div>
+    </div>`
+}
+
+function questionarieListItemAdmin(questionarieId, questionarieName){
+    return `<div id="questionarie-grid-item-${questionarieId}" class="row">
+    <div class="col text-end">
+     <label><h2 class="px-4"> ${questionarieName} </h2></label>
+   </div>
+    <div class="col text-start">
+     <a href="/score_record.html?questionarie-id=${questionarieId}">
+       <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
+     </a>
+     <a href="/addQuestions.html?questionarie-id=${questionarieId}">
+       <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
+     </a>
+     <a href="#" key="${questionarieId}">
+       <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
+     <a>
+    </div>
+    </div>`
+}

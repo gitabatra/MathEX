@@ -5,6 +5,40 @@ function initLocalStorage(){
         return;
     }
     let questionaries = {
+            // "qs-20230405-01": {
+            //     name: "Test 1", 
+            //     questions: {
+            //         // "q-20230405-01": {ndigit:1, num1: 1, num2: 2,type: "+", givenAns: "", correctAns: 3},
+            //         // "q-20230405-02": {ndigit:1, num1: 6, num2: 8,type: "+", givenAns: "", correctAns: 14},
+            //         // "q-20230405-03": {ndigit:1, num1: 5, num2: 9,type: "+", givenAns: "", correctAns: 14},
+            //         // "q-20230405-04": {ndigit:1, num1: 7, num2: 6,type: "+", givenAns: "", correctAns: 13},
+            //         // "q-20230405-05": {ndigit:1, num1: 7, num2: 4,type: "+", givenAns: "", correctAns: 11}
+            //         "q-20230405-01": {ndigit:1, num1: 1, num2: 2,type: "+"},
+            //         "q-20230405-02": {ndigit:1, num1: 6, num2: 8,type: "+"},
+            //         "q-20230405-03": {ndigit:1, num1: 5, num2: 9,type: "+"},
+            //         "q-20230405-04": {ndigit:1, num1: 7, num2: 6,type: "+"},
+            //         "q-20230405-05": {ndigit:1, num1: 7, num2: 4,type: "+"}
+            //     },
+            //     dateQuestionarie: "",
+            //     score: "",
+            //     isQuestionariePublished: true,
+            //     scoreAttempts: {
+            //         "sa-20230405-1-qs-20230405-01" : {
+            //             "q-20230405-01": {ndigit:1, num1: 1, num2: 2,type: "+", givenAns: 5, correctAns: 3},
+            //             "q-20230405-02": {ndigit:1, num1: 6, num2: 8,type: "+", givenAns: 10, correctAns: 14},
+            //             "q-20230405-03": {ndigit:1, num1: 5, num2: 9,type: "+", givenAns: 10, correctAns: 14},
+            //             "q-20230405-04": {ndigit:1, num1: 7, num2: 6,type: "+", givenAns: 10, correctAns: 13},
+            //             "q-20230405-05": {ndigit:1, num1: 7, num2: 4,type: "+", givenAns: 10, correctAns: 11}
+            //         },
+            //         "sa-20230405-2-qs-20230405-01" : {
+            //             "q-20230405-01": {ndigit:1, num1: 1, num2: 2,type: "+", givenAns: 5, correctAns: 3},
+            //             "q-20230405-02": {ndigit:1, num1: 6, num2: 8,type: "+", givenAns: 10, correctAns: 14},
+            //             "q-20230405-03": {ndigit:1, num1: 5, num2: 9,type: "+", givenAns: 10, correctAns: 14},
+            //             "q-20230405-04": {ndigit:1, num1: 7, num2: 6,type: "+", givenAns: 10, correctAns: 13},
+            //             "q-20230405-05": {ndigit:1, num1: 7, num2: 4,type: "+", givenAns: 10, correctAns: 11}
+            //         },
+            //     }
+            // },
             "qs-20230405-01": {
                 name: "Test 1", 
                 questions: {
