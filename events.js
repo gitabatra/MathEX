@@ -1,35 +1,18 @@
 function initEvents() {
-  // $(document).on("click", "button#open-questionarie-btn", function () {
-  //   console.log("open-questionarie button event is executing");
-  //   window.location.href = "http://localhost:5500/studentQuestionary.html";
-  // });
 
-  // $(document).on("click", "button#open-score-record-btn", function () {
-  //   console.log("open score button event is executing");
-  //   window.location.href = "http://localhost:5500/score_record.html";
-  // });
-
+  //Open page to add new Questionarie
   $("button#add-new-questionarie-btn").click(function () {
     console.log("Add new Questionarie button event is executing");
     window.location.href = "http://localhost:5500/addNewTest.html";
   });
 
-  // $(document).on("click", "button#open-edit-questionarie-btn", function () {
-  //   console.log("Edit Questionarie button event is executing");
-  // let questionarieId = new URLSearchParams(window.location.search).get(
-  //   "questionarie-id"
-  // );
-  // let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+  //Open questionarie
+  $(document).on("click", "button#delete-questionarie-btn", function () {
+    console.log("Open Questionarie on pressing GO button event is executing");
 
-  // Object.assign(questionaries[questionarieId], {
-  //   isQuestionariePublished: false,
-  // });
-  // localStorage.setItem("questionaries", JSON.stringify(questionaries));
-  // console.log("Edit Button Click -- Is Questionarie Piblished: ",questionaries[questionarieId].isQuestionariePublished);
+  });
 
-  //  // window.location.href = "http://localhost:5500/addQuestions.html";
-  // });
-
+  //Delete questionarie
   $(document).on("click", "button#delete-questionarie-btn", function () {
     console.log("Delete Questionarie button event is executing");
     let questionaryKey = $(this).parent().attr("key");
@@ -43,11 +26,12 @@ function initEvents() {
     targetId.remove();
     console.log(targetId);
 
-    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+    let questionaries = getQuestionaries();
     delete questionaries[questionaryKey];
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
   });
 
+  //Delete Question from a Questionarie
   $(document).on("click", "a#delete-question-link", function () {
     console.log("Delete Question from List event is executing");
     let questionKey = $(this).attr("key");
@@ -61,21 +45,25 @@ function initEvents() {
     targetId.remove();
 
     //get questionarie from URL
-    let questionarieId = new URLSearchParams(window.location.search).get(
-      "questionarie-id"
-    );
-    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
+    let questionarieId = getQuestionarieID();
+    let questionaries = getQuestionaries();
     console.log(questionaries[questionarieId]["questions"][questionKey]);
 
     delete questionaries[questionarieId]["questions"][questionKey];
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
   });
 
+  //Student finish button 
   $("input#student-questionarie-finish-btn").click(function () {
     console.log("Finish Questionarie button event is executing");
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
-    console.log("questionarieid: ", questionaries[questionarieId]);
+    console.log("On finish btn:  ", questionaries[questionarieId]);
+    let questionarieObj = questionaries[questionarieId];
+    // console.log("On finish btn:  ", questionarieId, questionarieObj);
+    //Generate new AttemptID and new Score Record, save score record for latest attempt for the Questionarie.
+    let scoreAttemptID = "sa-20230405-1-"+questionarieId;
+    let scoreRecordObject = questionarieObj["scoreAttempts"][scoreAttemptID];
 
     let currentDate = new Date();
     const options = {
@@ -89,7 +77,7 @@ function initEvents() {
       currentDate.toLocaleDateString("en-US", options)
     );
 
-    Object.assign(questionaries[questionarieId], {
+    Object.assign(scoreRecordObject, {
       dateQuestionarie: currentDate.toLocaleDateString("en-US", options),
     });
 
@@ -97,6 +85,7 @@ function initEvents() {
     window.location.href = "http://localhost:5500/index.html";
   });
 
+  //Admin Publish Button
   $("input#publish-btn").click(function (event) {
     console.log(event.delegateTarget);
     console.log("Publish event is executing");
@@ -109,10 +98,9 @@ function initEvents() {
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
   });
 
+  //Pop up Client-side parsley Validation
   $("#inputNumber").change(function () {
     let inputDigit = parseInt($("#inputNumber").val());
-    console.log("input change");
-    console.log(inputDigit);
     $("#inputNumber1").attr("data-parsley-min", 1);
     $("#inputNumber2").attr("data-parsley-min", 1);
     if (inputDigit === 1) {
@@ -128,76 +116,35 @@ function initEvents() {
     } else if (inputDigit === 4) {
       $("#inputNumber1").attr("data-parsley-max", 9999);
       $("#inputNumber2").attr("data-parsley-max", 9999);
-      // }
     }
   });
 
   $("button#pop-up-submit-btn").click(function (event) {
     console.log("PopUp Submit button on AddNewTest page is executing");
-  
     let testName = $("input#new-questionarie-name").val();
-    console.log("Test Name in Submit Button", testName);
-
     let popupData = fetchPopUpData(event);
-    console.log("PopupData : ", popupData);
     if (popupData != null) {
       console.log("PopupData : ", popupData);
       let questionaries = JSON.parse(localStorage.getItem("questionaries"));
       let qlength = Object.keys(questionaries).length;
-
-      console.log(
-        "Object Keys",
-        Object.keys(questionaries),
-        "Length of Questionaries ",
-        qlength
-      );
       if (qlength > 0) {
         qlength = Object.keys(questionaries)[qlength - 1].substring(13);
       }
-
-      console.log("QLength --- : ", parseInt(qlength));
       let newQuestionarieKey = "qs-20230405-0" + (parseInt(qlength) + 1);
-      console.log("New Questionarie Key: ", newQuestionarieKey);
-
-      let newQuestionariesObj = {
-        [newQuestionarieKey]: {
-          name: testName,
-          questions: {
-            "q-20230405-01": {
-              ndigit: popupData.ndigit,
-              num1: popupData.num1,
-              num2: popupData.num2,
-              type: popupData.type,
-              givenAns: "",
-              correctAns: popupData.correctAns,
-            },
-          },
-          dateQuestionarie: "",
-          score: "",
-          isQuestionariePublished: false,
-        },
-      };
-      //let newQuestionariesObj = {[newQuestionarieKey] : {"name": testName, "questions":{"q-20230405-01" : {}}}};
+      newQuestionariesObj = createNewQuestionarie(newQuestionarieKey,testName,popupData);
       console.log("New Questionarie", newQuestionariesObj);
-
       Object.assign(questionaries, newQuestionariesObj);
       console.log(questionaries);
-
       localStorage.setItem("questionaries", JSON.stringify(questionaries));
-
       window.location.href =
         "./addQuestions.html?questionarie-id=" + newQuestionarieKey;
     }
-    // }
   });
 
   function checkQuestionaryName(testName) {
     console.log("Checking Questionarie name already exist or not");
     let questionaries = JSON.parse(localStorage.getItem("questionaries"));
-    console.log(testName);
-    console.log("createQuestionaries: ", questionaries);
     let isTestNameAvailable = false;
-
     for (const questionarieId in questionaries) {
       if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
         let questionarieObject = questionaries[questionarieId];
@@ -237,7 +184,7 @@ function initEvents() {
     ) {
       console.log("Pop up object data is not empty", popupData);
       event.preventDefault();
-      let correctAns = null;
+      //let correctAns = null;
       popupData["num1"] = popupData["num1"].replace(/[^0-9 ]/g, "");
       popupData["num2"] = popupData["num2"].replace(/[^0-9 ]/g, "");
       popupData["ndigit"] = popupData["ndigit"].replace(/[^0-9 ]/g, "");
@@ -262,20 +209,6 @@ function initEvents() {
         popupData["num2"] = parseInt(popupData["num2"]);
       }
       popupData["ndigit"] = parseInt(popupData["ndigit"]);
-
-      popupData["givenAns"] = "";
-      if (popupData["type"] === "+") {
-        correctAns = popupData["num1"] + popupData["num2"];
-      } else if (popupData["type"] === "-") {
-        correctAns = popupData["num1"] - popupData["num2"];
-      } else if (popupData["type"] === "x") {
-        correctAns = popupData["num1"] * popupData["num2"];
-      } else if (popupData["type"] === "/") {
-        correctAns = popupData["num1"] / popupData["num2"];
-      }
-      popupData["correctAns"] = correctAns;
-
-      console.log("PopupData : ", popupData);
       return popupData;
     }
   }
@@ -324,3 +257,4 @@ function onChange(obj) {
       break;
   }
 }
+

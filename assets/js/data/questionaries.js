@@ -15,3 +15,28 @@ function setQuestionary(id, newObject) {
     console.log(questionaries[id]);
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
 }
+
+// function getNewQuestionarieAttemptID(questionarieId){
+//     let questionaries = getQuestionaries();
+//     let questionarieObj = questionaries[questionarieId];
+//     let scoreAttemptObj = questionarieObj["scoreAttempts"];
+//     return(scoreAttemptObj)
+// }
+
+function createNewQuestionarie(newQuestionarieKey,testName,popupData){
+    let newQuestionariesObj = {
+        [newQuestionarieKey]: {
+          name: testName,
+          questions: {
+            "q-20230405-01": {
+              ndigit: popupData.ndigit,
+              num1: popupData.num1,
+              num2: popupData.num2,
+              type: popupData.type,
+            },
+          },
+          isQuestionariePublished: false,
+        },
+      };
+      return newQuestionariesObj;
+}
