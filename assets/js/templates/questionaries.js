@@ -80,14 +80,14 @@ function appendAttemptHeader(questionarieId,questionarieDate,score,attemptCount)
 }
 
 
-function appendScoreRecord(question,questionId,correctAnswer,givenAnswer){
+function appendScoreRecord(question,questionId,attemptCount,correctAnswer,givenAnswer){
   return `<div class="row">
   <div class="col-4">${question}</div>
   <div class="col-4 correctAns">Correct Answer - ${correctAnswer}</div>
   <div class="col-4 givenAns">
     Given Answer -  ${givenAnswer}
-    <i id="question-${questionId}-correct" class="fas fa-check text-success"></i>
-    <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger"></i>
+    <i id="question-${attemptCount}-${questionId}-correct" class="fas fa-check text-success"></i>
+    <i id="question-${attemptCount}-${questionId}-wrong" class="fas fa-xmark text-danger"></i>
   </div>
 </div>`
 }

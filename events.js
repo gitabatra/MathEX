@@ -1,5 +1,4 @@
 function initEvents() {
-
   //Open page to add new Questionarie
   $("button#add-new-questionarie-btn").click(function () {
     console.log("Add new Questionarie button event is executing");
@@ -58,30 +57,40 @@ function initEvents() {
     console.log("Finish Questionarie button event is executing");
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
-    console.log("On finish btn:  ", questionaries[questionarieId]);
-    let questionarieObj = questionaries[questionarieId];
-    let scoreAttemptID = createNewScoreAttemptID(questionarieId);
-    let scoreRecordObject = questionarieObj["scoreAttempts"][scoreAttemptID];
-    console.log("Score Record while clicking on Finish Button: ",scoreRecordObject);
-    let currentDate = new Date();
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-    };
-
-    console.log(currentDate.toLocaleDateString("en-US", options));
     $("#date-questionarie-attempt-" + questionarieId).text(
-      currentDate.toLocaleDateString("en-US", options)
+      getDateForQuestionarieAttempt()
     );
-
-    Object.assign(scoreRecordObject, {
-      dateQuestionarie: currentDate.toLocaleDateString("en-US", options)
-    });
-
-    localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    window.location.href = "http://localhost:5500/index.html";
+    if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
+      let questionarieObject = questionaries[questionarieId];
+      let scoreAttemptID = createNewScoreAttemptID(questionarieId);
+      let scoreRecordObject = createNewScoreAttemptObject(scoreAttemptID);
+      let totalQuestions = Object.keys(questionarieObject["questions"]).length;
+      let scoreRecordObj = getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions);
+      Object.assign(questionarieObject["scoreAttempts"],{[scoreAttemptID]: scoreRecordObj});
+      localStorage.setItem("questionaries", JSON.stringify(questionaries));
+      window.location.href = "http://localhost:5500/index.html";
+    }
   });
+
+  function getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions){
+    let correctCount = 0, inputAnswer = 0;
+    for (const questionId in questionarieObject["questions"]) {
+      let questionsObj = questionarieObject["questions"][questionId];
+      let correctAnswer = calculateAnswer(questionsObj.num1,questionsObj.num2,questionsObj.type);
+      inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+      console.log("Questions-- Input Answer: ",inputAnswer);
+      if (isNaN(inputAnswer) || inputAnswer == null) {
+        inputAnswer = "";
+      }
+      if(inputAnswer == correctAnswer){
+        correctCount = correctCount+1;
+      }
+      Object.assign(scoreRecordObject[scoreAttemptID]["questions"], { [questionId] :{num1 : questionsObj.num1, num2 : questionsObj.num2,ndigit: questionsObj.ndigit,type: questionsObj.type, 
+        givenAns: inputAnswer, correctAns: correctAnswer}});
+    }
+   Object.assign(scoreRecordObject[scoreAttemptID], { dateQuestionarie: getDateForQuestionarieAttempt(),score: correctCount + " / " + totalQuestions });
+  return(scoreRecordObject[scoreAttemptID]);
+  }
 
   //Admin Publish Button
   $("input#publish-btn").click(function (event) {
@@ -94,27 +103,6 @@ function initEvents() {
       isQuestionariePublished: true,
     });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-  });
-
-  //Pop up Client-side parsley Validation
-  $("#inputNumber").change(function () {
-    let inputDigit = parseInt($("#inputNumber").val());
-    $("#inputNumber1").attr("data-parsley-min", 1);
-    $("#inputNumber2").attr("data-parsley-min", 1);
-    if (inputDigit === 1) {
-      console.log("digit 1");
-      $("#inputNumber1").attr("data-parsley-max", 9);
-      $("#inputNumber2").attr("data-parsley-max", 9);
-    } else if (inputDigit === 2) {
-      $("#inputNumber1").attr("data-parsley-max", 99);
-      $("#inputNumber2").attr("data-parsley-max", 99);
-    } else if (inputDigit === 3) {
-      $("#inputNumber1").attr("data-parsley-max", 999);
-      $("#inputNumber2").attr("data-parsley-max", 999);
-    } else if (inputDigit === 4) {
-      $("#inputNumber1").attr("data-parsley-max", 9999);
-      $("#inputNumber2").attr("data-parsley-max", 9999);
-    }
   });
 
   $("button#pop-up-submit-btn").click(function (event) {
@@ -139,33 +127,6 @@ function initEvents() {
     }
   });
 
-  function checkQuestionaryName(testName) {
-    console.log("Checking Questionarie name already exist or not");
-    let questionaries = JSON.parse(localStorage.getItem("questionaries"));
-    let isTestNameAvailable = false;
-    for (const questionarieId in questionaries) {
-      if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
-        let questionarieObject = questionaries[questionarieId];
-        console.log(questionarieObject.name);
-        let questionarieName = questionarieObject["name"]
-          .toLowerCase()
-          .replace(" ", "");
-        let inputTestName = testName.toLowerCase().replace(" ", "");
-        if (questionarieName == inputTestName) {
-          console.log("testname already exists");
-          toastr.warning(
-            "Test with the given name already exist. Please change the name"
-          );
-          isTestNameAvailable = true;
-        } else {
-          //toastr.success("Test name is available");
-          console.log("Questionary name is available");
-        }
-      }
-    }
-    return isTestNameAvailable;
-  }
-
   function fetchPopUpData(event) {
     let $inputs = $("#popup-form :input");
     let popupData = {};
@@ -174,41 +135,7 @@ function initEvents() {
       console.log(popupData[this.name]);
       console.log(typeof popupData[this.name]);
     });
-
-    if (
-      popupData["ndigit"] != "" &&
-      popupData["num1"] != "" &&
-      popupData["num2"] != ""
-    ) {
-      console.log("Pop up object data is not empty", popupData);
-      event.preventDefault();
-      //let correctAns = null;
-      popupData["num1"] = popupData["num1"].replace(/[^0-9 ]/g, "");
-      popupData["num2"] = popupData["num2"].replace(/[^0-9 ]/g, "");
-      popupData["ndigit"] = popupData["ndigit"].replace(/[^0-9 ]/g, "");
-      popupData["num1"] = popupData["num1"].substr(0, popupData.ndigit);
-      popupData["num2"] = popupData["num2"].substr(0, popupData.ndigit);
-      console.log(
-        "Number 1 and Number 2 after validation: ",
-        popupData["num1"].substr(popupData.ndigit),
-        popupData["num2"].substr(popupData.ndigit)
-      );
-
-      if (
-        parseInt(popupData["num1"]) < parseInt(popupData["num2"]) &&
-        popupData["type"] == "-"
-      ) {
-        console.log("Number 1 is smaller than number 2");
-        let number1 = parseInt(popupData["num1"]);
-        popupData["num1"] = parseInt(popupData["num2"]);
-        popupData["num2"] = number1;
-      } else {
-        popupData["num1"] = parseInt(popupData["num1"]);
-        popupData["num2"] = parseInt(popupData["num2"]);
-      }
-      popupData["ndigit"] = parseInt(popupData["ndigit"]);
-      return popupData;
-    }
+   return ( validatePopUpData(popupData,event));
   }
 
   $("button#pop-up-submit-save-btn").click(function (event) {
