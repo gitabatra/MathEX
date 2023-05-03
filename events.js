@@ -60,11 +60,9 @@ function initEvents() {
     let questionaries = getQuestionaries();
     console.log("On finish btn:  ", questionaries[questionarieId]);
     let questionarieObj = questionaries[questionarieId];
-    // console.log("On finish btn:  ", questionarieId, questionarieObj);
-    //Generate new AttemptID and new Score Record, save score record for latest attempt for the Questionarie.
-    let scoreAttemptID = "sa-20230405-1-"+questionarieId;
+    let scoreAttemptID = createNewScoreAttemptID(questionarieId);
     let scoreRecordObject = questionarieObj["scoreAttempts"][scoreAttemptID];
-
+    console.log("Score Record while clicking on Finish Button: ",scoreRecordObject);
     let currentDate = new Date();
     const options = {
       weekday: "long",
@@ -78,7 +76,7 @@ function initEvents() {
     );
 
     Object.assign(scoreRecordObject, {
-      dateQuestionarie: currentDate.toLocaleDateString("en-US", options),
+      dateQuestionarie: currentDate.toLocaleDateString("en-US", options)
     });
 
     localStorage.setItem("questionaries", JSON.stringify(questionaries));

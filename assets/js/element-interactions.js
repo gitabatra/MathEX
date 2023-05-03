@@ -103,24 +103,26 @@ function checkQuestionarie() {
   console.log("Checking Questions for Questionarie: ", questionarieId);
   if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
     let questionarieObject = questionaries[questionarieId];
-    let scoreAttemptID = getNewQuestionarieAttemptID(questionarieId);
-    let scoreRecordObject = questionarieObject["scoreAttempts"][scoreAttemptID];
-    let totalQuestions = Object.keys(scoreRecordObject["questions"]).length;
+    console.log(questionarieObject);
+    let scoreAttemptID = createNewScoreAttemptID(questionarieId);
+    let scoreRecordObject = createNewScoreAttemptObject(scoreAttemptID);
+    console.log(scoreAttemptID,scoreRecordObject[scoreAttemptID]);
+    let totalQuestions = Object.keys(questionarieObject["questions"]).length;
     let correctCount = 0;
-    for (const questionId in scoreRecordObject["questions"]) {
-      let correctAnswer = parseInt(
-        scoreRecordObject.questions[questionId].correctAns
-      );
-      let inputAnswer = 0;
-     inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
-     console.log("Questions-- Input Answer: ",inputAnswer);
+    let inputAnswer = 0;
+    for (const questionId in questionarieObject["questions"]) {
+      let questionsObj = questionarieObject["questions"][questionId];
+      let correctAnswer = calculateAnswer(questionsObj.num1,questionsObj.num2,questionsObj.type);
+      inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+      console.log("Questions-- Input Answer: ",inputAnswer);
      
       if (isNaN(inputAnswer) || inputAnswer == null) {
         inputAnswer = "";
       }
       //questionarieObject.questions[questionId].givenAns = inputAnswer;
       console.log("Given Answer: ", inputAnswer);
-
+      console.log("correct Answer: ", correctAnswer);
+     
       if (inputAnswer === correctAnswer) {
         correctCount = correctCount + 1;
         $("i#question-" + `${questionId}` + "-correct").show();
@@ -129,16 +131,28 @@ function checkQuestionarie() {
         $("i#question-" + `${questionId}` + "-wrong").show();
         $("i#question-" + `${questionId}` + "-correct").hide();
       }
-      Object.assign(scoreRecordObject["questions"][questionId], {
-        givenAns: inputAnswer,
+     
+      Object.assign(scoreRecordObject[scoreAttemptID]["questions"], { [questionId] :{num1 : questionsObj.num1, num2 : questionsObj.num2,ndigit: questionsObj.ndigit,type: questionsObj.type, givenAns: inputAnswer, correctAns: correctAnswer}
       });
-
-      console.log("Questionarie Object: ", scoreRecordObject["questions"][questionId]);
+      
+      console.log("Questionarie Object: ", scoreRecordObject[scoreAttemptID]["questions"][questionId]);
+      //console.log("questions REcord JSON Onject", questionsRecordObj);
     }
+
+    console.log("Questionarie Object: ", scoreRecordObject[scoreAttemptID]);
     console.log("Correct Questions: ", correctCount);
-    Object.assign(scoreRecordObject, {
+    Object.assign(scoreRecordObject[scoreAttemptID], {
       score: correctCount + " / " + totalQuestions,
     });
+   
+   // let scoreObj = {[scoreAttemptID]: scoreRecordObject[scoreAttemptID]};
+   // console.log("----Score Obj---- ",scoreAttemptID,scoreObj);
+    console.log("Score Record Object----- ",scoreRecordObject[scoreAttemptID],questionarieObject);
+    Object.assign(questionarieObject["scoreAttempts"],{[scoreAttemptID]: scoreRecordObject[scoreAttemptID]});
+    
+ // }else{
+ //   console.log("Score Object is not defined");
+ // }
 
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
     console.log("Questionarie object after checking questions: ", questionaries);
@@ -154,12 +168,10 @@ function refreshScoreRecord() {
     let questionarieObject = questionaries[questionarieId];
     console.log(questionarieObject["scoreAttempts"]);
     $("div#questionarie-score-record").append( scoreRecord(questionarieId, questionarieObject["name"]));
-   // $("div#score-record-"+`${questionarieId}`).append(appendLastAttemptScore(questionarieId));
     let attemptCount = 1;
     for(const attemptId in questionarieObject["scoreAttempts"]){
       console.log("Score Record for Questionarie: ",questionarieId,"and score attemptId",attemptId);
       let scoreRecordObject = questionarieObject["scoreAttempts"][attemptId];
-      console.log("Score Record Object ",attemptId, scoreRecordObject);
       $("div#accordion-"+`${questionarieId}`).append(appendAttemptHeader(questionarieId,scoreRecordObject.dateQuestionarie,scoreRecordObject.score,attemptCount));
       let countQuestion = 1;
       for (const questionId in scoreRecordObject["questions"]) {
@@ -189,17 +201,6 @@ function refreshScoreRecord() {
       }
       attemptCount = attemptCount + 1;
     }
-    
-    
-    
-    //Check the length of scoreAttempts objects and loop through it to add multiple attempt
-
-   //then for each object display score record
-
-    //console.log("Questions for Questionarie: ", questionarieId, questionarieObject["questions"]);
-   //.dateQuestionarie, questionaries[questionarieId].score));
-    
-    
   }
 }
 
