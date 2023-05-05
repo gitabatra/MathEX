@@ -87,12 +87,26 @@ function appendQuestionForAdmin(questionId, questionType, firstNum, secondNum){
 
 //Appending Questions on Student Page
 function appendquestionForStudent(questionId,nDigits,countQuestion,questionType,firstNum,secondNum){
-  $("div#questions-list").append(appendMultiplicationQuestions(questionId,countQuestion,questionType,firstNum,secondNum));
-  let inputBoxID = $("input#given-answer-"+`${questionId}`);
-  if(nDigits == 1 || nDigits == 2){
-    inputBoxID.attr("class","inputBox");
-  } else if(nDigits == 3){
-    inputBoxID.attr("class","inputBox3digit");
+  console.log("Appending Questions for students......");
+  console.log("Second Number: ",secondNum,typeof(secondNum));
+  if(questionType == "+" || questionType == "-"){
+    //append addition and subtraction questions
+    console.log("Second Number: ",secondNum,typeof(secondNum));
+    appendAdditionSubtractionQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum);
+  } else if(questionType == "x"){
+    $("div#questions-list").append(appendMultiplicationQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum));
+    let inputBoxID = $("input#given-answer-"+`${questionId}`);
+    if(nDigits == 1 || nDigits == 2){
+      inputBoxID.attr("class","inputBox");
+    } else if(nDigits == 3){
+      inputBoxID.attr("class","inputBox3digit");
+    }
+  } else if(questionType == "/"){
+    //append division questions
+    console.log("Appending Division Questions");
+    $("div#questions-list").append(appendDivisionQuestions(questionId,countQuestion,firstNum,secondNum));
+  } else {
+    console.log("question type is not defined or selected");
   }
 }
 

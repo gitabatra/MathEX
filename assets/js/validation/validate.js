@@ -55,6 +55,8 @@ function calculateAnswer(firstNum,secondNum,type){
     }
 }
 
+
+
 function checkQuestionaryName(testName) {
     console.log("Checking Questionarie name already exist or not");
     let questionaries = JSON.parse(localStorage.getItem("questionaries"));
@@ -91,13 +93,36 @@ function checkQuestionarie() {
       for (const questionId in questionarieObject["questions"]) {
         let questionsObj = questionarieObject["questions"][questionId];
         let correctAnswer = calculateAnswer(questionsObj.num1,questionsObj.num2,questionsObj.type);
-        inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+        if(questionsObj.type == "+" || questionsObj.type == "-"){
+            inputAnswer = checkAnswerForAdditionSubtraction(questionId,questionsObj,correctAnswer);
+        } else if(questionsObj.type == "x"){
+            inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+        } else if(questionsObj.type == "/"){
+            //call function for division
+           // let inputAnswerObj = checkAnswerForDivision(questionId,questionsObj);
+        } else {
+            console.log("Question type is not defined");
+        }
+       
         if (isNaN(inputAnswer) || inputAnswer == null) {
           inputAnswer = "";
         }
         displayCorrectnessIndicator(questionId,inputAnswer,correctAnswer);
     }
   }
+  }
+
+
+  function checkAnswerForAdditionSubtraction(questionId,questionsObj,correctAnswer){
+    console.log("Checking given answer for Addition.....questionObject",questionsObj);
+    let answerLength = correctAnswer.toString().length;
+    console.log("Answer Length: ",answerLength);
+    let givenInput="";
+    for (let i=0; i<answerLength; i++){
+        givenInput = givenInput.concat($(`input#answer-box-${questionId}-${i}`).val().trim());
+    }
+    console.log("Given Input: ",givenInput);
+    return(parseInt(givenInput));
   }
 
   function displayCorrectnessIndicator(questionId,inputAnswer,correctAnswer){

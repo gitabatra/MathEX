@@ -77,7 +77,14 @@ function initEvents() {
     for (const questionId in questionarieObject["questions"]) {
       let questionsObj = questionarieObject["questions"][questionId];
       let correctAnswer = calculateAnswer(questionsObj.num1,questionsObj.num2,questionsObj.type);
-      inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+      if(questionsObj.type == "+" || questionsObj.type == "-"){
+         inputAnswer = checkAnswerForAdditionSubtraction(questionId,questionsObj,correctAnswer);
+      }else if(questionsObj.type == "x"){
+        inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+      } else if(questionsObj.type == "/"){
+        //call 
+      }
+      
       console.log("Questions-- Input Answer: ",inputAnswer);
       if (isNaN(inputAnswer) || inputAnswer == null) {
         inputAnswer = "";
