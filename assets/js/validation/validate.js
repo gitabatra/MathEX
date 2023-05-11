@@ -20,7 +20,9 @@
   });
 
 function validatePopUpData(popupData,event){
-    if (popupData["ndigit"] != "" && popupData["num1"] != "" && popupData["num2"] != "") {
+  console.log("Validating popup data.....");
+   
+      console.log("Validating popup data.....");
       event.preventDefault();
       popupData["num1"] = popupData["num1"].replace(/[^0-9 ]/g, "");
       popupData["num2"] = popupData["num2"].replace(/[^0-9 ]/g, "");
@@ -38,7 +40,7 @@ function validatePopUpData(popupData,event){
       }
       popupData["ndigit"] = parseInt(popupData["ndigit"]);
       return popupData;
-    }
+   
   }
 
 function calculateAnswer(firstNum,secondNum,type){
@@ -50,8 +52,13 @@ function calculateAnswer(firstNum,secondNum,type){
     }else if(type == "x"){
         return(parseInt(firstNum)*parseInt(secondNum));
     }else {
+        let correctAnsObj;
         console.log("Division....");
-        return(parseInt(firstNum)/parseInt(secondNum));
+        let quotient = parseInt(firstNum)/parseInt(secondNum);
+        let remainder = parseInt(firstNum)%parseInt(secondNum);
+        let correctAnswer = {"quotient": parseInt(quotient),"remainder":remainder};
+        console.log(correctAnswer);
+        return correctAnswer;
     }
 }
 
@@ -95,21 +102,32 @@ function checkQuestionarie() {
         let correctAnswer = calculateAnswer(questionsObj.num1,questionsObj.num2,questionsObj.type);
         if(questionsObj.type == "+" || questionsObj.type == "-"){
             inputAnswer = checkAnswerForAdditionSubtraction(questionId,questionsObj,correctAnswer);
+            inputAnswer = (isNaN(inputAnswer) || inputAnswer == null) ? "" : inputAnswer
         } else if(questionsObj.type == "x"){
-            inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+            // inputAnswer = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+            // inputAnswer = (isNaN(inputAnswer) || inputAnswer == null) ? "" : inputAnswer
+            inputAnswer = checkAnswerForMultiplication(questionId,questionsObj,correctAnswer);
         } else if(questionsObj.type == "/"){
             //call function for division
-           // let inputAnswerObj = checkAnswerForDivision(questionId,questionsObj);
+          inputAnswer = checkAnswerForDivision(questionId,questionsObj);
+          console.log("Given Answer For Division : ",inputAnswer);
         } else {
             console.log("Question type is not defined");
         }
-       
-        if (isNaN(inputAnswer) || inputAnswer == null) {
-          inputAnswer = "";
-        }
-        displayCorrectnessIndicator(questionId,inputAnswer,correctAnswer);
+        displayCorrectnessIndicator(questionId,inputAnswer,correctAnswer,questionsObj.type);
     }
   }
+  }
+
+  function checkAnswerForDivision(questionId,questionsObj){
+    console.log("Checking given answer for Division.....questionObject",questionsObj);
+    let divideAns = parseInt($("#given-answer-" + `${questionId}`).val().trim()); 
+    divideAns = (isNaN(divideAns) || divideAns == null) ? "" : divideAns
+    let remainder = parseInt($("#given-answer-remainder-" + `${questionId}`).val().trim());
+    remainder = (isNaN(remainder) || remainder == null) ? "" : remainder
+    let givenAnswer = {"quotient": divideAns,"remainder":remainder};
+    console.log("Given Answers for Division Question:",divideAns,remainder,givenAnswer);
+    return givenAnswer;
   }
 
 
@@ -125,12 +143,34 @@ function checkQuestionarie() {
     return(parseInt(givenInput));
   }
 
-  function displayCorrectnessIndicator(questionId,inputAnswer,correctAnswer){
-    if (inputAnswer === correctAnswer) {
-      $("i#question-" + `${questionId}` + "-correct").show();
-      $("i#question-" + `${questionId}` + "-wrong").hide();
+  function checkAnswerForMultiplication(questionId,questionsObj,correctAnswer){
+    console.log("Checking given answer for Multiplication.....questionObject",questionsObj);
+    let answerLength = correctAnswer.toString().length;
+    let givenInput = "";
+    for(let i=0; i<answerLength; i++){
+      givenInput = givenInput.concat($(`input#final-answer-box-${questionId}-${i}`).val().trim());
+    }
+    console.log("Given Input: ",givenInput);
+    return(parseInt(givenInput));
+  }
+
+  function displayCorrectnessIndicator(questionId,inputAnswer,correctAnswer,type){
+    console.log("While displaying correctness Indicator, inputAnswer and correctAnswer: ",inputAnswer,correctAnswer);
+    if(type == "/"){
+      if(inputAnswer.quotient == correctAnswer.quotient && inputAnswer.remainder == correctAnswer.remainder){
+        $("i#question-" + `${questionId}` + "-correct").show();
+        $("i#question-" + `${questionId}` + "-wrong").hide();
+      } else {
+        $("i#question-" + `${questionId}` + "-wrong").show();
+        $("i#question-" + `${questionId}` + "-correct").hide();
+      }
     } else {
-      $("i#question-" + `${questionId}` + "-wrong").show();
-      $("i#question-" + `${questionId}` + "-correct").hide();
+      if (inputAnswer === correctAnswer) {
+        $("i#question-" + `${questionId}` + "-correct").show();
+        $("i#question-" + `${questionId}` + "-wrong").hide();
+      } else {
+        $("i#question-" + `${questionId}` + "-wrong").show();
+        $("i#question-" + `${questionId}` + "-correct").hide();
+      }
     }
   }
