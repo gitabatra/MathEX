@@ -61,7 +61,7 @@ function appendAttemptHeader(questionarieId,questionarieDate,score,attemptCount)
   return `<div class="accordion-item">
   <h2 class="accordion-header" id="heading-${attemptCount}">
     <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#collapse-questionarie-score-${attemptCount}" aria-expanded="false" aria-controls="collapse-questionarie-score-${attemptCount}">
-      Last Attempt #${attemptCount}
+      Attempt #${attemptCount}
     </button>
   </h2>
   <div id="collapse-questionarie-score-${attemptCount}" class="accordion-collapse collapse" aria-labelledby="heading-${attemptCount}" data-mdb-parent="#accordion-${questionarieId}">
@@ -92,58 +92,6 @@ function appendScoreRecord(question,questionId,attemptCount,correctAnswer,givenA
 </div>`
 }
 
-// function appendMultiplicationQuestions(questionId,countQuestion,questionType,firstNum,secondNum){
-// return `<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
-// <div class="card text-center">
-//     <div class="card-header">Question ${countQuestion}</div>
-//     <div class="card-body">
-//         <div class="col">
-//             <div class="row mx-2">
-//               <div class="col-sm-4"> </div>
-//               <div class="col-sm-4 px-4 text-end">${firstNum}</div>
-//             </div>
-//             <div class="row mx-2">
-//               <div class="col-sm-4 text-end px-0">${questionType}</i></div>
-//               <div class="col-sm-4 px-4 text-end">${secondNum}</div>
-//             </div>
-//             <div class="row mx-2">
-//               <div class="col-sm-4"> </div>
-//               <div class="col-sm-4 px-1 text-end"><input id="given-answer-${questionId}" type="text" style="width:65px; text-align:center" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></div>
-//             </div>
-//         </div><br />
-//         <i id="question-${questionId}-correct" class="fas fa-check text-success correctness-indicator"></i>
-//         <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
-//     </div>
-//   </div>        
-// </div>`
-// }
-
-function appendMultiplicationQuestions(questionId,countQuestion,questionType,firstNum,secondNum){
-  return `<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
-  <div class="card text-center">
-      <div class="card-header">Question ${countQuestion}</div>
-      <div class="card-body">
-          <div class="col text-center">
-              <div class="row d-flex justify-content-center">
-                <div class="col-auto mx-1"> </div>
-                <div class="col-auto px-2 text-end numberBox">${firstNum}</div>
-              </div>
-              <div class="row d-flex justify-content-center">
-                <div class="col-auto text-end mx-0">${questionType}</div>
-                <div class="col-auto px-2 text-end numberBox">${secondNum}</div>
-              </div>
-              <div class="row d-flex justify-content-center">
-                <div class="col-auto mx-1"> </div>
-                <div class="col-auto px-0 text-end numberBox"><input id="given-answer-${questionId}" type="text" class="inputBox4digit" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></div>
-              </div>
-          </div><br />
-          <i id="question-${questionId}-correct" class="fas fa-check text-success correctness-indicator"></i>
-          <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
-      </div>
-    </div>        
-  </div>`
-  }
-
   function appendDivisionQuestions(questionId,countQuestion,firstNum,secondNum){
     return `<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
     <div class="card text-center">
@@ -155,14 +103,14 @@ function appendMultiplicationQuestions(questionId,countQuestion,questionType,fir
                 <div class="col-auto mx-0"><i class="fas fa-divide"></i></div>
                 <div class="col-auto mx-0">${secondNum}</div>
                 <div class="col-auto mx-0">=</div>
-                <div class="col-auto px-0 text-end numberBox"><input id="given-answer-${questionId}" type="text" class="inputBox" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></div>
+                <div class="col-auto px-0 text-end numberBox"><input id="given-answer-${questionId}" type="text" class="inputDivisionBox" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></div>
               </div>
               <br>
               <div class="row mx-2 d-flex justify-content-center"></div>
               <div class="row mx-2 d-flex justify-content-center">
                 <div class="col-auto text-end mx-0">Remainder</div>
                 <div class="col-auto mx-0 text-end numberBox">=</div>
-                <div class="col-auto px-0 text-end numberBox"><input id="given-answer-remainder-${questionId}" type="text" class="inputBox" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></div>
+                <div class="col-auto px-0 text-end numberBox"><input id="given-answer-remainder-${questionId}" type="text" class="inputRemainderBox" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></div>
               </div>
               
           </div><br />

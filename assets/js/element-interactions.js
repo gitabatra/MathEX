@@ -7,6 +7,7 @@ function initQuestions() {
   refreshQuestionsList();
   refreshScoreRecord();
   $("i.correctness-indicator").hide();
+  $("input#hide-publish-btn").hide();
 }
 
 function refreshQuestionarieList() {
@@ -15,7 +16,6 @@ function refreshQuestionarieList() {
   for (const questionarieId in questionaries) {
     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
       let questionarieObject = questionaries[questionarieId];
-      //let hide_score_button = (('score' in questionarieObject)  &&(questionarieObject["score"] == "") ) ? "" : "hidden";
       console.log("questionary object: ",questionarieObject,"published: ",questionarieObject["isQuestionariePublished"]);
       if (!(questionarieObject.isQuestionariePublished)) {
         console.log("Publish button is not clicked.........................");
@@ -44,6 +44,7 @@ function appendNewQuestionToList(popupData) {
     qlength = Object.keys(questionarieObject["questions"])[qlength - 1].substring(12);
   }
   let newQuestionKey = "q-20230405-0" + (parseInt(qlength) + 1);
+  console.log("Pop up data while appending for Admin: ",popupData);
   questionarieObject["questions"][newQuestionKey] = popupData;
   console.log(questionarieObject["questions"][newQuestionKey]);
   appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);
@@ -92,15 +93,9 @@ function appendquestionForStudent(questionId,nDigits,countQuestion,questionType,
   if(questionType == "+" || questionType == "-"){
     //append addition and subtraction questions
     console.log("Second Number: ",secondNum,typeof(secondNum));
-    appendAdditionSubtractionQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum);
+    appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum);
   } else if(questionType == "x"){
-    $("div#questions-list").append(appendMultiplicationQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum));
-    let inputBoxID = $("input#given-answer-"+`${questionId}`);
-    if(nDigits == 1 || nDigits == 2){
-      inputBoxID.attr("class","inputBox");
-    } else if(nDigits == 3){
-      inputBoxID.attr("class","inputBox3digit");
-    }
+    appendMultiplicationQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum);
   } else if(questionType == "/"){
     //append division questions
     console.log("Appending Division Questions");
@@ -122,7 +117,7 @@ function refreshScoreRecord() {
     let attemptCount = 1;
     for(const attemptId in questionarieObject["scoreAttempts"]){
       let scoreRecordObject = questionarieObject["scoreAttempts"][attemptId];
-      $("div#accordion-"+`${questionarieId}`).append(appendAttemptHeader(questionarieId,scoreRecordObject.dateQuestionarie,scoreRecordObject.score,attemptCount));
+      $("div#accordion-"+`${questionarieId}`).prepend(appendAttemptHeader(questionarieId,scoreRecordObject.dateQuestionarie,scoreRecordObject.score,attemptCount));
       let countQuestion = 1;
       for (const questionId in scoreRecordObject["questions"]) {
         refreshScoreRecordAttempt(scoreRecordObject,attemptCount,questionId,countQuestion);
@@ -143,15 +138,35 @@ function refreshScoreRecordAttempt(scoreRecordObject,attemptCount,questionId,cou
   let question ="Q" + countQuestion + ". " +firstNum + " " + questionType + " " +secondNum;
   console.log(question);
   console.log("Given Answer: ", givenAnswer,"Correct Answer: ", correctAnswer);
+  if(questionType == "/"){
+    let givenInputAnswer = "Q : "+givenAnswer.quotient+" , R : "+givenAnswer.remainder;
+    let calcCorrectAnswer = "Q : "+correctAnswer.quotient+" , R : "+correctAnswer.remainder;
+    $("div#score-accordion-body-" + `${attemptCount}`)
+    .append(appendScoreRecord(question,questionId,attemptCount,calcCorrectAnswer,givenInputAnswer));
+    if(givenAnswer.quotient == correctAnswer.quotient && givenAnswer.remainder == correctAnswer.remainder){
+      displayCorrectSignOnScoreRecord(attemptCount,questionId);
+    } else {
+      displayWrongSignOnScoreRecord(attemptCount,questionId);
+    }
+  }else {
   $("div#score-accordion-body-" + `${attemptCount}`)
     .append(appendScoreRecord(question,questionId,attemptCount,correctAnswer,givenAnswer));
   if (givenAnswer === correctAnswer) {
     console.log("Score Record Check -- Question is Correct");
-    $("i#question-" + `${attemptCount}`+ "-" +`${questionId}` + "-correct").show();
-    $("i#question-" + `${attemptCount}`+ "-" +`${questionId}` + "-wrong").hide();
+    displayCorrectSignOnScoreRecord(attemptCount,questionId);
   } else {
     console.log("Score Record Check -- Question is Wrong");
-    $("i#question-" + `${attemptCount}`+ "-" +`${questionId}` + "-wrong").show();
-    $(`i#question-${attemptCount}-${questionId}-correct`).hide();
+    displayWrongSignOnScoreRecord(attemptCount,questionId);
   }
+  }
+}
+
+function displayCorrectSignOnScoreRecord(attemptCount,questionId){
+   $("i#question-" + `${attemptCount}`+ "-" +`${questionId}` + "-correct").show();
+  $("i#question-" + `${attemptCount}`+ "-" +`${questionId}` + "-wrong").hide();
+}
+
+function displayWrongSignOnScoreRecord(attemptCount,questionId){
+  $("i#question-" + `${attemptCount}`+ "-" +`${questionId}` + "-wrong").show();
+  $(`i#question-${attemptCount}-${questionId}-correct`).hide();
 }

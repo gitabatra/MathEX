@@ -57,6 +57,12 @@
   text-align: center;
 }
 
+.StudentNotification{
+  margin: 2% 1%;
+  text-align: center;
+  background-color: #FFCCBC;
+  padding: 5px;
+}
 
 .col {
   text-align: center;
@@ -126,31 +132,54 @@
 }
 
 .inputBox {
-  width:40px;
+  width:35px;
+  text-align:center;
+  background-color:#BBDEFB;
+  border:none;
+}
+.emptyBox{
+  width:33px;
   text-align:center;
 }
 
-.numberBox {
-  width:50px;
-}
-.inputBox3digit {
-  width:60px;
+.finalInputBox {
+  border:none;
+  width:35px;
   text-align:center;
+  background-color:#80CBC4;
 }
 
-.inputBox4digit {
-  width:70px;
-  text-align:center;
-}
 
 .inputBox:focus {
   outline: none;
 }
 
-.inputBoxMultiply{
-  width: 80px;
-  text-align: center;
+.finalInputBox:focus {
+  outline: none;
 }
+
+.inputDivisionBox {
+  width:60px;
+  text-align:center;
+  background-color:#90CAF9;
+  border:none;
+}
+
+.inputDivisionBox:focus {
+  outline: none;
+}
+
+.inputRemainderBox {
+  width:60px;
+  text-align:center;
+  background-color:#E1BEE7;
+  border:none;
+}
+
+.inputRemainderBox:focus {
+  outline: none;
+}
+
 .tableAlign {
   margin: 0 auto;
 }
