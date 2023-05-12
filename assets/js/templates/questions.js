@@ -1,162 +1,237 @@
-//  //insert Questions for Admin
-//  function appendQuestionForAdmin(questionId, questionType, firstNum, secondNum){
-//     const ques = firstNum + " " + questionType + " " + secondNum + " = ? ";
+
+function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum){
+  console.log("QuestionType: ",questionType);
+  console.log("second number type", secondNum,typeof(secondNum));
+  $("div#questions-list").append(appendQuestionsToStudentQuestionary(questionId,countQuestion,questionType));
+        appendFirstNumberInRow(questionId,firstNum,nDigits);
+        appendSecondNumberInRow(questionId,secondNum,nDigits);
+        appendInputBoxForAnswer(questionId,nDigits,firstNum,secondNum,questionType);   
+}
+
+function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionType){
+  return`<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
+  <div class="card text-center">
+    <div class="card-header">Question ${countQuestion}</div>
+    <div class="card-body">
+      <table class="tableAlign">
+        <tbody>
+          <tr id="first-number-${questionId}">
+          <td class="text-center align-bottom"></td>  
+          </tr>
+          <tr id="second-number-${questionId}"> 
+          <td class="text-center align-bottom">${questionType}</td>
+          </tr>
+          <tr id="answer-input-box-${questionId}">
+          
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <i id="question-${questionId}-correct" class="fas fa-check text-success correctness-indicator"></i>
+      <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
+    </div>
+  </div>
+</div>`
+}
   
-//     console.log("Append Question for Admin------- : ",ques);
-//     $("div#add-question-from-popupdata")
-//       .append(`<div id="question-${questionId}" class="alignQuestions">
-//       ${ques} 
+  function appendFirstNumberInRow(questionId,number,nDigits){
+    console.log("First Number--- No of Digits: ",nDigits);
+    console.log("first number type", typeof(number));
+    let firstNumLength = number.length;
+    console.log("Length of Second number: ", firstNumLength);
+    for (let i = 0; i< nDigits; i++){
+      if(firstNumLength == nDigits){
+        console.log("Length of first number is equal to number of Digits");
+        $("tr#first-number-"+`${questionId}`).append(`<td id="first-number-digit-${i}" class="text-center align-bottom">${number[i]}</td>`);
+      } else if(firstNumLength <nDigits){
+        console.log("Length of first number is less than the number of Digits");
+        let calcDifference = (nDigits - firstNumLength);
+        console.log("Difference in Length: ",calcDifference);
+        if(i<calcDifference){
+          console.log("i ",i,"is less than calcDifference",calcDifference);
+          $("tr#first-number-"+`${questionId}`).append(`<td id="first-number-digit-${i}" class="text-center align-bottom"></td>`);
+        }
+       else{
+        $("tr#first-number-"+`${questionId}`).append(`<td id="first-number-digit-${i}" class="text-center align-bottom">${number[i-calcDifference]}</td>`);
+       }
+      }
+    }
+  }
+  
+  function appendSecondNumberInRow(questionId,secondNumber,nDigits){
+    console.log("First Number--- No of Digits: ",nDigits);
+    console.log("Second number type", secondNumber, typeof(secondNumber.toString()));
+    let numLength = (secondNumber.length);
+    console.log("Length of Second number: ", numLength);
+    for (let i = 0; i< nDigits; i++){
+      if(numLength == nDigits){
+        $("tr#second-number-"+`${questionId}`).append(`<td id="second-number-digit-${i}" class="text-center align-bottom">${secondNumber[i]}</td>`);
+      } else if(numLength <nDigits){
+        let calcDifference = (nDigits - numLength);
+        console.log("Difference in Length: ",calcDifference);
+        if(i<calcDifference){
+          console.log("i ",i,"is less than calcDifference",calcDifference);
+          $("tr#second-number-"+`${questionId}`).append(`<td id="second-number-digit-${i}" class="text-center align-bottom"></td>`);
+        }
+        else {
+          console.log("Value of second Number at position: ",i, secondNumber[i-calcDifference]);
+          $("tr#second-number-"+`${questionId}`).append(`<td id="second-number-digit-${i}" class="text-center align-bottom">${secondNumber[i-calcDifference]}</td>`);
+        } 
+      }
+    }
+  }
+  
+  function appendInputBoxForAnswer(questionId,nDigits,firstNum,secondNum,questionType){
+    console.log("QuestionType: ",questionType);
+    let answer;
+    let maxInput;
+    if(questionType == "+"){
+      answer = parseInt(firstNum)+parseInt(secondNum);
+    } else if(questionType == "-"){
+      answer = parseInt(firstNum)-parseInt(secondNum);
+    }
+    let answerLength = answer.toString().length;
+    // if(answerLength == nDigits){
+    //   $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
+    // }
+    if(answerLength <= nDigits){
+      maxInput = nDigits;
+      $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
+    }
+    else {
+      maxInput = answerLength;
+    }
+    console.log("ADD / Subtract -- maximum input Boxes for answer ",maxInput);
+    for(let i=0; i<maxInput; i++){
+      console.log("AnswerLength: ",answerLength);
+     
+        console.log("AnswerLength is equal to number of Digits.");
+        $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom">
+        <input id="answer-box-${questionId}-${i}" class="no-outline finalInputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
+        </td>`); 
+    }
+  }
+
+  function appendMultiplicationQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum){
+    $("div#questions-list").append(appendMultiplicationQuestionsStudentQuestionary(questionId,countQuestion,questionType));
+    let answerLength = (parseInt(firstNum)*parseInt(secondNum)).toString().length;
+    console.log("Multiply Answer length: ",answerLength);
+    appendFirstNumberInRow(questionId,firstNum,answerLength);
+    appendSecondNumberInRow(questionId,secondNum,answerLength);
+     $("#answer-input-box-"+`${questionId}`).append(appendRowsForMultiplyAnswer(questionId,firstNum,secondNum));
+  }
+
+  function appendMultiplicationQuestionsStudentQuestionary(questionId,countQuestion,questionType,j){
+    return(`<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
+    <div class="card text-center">
+    <div class="card-header">Question ${countQuestion}</div>
+    <div class="card-body">
+      <table class="tableAlign">
+        <tbody id="multiplication-questionarie-table-${questionId}">
+          <tr id="first-number-${questionId}">
+            <td class="text-center align-bottom"></td>
+          </tr>  
+          <tr id="second-number-${questionId}"> 
+            <td class="text-center align-bottom">${questionType}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <i id="question-${questionId}-correct" class="fas fa-check text-success correctness-indicator"></i>
+      <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
+    </div>
+  </div>
+  </div>
+`)
+  }
+
+  function appendRowsForMultiplyAnswer(questionId,firstNum,secondNum){
+    console.log("InputBox for Multiplication.......");
+    console.log("First number and Second Number", firstNum, typeof(firstNum),secondNum, typeof(secondNum));
+    let secondNumLength = secondNum.length;
+    //let totalAnswerRows = secondNumLength+1;
+    console.log("second number, Length of Second Number: ",secondNum, secondNumLength);
+    let totalAnswerLength = ((parseInt(firstNum)*parseInt(secondNum)).toString().length);
+    let countX=0;
+    if(secondNumLength == 1){
+      $(`#multiplication-questionarie-table-${questionId}`).append(`<tr id="answer-input-box-final-${questionId}"><td class="text-center align-bottom"></td></tr>`);
+      displayFinalAnswerRow(questionId,totalAnswerLength);
+    }else {
+      for(let rowCount=0; rowCount<secondNumLength; rowCount++){
+        let secondNumDigit = secondNum[secondNumLength-(rowCount+1)];
+        console.log("Second number digit: ",secondNum[secondNumLength-(rowCount+1)]);
+        $(`#multiplication-questionarie-table-${questionId}`).append(`<tr id="answer-input-box-row-${questionId}-${rowCount}"><td class="text-center align-bottom"></td></tr>`);
+        appendAnswerRowForMultiplication(questionId,firstNum,secondNumDigit,rowCount,totalAnswerLength,countX);
+        countX = countX + 1;
+      }
+      $(`#multiplication-questionarie-table-${questionId}`).append(`<tr id="answer-input-box-final-${questionId}"><td class="text-center align-bottom"></td></tr>`);
+      displayFinalAnswerRow(questionId,totalAnswerLength);
+    }
+
+  }
+
+  function displayFinalAnswerRow(questionId,totalAnswerLength){
+    console.log("Total Length in Final box: ",totalAnswerLength);
+    for(let i=0; i<totalAnswerLength; i++){
+      $(`tr#answer-input-box-final-${questionId}`).append(` <td class="text-center align-bottom">
+      <input id="final-answer-box-${questionId}-${i}" class="finalInputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
+      </td>`)
+    }
+  }
+
+  function  appendAnswerRowForMultiplication(questionId,firstNum,secondNumDigit,rowCount,totalAnswerLength,countX){
+    let multiRowLength;
+    if(secondNumDigit == 0){
+      console.log("Second Number Digit : ", secondNumDigit, "Length of first number: ",firstNum.length);
+      multiRowLength = (firstNum.length);
+
+    } else{
+      let multiResult = parseInt(firstNum)*parseInt(secondNumDigit);
+      console.log("First number: ",firstNum,"second number digit: ",secondNumDigit);
+      multiRowLength = multiResult.toString().length;
+    }
+       
+        console.log("Length of calculated answer: ",multiRowLength, "TotalLength of Answer",totalAnswerLength);
+        let invlength = totalAnswerLength-multiRowLength;
+        console.log("Length of Invisible boxes: ",invlength);
+        for(let i=0; i<(invlength-countX); i++)
+        {
+          $(`#answer-input-box-row-${questionId}-${rowCount}`).append(`<td class="emptyBox"></td>`);
+        }
+        for(let j=invlength; j<(invlength+multiRowLength); j++){
+          displayAnswerRow(questionId,j,rowCount);
+        }
+        for(let l=0; l<countX; l++){
+          $(`#answer-input-box-row-${questionId}-${rowCount}`).append(`<td class="emptyBox">x</td>`);
+        }
+  }
+
+  function displayAnswerRow(questionId,count,rowCount){
+      $(`#answer-input-box-row-${questionId}-${rowCount}`).append(`
+     <td class="text-center align-bottom">
+      <input id="answer-box-${count}" class="inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
+      </td>`)
+  }
+
+  $(document).on("keyup", "input.finalInputBox", function (e) {
+  // $("").on('keyup', function() {
+    console.log("Keycode for pressed key : ", e.keyCode);
+    console.log("Key up..........",$(this).next().find('input'), "MaxLength: ",this.maxLength);
+    
+    //$(this).next().focus();
+    //if(e.which==8) {
+      if(e.keyCode == 8){
+        console.log("Backspace key is pressed");
+      } 
       
-//       <a id="delete-question-link" href="#" key="${questionId}" class="text-dark"><i class="fas fa-trash-alt ms-5"></i></a>   
-  
-//     </div>`);
-//   }
+      if (this.value.length == this.maxLength) {
+        $(this).parent().next().find('input').focus();
+      } 
+      if (this.value.length == 0) {
+        $(this).parent().prev().find('input').focus();
+      } 
+    //}
+  });
 
 
-// // Append Questions to Student Questionarie
-// function appendQuestionsForStudent(
-//     questionId,
-//     countQuestion,
-//     nDigits,
-//     questionType,
-//     firstNum,
-//     secondNum
-//   ) {
-//     //console.log("Appending Questions...............");
-//     //console.log("First No: ",firstNum,"type of first no: ",typeof(firstNum));
-//     let firstNumLength = firstNum.length;
-//     let secondNumLength = secondNum.length;
-//     let firstNumber = getDigits(firstNumLength,firstNum);
-//     let secondNumber = getDigits(secondNumLength,secondNum);
-//     if(questionType === "x"){
-//       $("div#questions-list").append(appendMultiplicationQuestions(questionId,countQuestion,firstNum,secondNum));
-//     }else if(questionType === "+" || questionType === "-")
-//     {  
-//     $("div#questions-list").append(`
-//       <div id="question-col-${questionId}" class="col-sm-6 col-md-4">
-//           <div class="card text-center">
-//             <div class="card-header">Question ${countQuestion}</div>
-//             <div class="card-body">
-//               <table class="tableAlign">
-//                 <tbody>
-//                   <tr id="first-number">
-//                    ${appendFirstNumberInRow(firstNumber)}
-//                   </tr>
-//                   <tr id="second-number"> 
-//                    ${appendSecondNumberInRow(secondNumber,questionType)}
-//                   </tr>
-//                   <tr id="answerInputBox">
-//                    ${appendInputBoxForAnswer(questionId)}
-//                   </tr>
-//                 </tbody>
-//               </table>
-//               <br />
-//               <i id="question-${questionId}-correct" class="fas fa-check text-success correctness-indicator"></i>
-//               <i id="question-${questionId}-wrong" class="fas fa-xmark text-danger correctness-indicator"></i>
-//             </div>
-//           </div>
-//       </div>
-//         `);
-//     }
-//     hideInputBoxForDigits(questionId, nDigits);
-//     $('#answerInputBox :input:enabled:visible:first').focus();
-//   }
-  
-//   function appendFirstNumberInRow(firstNumber){
-//    return(`<td></td>
-//     <td class="text-center align-bottom">${firstNumber.thousandDigit}</td>
-//     <td class="text-center align-bottom">${firstNumber.hundredDigit}</td>
-//     <td class="text-center align-bottom">${firstNumber.tensDigit}</td>
-//     <td class="text-center">${firstNumber.onesDigit}</td>`);
-//   }
-  
-//   function appendSecondNumberInRow(secondNumber,questionType){
-//     return(`<td class="text-center align-bottom">${questionType}</td>
-//     <td class="text-center align-bottom">${secondNumber.thousandDigit}</td>
-//     <td class="text-center align-bottom">${secondNumber.hundredDigit}</td>
-//     <td class="text-center align-bottom">${secondNumber.tensDigit}</td>
-//     <td class="text-center">${secondNumber.onesDigit}</td>`);
-//   }
-  
-//   function appendInputBoxForAnswer(questionId){
-//     return(` <td  class="text-end mx-0 "> <input id="digit-5-${questionId}" class="no-outline inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/></td>
-//     <td  class="text-end mx-0 px-0">
-//     <input id="digit-4-${questionId}" class="no-outline inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
-//   </td>
-//     <td class="text-end mx-0 px-0">
-//       <input id="digit-3-${questionId}" class="no-outline inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
-//     </td>
-//     <td  class="text-end mx-0 px-0">
-//       <input id="digit-2-${questionId}" class="no-outline inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
-//     </td>
-//     <td  class="mx-0 px-0">
-//       <input id="digit-1-${questionId}" class="no-outline inputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
-//     </td>`);
-//   }
-  
-//   //Get Digits from input Number
-//   function getDigits(numberLength,number){
-//     let numberObj = {thousandDigit:"", hundredDigit:"", tensDigit:"", onesDigit:""};
-  
-//     if (numberLength == 1) {
-//       numberObj.onesDigit = number[0];
-//     } else if (numberLength == 2) {
-//       numberObj.tensDigit = number[0];
-//       numberObj.onesDigit = number[1];
-//     } else if (numberLength == 3) {
-//       numberObj.hundredDigit = number[0];
-//       numberObj.tensDigit = number[1];
-//       numberObj.onesDigit = number[2];
-//     } else {
-//       numberObj.thousandDigit = number[0];
-//       numberObj.hundredDigit = number[1];
-//       numberObj.tensDigit = number[2];
-//       numberObj.onesDigit = number[3];
-//     }
-//     return (numberObj);
-//   }
-  
-//   function hideInputBoxForDigits(questionId, nDigits, answerLength) {
-//     console.log("Hiding input Box for each question is executing.......");
-//      $("input#digit-1-" + `${questionId}`).hide();
-//       $("input#digit-2-" + `${questionId}`).hide();
-//       $("input#digit-3-" + `${questionId}`).hide();
-//       $("input#digit-4-" + `${questionId}`).hide();
-//       $("input#digit-5-" + `${questionId}`).hide();
-//     if (nDigits == 1) {
-//       $("input#digit-1-" + `${questionId}`).show();
-//       $("input#digit-1-" + `${questionId}`).attr("maxlength",2);
-//     } else if (nDigits == 2) {
-//       $("input#digit-1-" + `${questionId}`).show();
-//       $("input#digit-2-" + `${questionId}`).show();
-//       $("input#digit-2-" + `${questionId}`).attr("maxlength",2);
-//     } else if (nDigits == 3) {
-//       $("input#digit-1-" + `${questionId}`).show();
-//       $("input#digit-2-" + `${questionId}`).show();
-//       $("input#digit-3-" + `${questionId}`).show();
-//      // $("input#digit-4-" + `${questionId}`).show();
-//      $("input#digit-3-" + `${questionId}`).attr("maxlength",2);
-//     } else {
-//       $("input#digit-1-" + `${questionId}`).show();
-//       $("input#digit-2-" + `${questionId}`).show();
-//       $("input#digit-3-" + `${questionId}`).show();
-//       $("input#digit-4-" + `${questionId}`).show();
-//       //$("input#digit-5-" + `${questionId}`).show();
-//       $("input#digit-4-" + `${questionId}`).attr("maxlength",2);
-//     }
-//   }
-  
-  // $(document).on("keyup", "input.inputBox", function (e) {
-  // // $("").on('keyup', function() {
-  //   console.log("Key up..........",$(this).next().find('input'), "MaxLength: ",this.maxLength);
-  //   //$(this).next().focus();
-  //   //if(e.which==8) {
-  //     if (this.value.length == this.maxLength) {
-  //       $(this).parent().next().find('input').focus();
-  //     } 
-  //     if (this.value.length == 0) {
-  //       $(this).parent().prev().find('input').focus();
-  //     } 
-  //   //}
-  // });
   

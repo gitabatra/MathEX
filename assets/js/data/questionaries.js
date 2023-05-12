@@ -17,4 +17,3 @@ function setQuestionary(id, newObject) {
 }
 
 
-
