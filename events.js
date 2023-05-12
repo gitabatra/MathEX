@@ -131,22 +131,6 @@ function initEvents() {
       isQuestionariePublished: true
     });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    $(this).hide();
-    $("input#hide-publish-btn").show();
-  });
-
-  $("input#hide-publish-btn").click(function (event) {
-    console.log(event.delegateTarget);
-    console.log("Publish event is executing");
-    let questionarieId = getQuestionarieID();
-    let questionaries = getQuestionaries();
-    console.log(questionaries[questionarieId].isQuestionariePublished);
-    // Object.assign(questionaries[questionarieId], {
-    //   isQuestionariePublished: true
-    // });
-    // localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    $(this).hide();
-    $("input#publish-btn").show();
   });
 
   $("button#pop-up-submit-btn").click(function (event) {

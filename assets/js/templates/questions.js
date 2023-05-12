@@ -22,6 +22,7 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
           <td class="text-center align-bottom">${questionType}</td>
           </tr>
           <tr id="answer-input-box-${questionId}">
+          
           </tr>
         </tbody>
       </table>
@@ -83,16 +84,25 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
   function appendInputBoxForAnswer(questionId,nDigits,firstNum,secondNum,questionType){
     console.log("QuestionType: ",questionType);
     let answer;
+    let maxInput;
     if(questionType == "+"){
       answer = parseInt(firstNum)+parseInt(secondNum);
     } else if(questionType == "-"){
       answer = parseInt(firstNum)-parseInt(secondNum);
     }
     let answerLength = answer.toString().length;
-    if(answerLength == nDigits){
+    // if(answerLength == nDigits){
+    //   $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
+    // }
+    if(answerLength <= nDigits){
+      maxInput = nDigits;
       $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
     }
-    for(let i=0; i<answerLength; i++){
+    else {
+      maxInput = answerLength;
+    }
+    console.log("ADD / Subtract -- maximum input Boxes for answer ",maxInput);
+    for(let i=0; i<maxInput; i++){
       console.log("AnswerLength: ",answerLength);
      
         console.log("AnswerLength is equal to number of Digits.");

@@ -20,9 +20,20 @@
 </head>
 <body id="student" class="gradient-custom">
     <header id="navigation-bar">
-     <nav class="navbar navbar-expand-lg navbar-dark">
+     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
-           <div class="collapse navbar-collapse" id="navbarText">
+          <button
+           class="navbar-toggler"
+           type="button"
+           data-mdb-toggle="collapse"
+           data-mdb-target="#navigation-nav-bar"
+           aria-controls="navigation-nav-bar"
+           aria-expanded="false"
+           aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+           <div class="collapse navbar-collapse" id="navigation-bar">
                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item px-2">
                          <a id="navbar-student-btn" class="nav-link active" aria-current="page" href="#" onclick="onChange(this)">Student</a>
@@ -36,9 +47,9 @@
     </nav>
     </header>
     <section id="testPapers">
-      <div class="StudentNotification">
+      <!-- <div class="StudentNotification">
         <h4 id="questionarie-update-notification">Test has been Updated.</h4>
-    </div> 
+    </div>  -->
             <div class="bigHeading">
                 <h1>List of Test Papers</h1>
             </div>
