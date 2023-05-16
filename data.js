@@ -26,7 +26,7 @@ function initLocalStorage(){
         },
         "u-20230405-02": {
             username: "Gita",
-            email: "gita@test.ca",
+            email: "anshi@test.ca",
             password: "12345",
             lastSession: {
                 day: 10,
@@ -76,8 +76,8 @@ function initLocalStorage(){
                     "q-20230405-01": {ndigit:2, num1: 37, num2: 6,type: "/"},
                     "q-20230405-02": {ndigit:2, num1: 46, num2: 5,type: "/"},
                     "q-20230405-03": {ndigit:2, num1: 50, num2: 10,type: "/"},
-                    "q-20230405-04": {ndigit:2, num1: 8, num2: 39,type: "/"},
-                    "q-20230405-05": {ndigit:2, num1: 17, num2: 84,type: "/"}                 
+                    "q-20230405-04": {ndigit:2, num1: 39, num2: 39,type: "/"},
+                    "q-20230405-05": {ndigit:2, num1: 84, num2: 17,type: "/"}                 
                 },
                 isQuestionariePublished: true,
                 scoreAttempts: {

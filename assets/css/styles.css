@@ -4,14 +4,14 @@
   background-color: #1572A1;
 }
 
-.active {
+/* .active {
   display: block;
   background: rgb(93,156,89);
   background: linear-gradient(137deg, rgba(93,156,89,1) 16%, rgba(233,0,100,1) 35%, rgba(21,114,161,1) 50%);
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-}
+} */
 
   #testPapers {
     margin: 2% 10%;
@@ -106,6 +106,17 @@
 
 .testPapers {
   margin: 5% auto;
+}
+
+.loginSection{
+  margin: 10% 10%;
+  padding: 2rem;
+}
+.formAlign {
+  margin: 0% 10%;
+  border: 2px solid #BDBDBD;
+  border-radius: 10px;
+  padding: 2rem;
 }
 
 .testPapers > .row  {
