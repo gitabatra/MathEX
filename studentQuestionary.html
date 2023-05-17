@@ -23,9 +23,9 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
 
   </head>
-  <body id="studentQuestionary">
+  <body class="gradient-custom">
     <header id="navigation-bar">
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
           <button
            class="navbar-toggler"
@@ -42,18 +42,18 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item px-2">
                 <a id="navbar-student-btn" class="nav-link" aria-current="page" href="#" onclick="onChange(this)"
-                  >Student</a
+                  ><i class="fas fa-user fa-sm"></i> Student</a
                 >
               </li>
               <li class="nav-item px-2">
-                <a id="navbar-admin-btn" class="nav-link active" href="#" onclick="onChange(this)">Admin</a>
+                <a id="navbar-admin-btn" class="nav-link active" href="#" onclick="onChange(this)"><i class="fas fa-user-gear fa-sm"></i> Admin</a>
               </li>
             </ul>
           </div>
           <div class="d-flex align-items-center">
             <!-- Icon -->
-            <a class="link-secondary me-3 text-white" id="navbar-logout-btn" href="#">
-              <i class="fas fa-power-off text-white"></i> Logout
+            <a class="link-secondary me-3" id="navbar-logout-btn" href="#">
+              <i class="fas fa-power-off"></i> Logout
             </a>
           </div>
         </div>
@@ -133,33 +133,28 @@
         toastr.options = {
           debug: false,
           newestOnTop: false,
-          positionClass: "toast-top-right",
-          progressBar: true,
+          positionClass: "toast-bottom-right",
+          progressBar: false,
           onclick: null,
           fadeIn: 300,
-          fadeOut: 3000,
-          timeOut: 3000,
+          fadeOut: 2000,
+          timeOut: 2000,
           extendedTimeOut: 1000,
         };
         // show when page load
-        toastr.info("Page Loaded");
+        toastr.info("Questionary Loaded");
         
 
         $(".checkBtn").click(function () {
           // show when the button is clicked
           toastr.info("Checking answers...");
-          // Do logic
           console.log("Checking the Questionaries event is executing");
-         
-          toastr.success("Checked succesfully.");
+          toastr.success("Checked succesfully!");
         });
         $(".submitBtn").mouseenter(function () {
           // show when the button is clicked
-          
-          toastr.warning("Please Check your Questions before Click on Finish!");
-          // Do logic
+          toastr.warning("Make sure you have attempted all Questions!!");
           console.log("Checking the Questionaries event is executing");
-         
           //toastr.success("Submitted succesfully.");
         });
       });

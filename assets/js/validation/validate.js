@@ -52,7 +52,7 @@ function calculateAnswer(firstNum,secondNum,type){
     }else if(type == "x"){
         return(parseInt(firstNum)*parseInt(secondNum));
     }else {
-        let correctAnsObj;
+        //let correctAnsObj;
         console.log("Division....");
         let quotient = parseInt(firstNum)/parseInt(secondNum);
         let remainder = parseInt(firstNum)%parseInt(secondNum);
@@ -133,7 +133,12 @@ function checkQuestionarie() {
 
   function checkAnswerForAdditionSubtraction(questionId,questionsObj,correctAnswer){
     console.log("Checking given answer for Addition.....questionObject",questionsObj);
+    
     let answerLength = correctAnswer.toString().length;
+    if(answerLength<questionsObj.ndigit){
+      answerLength = questionsObj.ndigit;
+      console.log("Length of answer digits: ",answerLength);
+    }
     console.log("Answer Length: ",answerLength);
     let givenInput="";
     for (let i=0; i<answerLength; i++){

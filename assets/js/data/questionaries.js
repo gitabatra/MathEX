@@ -16,4 +16,22 @@ function setQuestionary(id, newObject) {
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
 }
 
+function getRegisteredUsers(){
+    let users = JSON.parse(localStorage.getItem("users"));
+    return users;
+}
 
+function getUserID(){
+    let urlParams = new URLSearchParams(window.location.search);
+    let userId = urlParams.get("user-id");
+    return userId;
+}
+
+function setLoggedInUserId(userObj,userId){
+    userObj[userId].isLoggedIn = true;
+    Object.assign(userObj[userId], userObj[userId].isLoggedIn);
+    console.log(userObj[userId]);
+    localStorage.setItem("users", JSON.stringify(userObj));
+    //set userloginid in localstorage
+    localStorage.setItem("loggedInUserID", userId);
+}

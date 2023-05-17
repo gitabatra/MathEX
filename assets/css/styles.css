@@ -200,3 +200,10 @@
   margin:0px; 
   padding:0px;
 }
+
+/*custom position for toast notifications*/
+
+/* .toast-custom-position{
+  top: 80px;
+  right: 0px;
+} */

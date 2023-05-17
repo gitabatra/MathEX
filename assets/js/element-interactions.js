@@ -1,4 +1,12 @@
 function initElements() {
+  const isAdmin = isUserAdmin();
+  console.log("Admin or not: ",isAdmin);
+  if(!isAdmin){
+    $("a#navbar-admin-btn").hide();
+  }else {
+    $("a#navbar-admin-btn").show();
+  }
+ // checkUserLoggedIn();
   initQuestions();
 }
 
@@ -7,10 +15,38 @@ function initQuestions() {
   refreshQuestionsList();
   refreshScoreRecord();
   $("i.correctness-indicator").hide();
-  $("input#hide-publish-btn").hide();
 }
 
+// function checkUserLoggedIn(){
+//   let users = getRegisteredUsers();
+//   let userId = getUserID();
+  
+//   if(userId!=null ){
+//     $("a#navbar-admin-btn").hide();
+//     let isAdmin = users[userId].isAdmin;
+//     console.log("Logged in User id is : ",userId,"User is admin or not: ",isAdmin); //&& !isAdmin
+//    // initQuestions(userId);
+//   } 
+//   // else {
+//   //   window.location.href = "/login.html";
+//   // }
+// }
+  
+function isUserAdmin(){
+  if("loggedInUserID" in localStorage){
+    console.log("User is logged in....");
+    const loggedInUserId = localStorage.getItem("loggedInUserID");
+    console.log("Logged-in user Id: ",loggedInUserId);
+    const users = getRegisteredUsers();
+    const userObj = users[loggedInUserId];
+    console.log("Loggedin user Object: ",userObj,"Admin or not: ",userObj.isAdmin);
+    return (userObj.isAdmin);
+  }
+}
+
+
 function refreshQuestionarieList() {
+  //console.log("Refreshing questionaries : ", userId);
   let questionaries = getQuestionaries();
   console.log("createQuestionaries: ", questionaries);
   for (const questionarieId in questionaries) {
@@ -99,7 +135,9 @@ function appendquestionForStudent(questionId,nDigits,countQuestion,questionType,
   } else if(questionType == "/"){
     //append division questions
     console.log("Appending Division Questions");
-    $("div#questions-list").append(appendDivisionQuestions(questionId,countQuestion,firstNum,secondNum));
+    let correctAnswerObj = calculateAnswer(firstNum,secondNum,questionType);
+    console.log("Division Questions  before Appending: ",correctAnswerObj.quotient, typeof(correctAnswerObj["quotient"].toString().length));
+    $("div#questions-list").append(appendDivisionQuestions(questionId,countQuestion,firstNum,secondNum,correctAnswerObj));
   } else {
     console.log("question type is not defined or selected");
   }

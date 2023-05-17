@@ -71,3 +71,32 @@ function getDateForQuestionarieAttempt(){
 
    return(currentDate.toLocaleDateString("en-US", options));
 }
+
+
+
+function createNewUserRegistrationObject(newUserID,registrationData,sessionDate){
+  let newUserObject = {
+      [newUserID]: {
+        username: registrationData.username,
+        email: registrationData.email,
+        password: registrationData.password,
+        lastSession: {
+              day: sessionDate[0],
+              month: sessionDate[1],
+              year: sessionDate[2]
+            }, //"YYYY-MM-DD"
+            isAdmin: false,
+            isLoggedIn: true,
+      }
+    };
+    return newUserObject;
+}
+
+function getSessionDate(){
+  let currentDate = new Date();
+  let day = currentDate.getDate();
+  let month = (currentDate.getMonth()+1);
+  let year = currentDate.getFullYear();
+  console.log("Current date: day, month, year ---",[day,month,year]);
+  return ([day,month,year]);
+}
