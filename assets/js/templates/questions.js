@@ -213,13 +213,11 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
       </td>`)
   }
 
-  $(document).on("keyup", "input.finalInputBox", function (e) {
+  $(document).on("keyup", "input.finalInputBox, input.inputBox", function (e) {
   // $("").on('keyup', function() {
     console.log("Keycode for pressed key : ", e.keyCode);
     console.log("Key up..........",$(this).next().find('input'), "MaxLength: ",this.maxLength);
     
-    //$(this).next().focus();
-    //if(e.which==8) {
       if(e.keyCode == 8){
         console.log("Backspace key is pressed");
       } 

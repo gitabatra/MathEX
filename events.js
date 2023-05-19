@@ -212,7 +212,7 @@ function onChange(obj) {
 
 $("form#registration-form").on("submit", function(e){
   console.log("Registration form submit event is executing....");
-  e.preventDefault();
+  //e.preventDefault();
   let $inputs = $("#registration-form :input");
   console.log("Inputs: ",$inputs);
     let registrationData = {};
@@ -254,12 +254,13 @@ function registerNewUser(registrationData){
   localStorage.setItem("users", JSON.stringify(userObj));
   //set loggedinUserId to localstorage
   setLoggedInUserId(userObj,newUserId);
-  window.location.href = "/index.html";
+  $('#registration-form').attr('action', '/index.html');
+  //window.location.href = "/index.html";
 }
 
 $("form#login-form").on("submit", function(event) {
   console.log("Login submit event is executing...");
-  event.preventDefault();
+ // event.preventDefault();
   let $inputs = $("#login-form :input");
   console.log("Inputs: ",$inputs);
     let loginData = {};
@@ -299,7 +300,8 @@ function findLoginId(loginData){
         console.log("This email id is already registered");
         //set loggedIn to true
         setLoggedInUserId(userObj,userId);
-        window.location.href = "http://localhost:5500/index.html";
+        $('#login-form').attr('action', '/index.html');
+       // window.location.href = "http://localhost:5500/index.html";
          //window.location.href = "/index.html?user-id="+`${userId}`;
       } else{
         console.log("User is not registered");
