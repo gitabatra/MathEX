@@ -28,6 +28,7 @@ function getUserID(){
 }
 
 function setLoggedInUserId(userObj,userId){
+    console.log("set logged in user id: ",userId);
     userObj[userId].isLoggedIn = true;
     Object.assign(userObj[userId], userObj[userId].isLoggedIn);
     console.log(userObj[userId]);

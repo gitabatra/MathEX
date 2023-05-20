@@ -278,11 +278,11 @@ $("form#login-form").on("submit", function(event) {
   console.log("loginData data object is empty: ",isObjectEmpty);
   if (!isObjectEmpty){
     //check if email already exists then find login Id and save into the localstoarge
-      findLoginId(loginData);
+      findLoginId(loginData,event);
   }
 });
 
-function findLoginId(loginData){
+function findLoginId(loginData,event){
   console.log("Find logged in user event is executing...");
   let userObj = getRegisteredUsers();
   console.log("User Object in local Storage: ",userObj);
@@ -296,14 +296,21 @@ function findLoginId(loginData){
       let email = userObj[userId].email;
       let password = userObj[userId].password;
       console.log("userId : ",userId,"email: ",email,"password: ",password,"loginData: ",loginData);
-      if(loginData.email === email && loginData.password== password){
+      if(loginData.email === email && loginData.password === password){
         console.log("This email id is already registered");
         //set loggedIn to true
         setLoggedInUserId(userObj,userId);
-        $('#login-form').attr('action', '/index.html');
-       // window.location.href = "http://localhost:5500/index.html";
-         //window.location.href = "/index.html?user-id="+`${userId}`;
+        console.log("Admin is loggin in : ",userObj,userObj[userId].isAdmin);
+        if(userObj[userId].isAdmin){
+          window.location.href = "/admin.html";
+        } else {
+          window.location.href = "/index.html";
+        }
+       
+        // $('#login-form').attr('action', '/index.html');
+        // $('#login-form').submit();
       } else{
+        event.preventDefault();
         console.log("User is not registered");
         $("h2#login-status").text("Please register!!!");
       }
