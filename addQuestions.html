@@ -85,7 +85,7 @@
           <input
             type="button"
             id="add-new-question-btn"
-            class="btn btn-dark"
+            class="btn saveBtn"
             value="+"
             data-mdb-toggle="modal"
             data-mdb-target="#basicQuestionModal"
@@ -93,7 +93,7 @@
           <input
             type="button"
             id="publish-btn"
-            class="btn btn-dark publish-questionarie-msg"
+            class="btn btn-dark saveBtn"
             value="Publish"
           />
           
@@ -186,12 +186,12 @@
               </div>
 
               <div class="modal-footer">
-                <button id="pop-up-submit-save-btn" type="button" class="btn btn-dark">
+                <button id="pop-up-submit-save-btn" type="button" class="btn saveBtn">
                   Save
                 </button>
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  class="btn  btn-outline-dark"
                   data-mdb-dismiss="modal"
                 >
                   Cancel
@@ -245,8 +245,8 @@ $(document).ready(function () {
         toastr.options = {
           debug: false,
           newestOnTop: false,
-          positionClass: "toast-top-right",
-          progressBar: true,
+          positionClass: "toast-bottom-right",
+          progressBar: false,
           onclick: null,
           fadeIn: 300,
           fadeOut: 3000,

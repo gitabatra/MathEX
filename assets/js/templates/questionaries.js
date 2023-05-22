@@ -31,6 +31,10 @@ function questionarieListItemAdmin(questionarieId, questionarieName){
     </div>`
 }
 
+// function scoreAdminUserNames(username){
+//  return `<div id="user-name" class="row text-center"><h2>${username}</h2></div>`
+// }
+
 function scoreRecord(questionarieId, questionarieName){
   return `<div id="score-record-${questionarieId}" class="row gx-3 mt-3">
   <div class="col-sm-6 col-md-4">
@@ -66,6 +70,29 @@ function appendAttemptHeader(questionarieId,questionarieDate,score,attemptCount)
   </h2>
   <div id="collapse-questionarie-score-${attemptCount}" class="accordion-collapse collapse" aria-labelledby="heading-${attemptCount}" data-mdb-parent="#accordion-${questionarieId}">
     <div id="score-accordion-body-${attemptCount}" class="accordion-body">
+    <div class="d-flex justify-content-end">
+      <h5 id="date-questionarie-attempt-${attemptCount}" class="">${questionarieDate}</h5>
+      <h5 id="score-${attemptCount}" class="ms-5">Score - ${score}
+        <div class="progress">
+           <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </h5>
+    </div>
+  </div>
+</div>
+</div>`
+}
+
+
+function appendAttemptHeaderAdmin(questionarieId,username,questionarieDate,score,attemptCount){
+  return `<div class="accordion-item">
+  <h2 class="accordion-header" id="heading-${attemptCount}">
+    <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#collapse-questionarie-score-${questionarieId}-${attemptCount}" aria-expanded="false" aria-controls="collapse-questionarie-score-${attemptCount}">
+      <span class="userName">${username}</span> &nbsp;&nbsp;&nbsp;Attempt #${attemptCount}
+    </button>
+  </h2>
+  <div id="collapse-questionarie-score-${questionarieId}-${attemptCount}" class="accordion-collapse collapse" aria-labelledby="heading-${attemptCount}" data-mdb-parent="#accordion-${questionarieId}">
+    <div id="score-accordion-body-${questionarieId}-${attemptCount}" class="accordion-body">
     <div class="d-flex justify-content-end">
       <h5 id="date-questionarie-attempt-${attemptCount}" class="">${questionarieDate}</h5>
       <h5 id="score-${attemptCount}" class="ms-5">Score - ${score}

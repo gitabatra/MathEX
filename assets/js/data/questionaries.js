@@ -16,16 +16,22 @@ function setQuestionary(id, newObject) {
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
 }
 
+// function getScores(){
+//     let scores = JSON.parse(localStorage.getItem("scores"));
+//     console.log("Score Object in local storage: ",scores);
+//     return scores;
+// }
 function getRegisteredUsers(){
     let users = JSON.parse(localStorage.getItem("users"));
+    console.log("Users in local storage-----------------",users);
     return users;
 }
 
-function getUserID(){
-    let urlParams = new URLSearchParams(window.location.search);
-    let userId = urlParams.get("user-id");
-    return userId;
-}
+// function getUserID(){
+//     let urlParams = new URLSearchParams(window.location.search);
+//     let userId = urlParams.get("user-id");
+//     return userId;
+// }
 
 function setLoggedInUserId(userObj,userId){
     console.log("set logged in user id: ",userId);

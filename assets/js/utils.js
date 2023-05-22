@@ -16,33 +16,87 @@ function createNewQuestionarie(newQuestionarieKey,testName,popupData){
               type: popupData.type,
             },
           },
-          scoreAttempts: {},
+          // scoreAttempts: {},
           isQuestionariePublished: false,
         },
       };
       return newQuestionariesObj;
 }
 
-function createNewScoreAttemptID(questionarieId){
-    let currentDate = new Date();
-     let year = currentDate.getFullYear().toString();
-     let month = currentDate.getMonth().toString();
-     let day = currentDate.getDate().toString();
-     month = (month>9 ? "":"0")+month;
-     day = (day>9 ? "":"0")+day;
-     let dateString =  (year+month+day);
+// function createNewScoreAttemptID(questionarieId,loggedInUserId){
+//     console.log("Creating new Score attempt Id for user: ",loggedInUserId);
+//     let currentDate = new Date();
+//      let year = currentDate.getFullYear().toString();
+//      let month = currentDate.getMonth().toString();
+//      let day = currentDate.getDate().toString();
+//      month = (month>9 ? "":"0")+month;
+//      day = (day>9 ? "":"0")+day;
+//      let dateString =  (year+month+day);
 
-     let questionaries = getQuestionaries();
-     let questionarieObj = questionaries[questionarieId];
+//      let questionaries = getQuestionaries();
+//      let questionarieObj = questionaries[questionarieId];
+
+//     //  let keys =  Object.keys(questionarieObj["scoreAttempts"]);
+//     //  console.log("keys saved in scoreAttempts: ",keys)
     
-     let qlength = Object.keys(questionarieObj["scoreAttempts"]).length;
-     let attemptCount = qlength+1;
-     console.log("ScoreObject Attempts: ",questionarieObj["scoreAttempts"],"Qlength: ",qlength);
+//      let qlength = Object.keys(questionarieObj["scoreAttempts"]).length;
+//      let attemptCount = qlength+1;
+//      console.log("ScoreObject Attempts: ",questionarieObj["scoreAttempts"],"Qlength: ",qlength);
 
-     console.log("Current Date: ",dateString);
-     dateString = "sa-"+dateString+"-"+attemptCount+"-"+questionarieId;
-     console.log("New AttemptID :", dateString);
-     return (dateString);
+//      console.log("Current Date: ",dateString);
+//      dateString = questionarieId+"_"+loggedInUserId+"_"+"sa-"+dateString+"-"+attemptCount;
+//      console.log("New AttemptID :", dateString);
+//      return (dateString);
+// }
+
+function createNewScoreObject(scoreId){
+  console.log("Creating new score object...... ");
+  // let currentDate = getDateForQuestionaryAttempt();
+  // console.log("Date String: ",currentDate);
+  // let attemptId =  "sa-"+currentDate+"-1"+"_"+questionarieId+"_"+loggedInUserId;
+  //console.log("First Attempt ID: ",attemptId);
+  let newScoreObject = {
+     [scoreId] :{
+      "scoreAttempts" :{
+       
+      }
+      
+     }
+    };
+    console.log("New Score object: ",newScoreObject);
+    localStorage.setItem("scores", JSON.stringify(newScoreObject));
+    return newScoreObject;
+}
+
+function getDateForQuestionaryAttempt(){
+  let currentDate = new Date();
+  let year = currentDate.getFullYear().toString();
+  let month = currentDate.getMonth().toString();
+  let day = currentDate.getDate().toString();
+  month = (month>9 ? "":"0")+month;
+  day = (day>9 ? "":"0")+day;
+  let dateString =  (year+month+day);
+  return dateString;
+}
+
+function createNewScoreAttemptID(questionarieId,loggedInUserId){
+  console.log("Creating new Score attempt Id for user: ",loggedInUserId);
+  let currentDate = getDateForQuestionaryAttempt();
+  console.log("Date String: ",currentDate);
+   let scoreId = questionarieId+"_"+loggedInUserId;
+   let users = getRegisteredUsers();
+   let userId = localStorage.getItem("loggedInUserID");
+   console.log("users :----- : ",users, users[userId]);
+   let scoreObj = users[userId]["scores"];
+   console.log("Score object while creating new attemptID: ",scoreObj);
+  
+   let qlength = Object.keys(scoreObj[scoreId]["scoreAttempts"]).length;
+   let attemptCount = qlength+1;
+   //console.log("ScoreObject Attempts: ",questionarieObj["scoreAttempts"],"Qlength: ",qlength);
+
+   dateString = "sa-"+currentDate+"-"+attemptCount+"_"+questionarieId+"_"+loggedInUserId;
+   console.log("New AttemptID :", dateString);
+   return (dateString);
 }
 
 function createNewScoreAttemptObject(newAttemptID){
@@ -87,8 +141,19 @@ function createNewUserRegistrationObject(newUserID,registrationData,sessionDate)
             }, //"YYYY-MM-DD"
             isAdmin: false,
             isLoggedIn: true,
-      }
+            scores: {},
+            notifications: {
+                n1: {description: ""},
+                creationDate: {
+                    day: "",
+                    month: "",
+                    year: ""
+                } //"YYYY-MM
+            }
+      },
+      
     };
+    console.log("New Registered user: ",newUserObject);
     return newUserObject;
 }
 

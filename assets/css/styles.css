@@ -4,15 +4,6 @@
   background-color: #1572A1;
 }
 
-/* .active {
-  display: block;
-  background: rgb(93,156,89);
-  background: linear-gradient(137deg, rgba(93,156,89,1) 16%, rgba(233,0,100,1) 35%, rgba(21,114,161,1) 50%);
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-} */
-
   #testPapers {
     margin: 2% 10%;
   }
@@ -33,8 +24,33 @@
  .addTestBtn {
     float: right;
     font-size: large;
-    background-color: #1572A1;
+    background-color: #0C2D48;
+    color: #fff;
  }
+ .addTestBtn:hover, .addBtn:hover, .saveBtn:hover{
+  background: #1572A1;
+  color: #fff;
+}
+
+.addBtn {
+  font-size: 1.2rem;
+  width: 70px;
+  font-weight: bolder;
+  background-color: #0C2D48;
+  color: #fff;
+}
+
+.addBtn:disabled,
+.addBtn[disabled]{
+  background-color: #0C2D48;
+  color: #fff;
+  cursor: no-drop
+}
+
+.saveBtn{
+  background-color: #0C2D48;
+  color: #fff;
+}
 
 .gradient-custom {
   /* fallback for old browsers */
@@ -69,11 +85,7 @@
   justify-content: center;
 }
 
-.addBtn {
-  font-size: 1.2rem;
-  width: 70px;
-  font-weight: bolder;
-}
+
 
 .testNameBox{
   width: 50%;
@@ -84,12 +96,12 @@
   margin-left:6.5%;
 }
 
-.errorMsg {
+/* .errorMsg {
   color:rgb(205, 68, 68);
   font-size: small;
   margin-left: 0%;
   padding: 0;
-}
+} */
 
 
 #questionsList {
@@ -154,10 +166,10 @@
 }
 
 .finalInputBox {
-  border:none;
+  border:1px solid #0C2D48;
   width:35px;
   text-align:center;
-  background-color:#80CBC4;
+  background-color:#B1D4E0;
 }
 
 
@@ -201,6 +213,12 @@
   padding:0px;
 }
 
+.userName{
+  font-size: large;
+  font-weight: 400;
+  color: #1572A1;
+  text-decoration: underline;
+}
 /*custom position for toast notifications*/
 
 /* .toast-custom-position{

@@ -46,25 +46,137 @@ function initEvents() {
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
   });
 
-  //Student finish button 
+//  //Student finish button 
+//   $("input#student-questionarie-finish-btn").click(function () {
+//     console.log("Finish Questionarie button event is executing");
+//     let questionarieId = getQuestionarieID();
+//     let questionaries = getQuestionaries();
+//     $("#date-questionarie-attempt-" + questionarieId).text(
+//       getDateForQuestionarieAttempt()
+//     );
+//     let loggedInUserId = localStorage.getItem("loggedInUserID");
+//     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
+//       let questionarieObject = questionaries[questionarieId];
+//       let scoreAttemptID = createNewScoreAttemptID(questionarieId,loggedInUserId);
+//       let scoreRecordObject = createNewScoreAttemptObject(scoreAttemptID);
+//       let totalQuestions = Object.keys(questionarieObject["questions"]).length;
+//       let scoreRecordObj = getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions);
+//       Object.assign(questionarieObject["scoreAttempts"],{[scoreAttemptID]: scoreRecordObj});
+//       localStorage.setItem("questionaries", JSON.stringify(questionaries));
+//      // window.location.href = "http://localhost:5500/index.html";
+//     }
+//   });
+
+// function setScoreObject(id, newObject) {
+//   let users = getRegisteredUsers();
+//   Object.assign(users[id], newObject);
+//   console.log(users[id]);
+//   localStorage.setItem("users", JSON.stringify(users));
+// }
+
   $("input#student-questionarie-finish-btn").click(function () {
     console.log("Finish Questionarie button event is executing");
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
-    $("#date-questionarie-attempt-" + questionarieId).text(
-      getDateForQuestionarieAttempt()
-    );
+    let users = getRegisteredUsers();
+     //get logged in user ID
+    let loggedInUserId = localStorage.getItem("loggedInUserID");
+    let userObject = users[loggedInUserId];
+    console.log("user object of logged in user: ",userObject,"user: ",loggedInUserId);
+    console.log("user object of logged in user: ",userObject["scores"]);
+
+    let scoreRecordObject;
+    let scoreObjectId = questionarieId+"_"+loggedInUserId;
+    console.log("Logged in user id: ",loggedInUserId);
+   
+
     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
-      let questionarieObject = questionaries[questionarieId];
-      let scoreAttemptID = createNewScoreAttemptID(questionarieId);
-      let scoreRecordObject = createNewScoreAttemptObject(scoreAttemptID);
-      let totalQuestions = Object.keys(questionarieObject["questions"]).length;
-      let scoreRecordObj = getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions);
-      Object.assign(questionarieObject["scoreAttempts"],{[scoreAttemptID]: scoreRecordObj});
-      localStorage.setItem("questionaries", JSON.stringify(questionaries));
-      window.location.href = "http://localhost:5500/index.html";
+      if(typeof userObject["scores"][scoreObjectId] === 'undefined' || userObject["scores"][scoreObjectId]=== "null"){
+        Object.assign(userObject["scores"],{[scoreObjectId]: {"scoreAttempts":{}}});
+        localStorage.setItem("users", JSON.stringify(users));
+        console.log("Null object: ",userObject["scores"]);
+      }
+      console.log("User object: ",userObject["scores"][scoreObjectId]);
+            let questionarieObject = questionaries[questionarieId];
+            let scoreAttemptID = createNewScoreAttemptID(questionarieId,loggedInUserId);
+            let scoreRecordObject = createNewScoreAttemptObject(scoreAttemptID);
+            let totalQuestions = Object.keys(questionarieObject["questions"]).length;
+            let scoreRecordObj = getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions);
+            Object.assign(userObject["scores"][scoreObjectId]["scoreAttempts"],{[scoreAttemptID]: scoreRecordObj});
+            console.log("User object after assigning scores: ",userObject);
+            localStorage.setItem("users", JSON.stringify(users));
+            window.location.href = "/index.html";
     }
   });
+
+  // $("input#student-questionarie-finish-btn").click(function () {
+  //   console.log("Finish Questionarie button event is executing");
+  //   let questionarieId = getQuestionarieID();
+  //   let questionaries = getQuestionaries();
+  //    //get logged in user ID
+  //   let loggedInUserId = localStorage.getItem("loggedInUserID");
+  //   let scoreRecordObject;
+  //   let scoreObjectId = questionarieId+"_"+loggedInUserId;
+  //   console.log("Logged in user id: ",loggedInUserId);
+  //   // for (const questionarieId in questionaries) {
+       
+  //     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
+        
+  //     } else {
+  //       console.log("The following Id not found", questionarieId);
+  //     }
+  //   // }
+    
+  // });
+  
+
+
+
+  // function getScoreRecordObject(questionarieObject,scoreRecordObject,scoreAttemptID,totalQuestions){
+  //   console.log("Score record Object before getting data: ",scoreRecordObject);
+  //   let scoreAttemptObject, correctCount = 0, inputAnswer = 0;
+  //   for (const questionId in questionarieObject["questions"]) {
+  //     let questionsObj = questionarieObject["questions"][questionId];
+  //     let correctAnswer = calculateAnswer(questionsObj.num1,questionsObj.num2,questionsObj.type);
+  //     if(questionsObj.type == "/"){
+  //       //call 
+  //       let inputAnswerObj = checkAnswerForDivision(questionId,questionsObj);
+  //       //let quotient = inputAnswerObj.inputAnswer;
+  //       console.log("InputAnswerObject",inputAnswerObj);
+  //       if(inputAnswerObj.quotient == correctAnswer.quotient && inputAnswerObj.remainder == correctAnswer.remainder){
+  //         console.log("For Division, InputAnswer object is equal to CorrectAnswer Object", inputAnswerObj,correctAnswer);
+  //         correctCount = correctCount+1;
+  //       }
+  //       //scoreAttemptObject = createNewScoreAttemptDivision(questionsObj,scoreAttemptID,inputAnswerObj);
+  //       Object.assign(scoreRecordObject[scoreAttemptID]["questions"], { [questionId] :{num1 : questionsObj.num1, num2 : questionsObj.num2,ndigit: questionsObj.ndigit,type: questionsObj.type, 
+  //         givenAns: {"quotient":inputAnswerObj.quotient,"remainder":inputAnswerObj.remainder}, correctAns: {"quotient":correctAnswer.quotient,"remainder":correctAnswer.remainder}}});
+
+  //         console.log("********Score Object for Division:",scoreRecordObject);
+  //     }else{
+  //       if(questionsObj.type == "+" || questionsObj.type == "-"){
+  //         inputAnswer = checkAnswerForAdditionSubtraction(questionId,questionsObj,correctAnswer);
+  //      }else if(questionsObj.type == "x"){
+  //        inputAnswer = checkAnswerForMultiplication(questionId,questionsObj,correctAnswer); 
+  //      } 
+  //      console.log("Questions-- Input Answer: ",inputAnswer);
+  //      if (isNaN(inputAnswer) || inputAnswer == null) {
+  //        inputAnswer = "";
+  //      }
+  //      if(inputAnswer == correctAnswer){
+  //        correctCount = correctCount+1;
+  //      }
+  //     //  scoreAttemptObject = createNewScoreAttemptAddSubMulti(questionsObj,scoreAttemptID,inputAnswer,correctAnswer);
+  //     //  console.log("Score object on click of Finish: ",scoreAttemptObject);
+  //      Object.assign(scoreRecordObject[scoreAttemptID]["questions"], { [questionId] :{num1 : questionsObj.num1, num2 : questionsObj.num2,ndigit: questionsObj.ndigit,type: questionsObj.type, 
+  //        givenAns: inputAnswer, correctAns: correctAnswer}});
+
+  //        console.log("********Score Object for Add/Subtract/Multiply:",scoreRecordObject);
+  //     }
+      
+  //   }
+  //  Object.assign(scoreRecordObject[scoreAttemptID], { dateQuestionarie: getDateForQuestionarieAttempt(),score: correctCount + " / " + totalQuestions });
+  // return(scoreRecordObject[scoreAttemptID]);
+  // }
 
   function getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions){
     let correctCount = 0, inputAnswer = 0;
@@ -230,20 +342,22 @@ $("form#registration-form").on("submit", function(e){
     console.log("registration data object is empty or not: ",registrationData,"Data empty",isDataempty);
     if (!isObjectEmpty && isDataempty){
       //check if email already exists then 
-        registerNewUser(registrationData);
+        registerNewUser(registrationData,e);
     }
 })
 
-function registerNewUser(registrationData){
+function registerNewUser(registrationData,e){
   console.log("Register new user......");
   let userObj = getRegisteredUsers();
   console.log("User Object in local Storage: ",userObj);
+  //e.preventDefault();
 
   let ulength = Object.keys(userObj).length;
   if(ulength>0){
     ulength = Object.keys(userObj)[ulength - 1].substring(12);
   }
   let newUserId = "u-20230405-0" + (parseInt(ulength) + 1);
+  console.log("new user Id: ",newUserId);
   //session date
   let sessionDateObj = getSessionDate();
   console.log("New user Id: ",newUserId);
@@ -328,7 +442,13 @@ $("a#register-new-user").on("click", function(event){
 });
 
 $("a#navbar-logout-btn").on("click", function(event){
-  console.log("logout event is executing.....");
+  let users = getRegisteredUsers();
+  let userId =  localStorage.getItem("loggedInUserID");
+  console.log("logout event is executing for login Id.....",userId, users[userId].isLoggedIn);
+  Object.assign(users[userId], {
+    isLoggedIn: false
+  });
+  localStorage.setItem("users", JSON.stringify(users));
   //set userloginid to null localstorage
   localStorage.setItem("loggedInUserID",'null');
   console.log("logged in user id: ",localStorage.getItem("loggedInUserID"));
