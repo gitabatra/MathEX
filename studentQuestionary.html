@@ -23,9 +23,9 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
 
   </head>
-  <body id="studentQuestionary">
+  <body class="gradient-custom">
     <header id="navigation-bar">
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
           <button
            class="navbar-toggler"
@@ -42,13 +42,19 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item px-2">
                 <a id="navbar-student-btn" class="nav-link" aria-current="page" href="#" onclick="onChange(this)"
-                  >Student</a
+                  ><i class="fas fa-user fa-sm"></i> Student</a
                 >
               </li>
               <li class="nav-item px-2">
-                <a id="navbar-admin-btn" class="nav-link active" href="#" onclick="onChange(this)">Admin</a>
+                <a id="navbar-admin-btn" class="nav-link active" href="#" onclick="onChange(this)"><i class="fas fa-user-gear fa-sm"></i> Admin</a>
               </li>
             </ul>
+          </div>
+          <div class="d-flex align-items-center">
+            <!-- Icon -->
+            <a class="link-secondary me-3" id="navbar-logout-btn" href="#">
+              <i class="fas fa-power-off"></i> Logout
+            </a>
           </div>
         </div>
       </nav>
@@ -58,13 +64,13 @@
         <input
           type="button"
           id="student-questionarie-check-btn"
-          class="btn btn-dark checkBtn"
+          class="btn btn-dark checkBtn saveBtn"
           value="Check"
         />
         <input
           type="button"
           id="student-questionarie-finish-btn"
-          class="btn btn-dark submitBtn"
+          class="btn btn-dark submitBtn saveBtn"
           value="Finish"
           disabled="true"
         />
@@ -80,18 +86,18 @@
       </div>
     
     </section>
-    <section  class="buttonGroup">
+    <section  class="buttonGroup px-4">
       <div id="alignQuestions" class="col">
         <input
           type="button"
           id="student-questionarie-check-btn"
-          class="btn btn-dark checkBtn"
+          class="btn btn-dark checkBtn saveBtn"
           value="Check"
         />
         <input
           type="button"
           id="student-questionarie-finish-btn"
-          class="btn btn-dark submitBtn"
+          class="btn btn-dark submitBtn saveBtn"
           value="Finish"
           disabled="true"
         />
@@ -112,23 +118,24 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     ></script>
-    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="assets/js/data/data.js"></script>
     <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
+    <script type="text/javascript" src="assets/js/templates/scores.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
-    <!-- <script type="text/javascript" src="assets/js/validation/validate.js"></script> -->
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
     <script>
       $(document).ready(function () {
         toastr.options = {
           debug: false,
           newestOnTop: false,
-          positionClass: "toast-top-right",
-          progressBar: true,
+          positionClass: "toast-bottom-right",
+          preventDuplicates: true,
+          progressBar: false,
           onclick: null,
           fadeIn: 300,
           fadeOut: 3000,
@@ -136,24 +143,19 @@
           extendedTimeOut: 1000,
         };
         // show when page load
-        toastr.info("Page Loaded");
+        toastr.info("Questionary Loaded");
         
 
         $(".checkBtn").click(function () {
           // show when the button is clicked
           toastr.info("Checking answers...");
-          // Do logic
           console.log("Checking the Questionaries event is executing");
-         
-          toastr.success("Checked succesfully.");
+          toastr.success("Checked succesfully!");
         });
         $(".submitBtn").mouseenter(function () {
           // show when the button is clicked
-          
-          toastr.warning("Please Check your Questions before Click on Finish!");
-          // Do logic
+          toastr.warning("Make sure you have attempted all Questions!");
           console.log("Checking the Questionaries event is executing");
-         
           //toastr.success("Submitted succesfully.");
         });
       });

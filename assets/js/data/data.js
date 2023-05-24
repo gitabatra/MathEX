@@ -11,32 +11,54 @@ function initLocalStorage(){
     // user management page, list all users, edit their values 
     // user edit page
 
+
     let users = {
         "u-20230405-01": {
             username: "Gita",
             email: "gita@test.ca",
             password: "12345",
-            lastSession: {
+            lastSession: { 
                 day: 10,
                 month: 10,
                 year: 2020
             }, //"YYYY-MM-DD"
             isAdmin: true,
             isLoggedIn: true,
+            scores: {
+
+            },
+            notifications: {
+                n1: {description: ""},
+                creationDate: {
+                    day: 10,
+                    month: 10,
+                    year: 2020
+                } //"YYYY-MM
+            }
         },
         "u-20230405-02": {
-            username: "Gita",
-            email: "gita@test.ca",
+            username: "Anshi",
+            email: "anshi@test.ca",
             password: "12345",
             lastSession: {
                 day: 10,
                 month: 10,
                 year: 2020
-            }, //"YYYY-MM-DD"
+            }, 
             isAdmin: false,
             isLoggedIn: false,
+            scores: {},
+            notifications: {
+                n1: {description: ""},
+                creationDate: {
+                    day: 10,
+                    month: 10,
+                    year: 2020
+                } //"YYYY-MM
+            }
         }
     }
+    //let scores = {}
     let questionaries = {
             "qs-20230405-01": {
                 name: "Test 1", 
@@ -48,9 +70,7 @@ function initLocalStorage(){
                     "q-20230405-05": {ndigit:1, num1: 7, num2: 4,type: "+"}
                 },
                 isQuestionariePublished: true,
-                scoreAttempts: {
-                }
-                // ,
+                
                 // modifiedDate: {
                 //     day: 10,
                 //     month: 10,
@@ -66,9 +86,8 @@ function initLocalStorage(){
                     "q-20230405-04": {ndigit:2, num1: 41, num2: 36,type: "-"},
                     "q-20230405-05": {ndigit:2, num1: 27, num2: 4,type: "-"}                 
                 },
-                isQuestionariePublished: true,
-                scoreAttempts: {
-                }
+                isQuestionariePublished: true
+                
             },
             "qs-20230405-03": {
                 name: "Test 3", 
@@ -76,12 +95,11 @@ function initLocalStorage(){
                     "q-20230405-01": {ndigit:2, num1: 37, num2: 6,type: "/"},
                     "q-20230405-02": {ndigit:2, num1: 46, num2: 5,type: "/"},
                     "q-20230405-03": {ndigit:2, num1: 50, num2: 10,type: "/"},
-                    "q-20230405-04": {ndigit:2, num1: 8, num2: 39,type: "/"},
-                    "q-20230405-05": {ndigit:2, num1: 17, num2: 84,type: "/"}                 
+                    "q-20230405-04": {ndigit:2, num1: 39, num2: 39,type: "/"},
+                    "q-20230405-05": {ndigit:2, num1: 84, num2: 17,type: "/"}                 
                 },
-                isQuestionariePublished: true,
-                scoreAttempts: {
-                }
+                isQuestionariePublished: true
+                
             }
         };
     localStorage.setItem("questionaries", JSON.stringify(questionaries));

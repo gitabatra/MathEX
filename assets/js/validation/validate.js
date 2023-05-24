@@ -1,8 +1,9 @@
  //Pop up Client-side parsley Validation
  $("#inputNumber").change(function () {
     let inputDigit = parseInt($("#inputNumber").val());
-    $("#inputNumber1").attr("data-parsley-min", 1);
-    $("#inputNumber2").attr("data-parsley-min", 1);
+    console.log("Input Digit: ",inputDigit);
+    $("#inputNumber1").attr("data-parsley-min", 0);
+    $("#inputNumber2").attr("data-parsley-min", 0);
     if (inputDigit === 1) {
       console.log("digit 1");
       $("#inputNumber1").attr("data-parsley-max", 9);
@@ -14,6 +15,9 @@
       $("#inputNumber1").attr("data-parsley-max", 999);
       $("#inputNumber2").attr("data-parsley-max", 999);
     } else if (inputDigit === 4) {
+      $("#inputNumber1").attr("data-parsley-max", 9999);
+      $("#inputNumber2").attr("data-parsley-max", 9999);
+    } else {
       $("#inputNumber1").attr("data-parsley-max", 9999);
       $("#inputNumber2").attr("data-parsley-max", 9999);
     }
@@ -52,7 +56,7 @@ function calculateAnswer(firstNum,secondNum,type){
     }else if(type == "x"){
         return(parseInt(firstNum)*parseInt(secondNum));
     }else {
-        let correctAnsObj;
+        //let correctAnsObj;
         console.log("Division....");
         let quotient = parseInt(firstNum)/parseInt(secondNum);
         let remainder = parseInt(firstNum)%parseInt(secondNum);
@@ -133,7 +137,12 @@ function checkQuestionarie() {
 
   function checkAnswerForAdditionSubtraction(questionId,questionsObj,correctAnswer){
     console.log("Checking given answer for Addition.....questionObject",questionsObj);
+    
     let answerLength = correctAnswer.toString().length;
+    if(answerLength<questionsObj.ndigit){
+      answerLength = questionsObj.ndigit;
+      console.log("Length of answer digits: ",answerLength);
+    }
     console.log("Answer Length: ",answerLength);
     let givenInput="";
     for (let i=0; i<answerLength; i++){

@@ -5,19 +5,6 @@ function initEvents() {
     window.location.href = "http://localhost:5500/addNewTest.html";
   });
 
-  //Open questionarie
-  // $(document).on("click", "button#open-edit-questionarie-btn", function () {
-  //   console.log("Open Edit Questionarie event is executing....");
-  //   let questionarieId = getQuestionarieID();
-  //   let questionaries = getQuestionaries();
-  //   Object.assign(questionaries[questionarieId], {
-  //     isQuestionariePublished: false
-  //   });
-  //   console.log(questionaries[questionarieId].isQuestionariePublished);
-  //   localStorage.setItem("questionaries", JSON.stringify(questionaries));
-  //   refreshQuestionarieList();
-  // });
-
   //Delete questionarie
   $(document).on("click", "button#delete-questionarie-btn", function () {
     console.log("Delete Questionarie button event is executing");
@@ -59,23 +46,38 @@ function initEvents() {
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
   });
 
-  //Student finish button 
   $("input#student-questionarie-finish-btn").click(function () {
     console.log("Finish Questionarie button event is executing");
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
-    $("#date-questionarie-attempt-" + questionarieId).text(
-      getDateForQuestionarieAttempt()
-    );
+    let users = getRegisteredUsers();
+     //get logged in user ID
+    let loggedInUserId = localStorage.getItem("loggedInUserID");
+    let userObject = users[loggedInUserId];
+    console.log("user object of logged in user: ",userObject,"user: ",loggedInUserId);
+    console.log("user object of logged in user: ",userObject["scores"]);
+
+    let scoreRecordObject;
+    let scoreObjectId = questionarieId+"_"+loggedInUserId;
+    console.log("Logged in user id: ",loggedInUserId);
+   
+
     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
-      let questionarieObject = questionaries[questionarieId];
-      let scoreAttemptID = createNewScoreAttemptID(questionarieId);
-      let scoreRecordObject = createNewScoreAttemptObject(scoreAttemptID);
-      let totalQuestions = Object.keys(questionarieObject["questions"]).length;
-      let scoreRecordObj = getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions);
-      Object.assign(questionarieObject["scoreAttempts"],{[scoreAttemptID]: scoreRecordObj});
-      localStorage.setItem("questionaries", JSON.stringify(questionaries));
-      window.location.href = "http://localhost:5500/index.html";
+      if(typeof userObject["scores"][scoreObjectId] === 'undefined' || userObject["scores"][scoreObjectId]=== "null"){
+        Object.assign(userObject["scores"],{[scoreObjectId]: {"scoreAttempts":{}}});
+        localStorage.setItem("users", JSON.stringify(users));
+        console.log("Null object: ",userObject["scores"]);
+      }
+      console.log("User object: ",userObject["scores"][scoreObjectId]);
+            let questionarieObject = questionaries[questionarieId];
+            let scoreAttemptID = createNewScoreAttemptID(questionarieId,loggedInUserId);
+            let scoreRecordObject = createNewScoreAttemptObject(scoreAttemptID);
+            let totalQuestions = Object.keys(questionarieObject["questions"]).length;
+            let scoreRecordObj = getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions);
+            Object.assign(userObject["scores"][scoreObjectId]["scoreAttempts"],{[scoreAttemptID]: scoreRecordObj});
+            console.log("User object after assigning scores: ",userObject);
+            localStorage.setItem("users", JSON.stringify(users));
+            window.location.href = "/index.html";
     }
   });
 
@@ -166,14 +168,19 @@ function initEvents() {
 
     if (popupData["ndigit"] != "" && popupData["num1"] != ""  &&  popupData["num2"] != "") {
       console.log("Popup data not null and validate data");
-      let popupDataObj = validatePopUpData(popupData,event);
-      return (popupDataObj);
+      console.log("No of digits entered in pop up: ",popupData["ndigit"]);
+      if(parseInt(popupData["ndigit"])<=0 || parseInt(popupData["ndigit"])>4){
+        console.log("Greater than 4...........");
+        event.preventDefault();
+      }else{
+        let popupDataObj = validatePopUpData(popupData,event);
+        return (popupDataObj);
+      }
+      
     } else {
       console.log("Pop up data is null");
       return null;
     }
-    
-  
   }
 
   $("button#pop-up-submit-save-btn").click(function (event) {
@@ -224,3 +231,145 @@ function onChange(obj) {
   }
 }
 
+
+$("form#registration-form").on("submit", function(e){
+  console.log("Registration form submit event is executing....");
+  //e.preventDefault();
+  let $inputs = $("#registration-form :input");
+  console.log("Inputs: ",$inputs);
+    let registrationData = {};
+ 
+    $inputs.each(function () {
+      console.log("Form data values: ", $(this).val(), typeof( $(this).val()));
+        registrationData[this.name] = $(this).val();
+    });
+    const isObjectEmpty =  (
+        registrationData &&
+        Object.keys(registrationData).length === 0 &&
+        registrationData.constructor === Object
+      );
+    const isDataempty = (registrationData["username"]!="" && registrationData["email"]!="" && registrationData["password"]!="");
+    console.log("registration data object is empty or not: ",registrationData,"Data empty",isDataempty);
+    if (!isObjectEmpty && isDataempty){
+      //check if email already exists then 
+        registerNewUser(registrationData,e);
+    }
+})
+
+function registerNewUser(registrationData,e){
+  console.log("Register new user......");
+  let userObj = getRegisteredUsers();
+  console.log("User Object in local Storage: ",userObj);
+  //e.preventDefault();
+
+  let ulength = Object.keys(userObj).length;
+  if(ulength>0){
+    ulength = Object.keys(userObj)[ulength - 1].substring(12);
+  }
+  let newUserId = "u-20230405-0" + (parseInt(ulength) + 1);
+  console.log("new user Id: ",newUserId);
+  //session date
+  let sessionDateObj = getSessionDate();
+  console.log("New user Id: ",newUserId);
+  let newUserObj = createNewUserRegistrationObject(newUserId,registrationData,sessionDateObj);
+  console.log("New USer Object On Registration: ",newUserObj);
+  Object.assign(userObj, newUserObj);
+  console.log("After assigning new user: ",userObj);
+  localStorage.setItem("users", JSON.stringify(userObj));
+  //set loggedinUserId to localstorage
+  setLoggedInUserId(userObj,newUserId);
+  $('#registration-form').attr('action', '/index.html');
+  //window.location.href = "/index.html";
+}
+
+$("form#login-form").on("submit", function(event) {
+  console.log("Login submit event is executing...");
+ // event.preventDefault();
+  let $inputs = $("#login-form :input");
+  console.log("Inputs: ",$inputs);
+    let loginData = {};
+    $inputs.each(function () {
+      console.log("Login form data values: ", $(this).val(), typeof( $(this).val()));
+      if(( $(this).val())!= ""){
+        loginData[this.name] = $(this).val();
+      }
+    });
+    const isObjectEmpty =  (
+      loginData &&
+      Object.keys(loginData).length === 0 &&
+      loginData.constructor === Object
+    );
+  console.log("loginData data object is empty: ",isObjectEmpty);
+  if (!isObjectEmpty){
+    //check if email already exists then find login Id and save into the localstoarge
+      findLoginId(loginData,event);
+  }
+});
+
+function findLoginId(loginData,event){
+  console.log("Find logged in user event is executing...");
+  let userObj = getRegisteredUsers();
+  console.log("User Object in local Storage: ",userObj);
+ 
+  if(userObj!=null){
+    let userId = Object.keys(userObj);
+    console.log("user Keys: ",userId);
+
+     for (const userId in userObj) {
+      console.log("userId : ",userId);
+      let email = userObj[userId].email;
+      let password = userObj[userId].password;
+      console.log("userId : ",userId,"email: ",email,"password: ",password,"loginData: ",loginData);
+      if(loginData.email === email && loginData.password === password){
+        console.log("This email id is already registered");
+        //set loggedIn to true
+        setLoggedInUserId(userObj,userId);
+        console.log("Admin is loggin in : ",userObj,userObj[userId].isAdmin);
+        if(userObj[userId].isAdmin){
+          window.location.href = "/admin.html";
+        } else {
+          window.location.href = "/index.html";
+        }
+       
+        // $('#login-form').attr('action', '/index.html');
+        // $('#login-form').submit();
+      } else{
+        event.preventDefault();
+        console.log("User is not registered");
+        $("h2#login-status").text("Please register!!!");
+      }
+    }
+  }
+  // else{
+  //   console.log("User is not registered");
+  //   $("h2#login-status").text("Please register!!!");
+  // }
+}
+
+$("a#register-new-user").on("click", function(event){
+  console.log("register event is executing.....");
+  window.location.href = "/register.html";
+});
+
+$("a#navbar-logout-btn").on("click", function(event){
+  logout();
+});
+
+function logout(){
+  let users = getRegisteredUsers();
+  let userId =  localStorage.getItem("loggedInUserID");
+  console.log("logout event is executing for login Id.....",userId, users[userId].isLoggedIn);
+  Object.assign(users[userId], {
+    isLoggedIn: false
+  });
+  localStorage.setItem("users", JSON.stringify(users));
+  //set userloginid to null localstorage
+  localStorage.setItem("loggedInUserID",'null');
+  console.log("logged in user id: ",localStorage.getItem("loggedInUserID"));
+  if(forcedUserLogoutTimout != null){
+    console.log("Clearing timout");
+    clearTimeout(forcedUserLogoutTimout);
+    forcedUserLogoutTimout = null;
+  }   
+  window.location.href = "/login.html";
+}

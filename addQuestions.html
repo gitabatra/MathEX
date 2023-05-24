@@ -27,9 +27,9 @@
     <!--Local Stylesheet-->
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
-  <body id="questionPaper">
+  <body id="questionPaper" class="gradient-custom">
     <header id="navigation-bar">
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container-fluid">
           <button
            class="navbar-toggler"
@@ -51,7 +51,7 @@
                   aria-current="page"
                   href="#"
                   onclick="onChange(this)"
-                  >Student</a
+                  ><i class="fas fa-user fa-sm"></i> Student</a
                 >
               </li>
               <li class="nav-item px-2">
@@ -60,10 +60,16 @@
                   class="nav-link active"
                   href="#"
                   onclick="onChange(this)"
-                  >Admin</a
+                  ><i class="fas fa-user-gear fa-sm"></i> Admin</a
                 >
               </li>
             </ul>
+          </div>
+          <div class="d-flex align-items-center">
+            <!-- Icon -->
+            <a class="link-secondary me-3"id="navbar-logout-btn" href="#">
+              <i class="fas fa-power-off"></i> Logout
+            </a>
           </div>
         </div>
       </nav>
@@ -79,7 +85,7 @@
           <input
             type="button"
             id="add-new-question-btn"
-            class="btn btn-dark"
+            class="btn saveBtn"
             value="+"
             data-mdb-toggle="modal"
             data-mdb-target="#basicQuestionModal"
@@ -87,7 +93,7 @@
           <input
             type="button"
             id="publish-btn"
-            class="btn btn-dark publish-questionarie-msg"
+            class="btn btn-dark saveBtn"
             value="Publish"
           />
           
@@ -180,12 +186,12 @@
               </div>
 
               <div class="modal-footer">
-                <button id="pop-up-submit-save-btn" type="button" class="btn btn-dark">
+                <button id="pop-up-submit-save-btn" type="button" class="btn saveBtn">
                   Save
                 </button>
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  class="btn  btn-outline-dark"
                   data-mdb-dismiss="modal"
                 >
                   Cancel
@@ -216,16 +222,17 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
   ></script>
-    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="assets/js/data/data.js"></script>
     <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
+    <script type="text/javascript" src="assets/js/templates/scores.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
    
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
   </body>
   <script>
     $(document).ready(function () {
@@ -239,12 +246,13 @@ $(document).ready(function () {
         toastr.options = {
           debug: false,
           newestOnTop: false,
-          positionClass: "toast-top-right",
-          progressBar: true,
+          positionClass: "toast-bottom-right",
+          preventDuplicates: true,
+          progressBar: false,
           onclick: null,
           fadeIn: 300,
-          fadeOut: 3000,
-          timeOut: 3000,
+          fadeOut: 1000,
+          timeOut: 1000,
           extendedTimeOut: 1000,
         };
        

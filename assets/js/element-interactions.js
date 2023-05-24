@@ -1,4 +1,12 @@
 function initElements() {
+  const isAdmin = isUserAdmin();
+  console.log("Admin or not: ",isAdmin);
+  if(!isAdmin){
+    $("a#navbar-admin-btn").hide();
+  }else {
+    $("a#navbar-admin-btn").show();
+  }
+ // checkUserLoggedIn();
   initQuestions();
 }
 
@@ -7,13 +15,43 @@ function initQuestions() {
   refreshQuestionsList();
   refreshScoreRecord();
   $("i.correctness-indicator").hide();
-  $("input#hide-publish-btn").hide();
 }
 
+  
+function isUserAdmin(){
+  if("loggedInUserID" in localStorage){
+    let users = getRegisteredUsers();
+    console.log("user Objects: ",users);
+    console.log("User is logged in....");
+    let loggedInUserId = localStorage.getItem("loggedInUserID");
+    console.log("Logged-in user Id: ",loggedInUserId);
+    
+    let userObj = users[loggedInUserId];
+    console.log("Loggedin user Object: ",userObj);
+    console.log("Loggedin user Object: ",userObj,"Admin or not: ",userObj.isAdmin);
+    return (userObj.isAdmin);
+  }
+}
+
+
 function refreshQuestionarieList() {
+  //console.log("Refreshing questionaries : ", userId);
   let questionaries = getQuestionaries();
+  let users = getRegisteredUsers();
+    let loggedInUserId = localStorage.getItem("loggedInUserID");
+    console.log("Logged-in user Id: ",loggedInUserId);
+    let userObj = users[loggedInUserId];
+    console.log("User Object: ",userObj);
   console.log("createQuestionaries: ", questionaries);
   for (const questionarieId in questionaries) {
+    let scoreId = questionarieId+"_"+loggedInUserId;
+    if(typeof userObj["scores"][scoreId] === 'undefined' || userObj["scores"][scoreId]=== "null"){
+      Object.assign(userObj["scores"],{[scoreId]: {"scoreAttempts":{}}});
+      localStorage.setItem("users", JSON.stringify(users));
+      console.log("Null object: ",userObj["scores"]);
+    }else{
+      console.log("already defined");
+    }
     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
       let questionarieObject = questionaries[questionarieId];
       console.log("questionary object: ",questionarieObject,"published: ",questionarieObject["isQuestionariePublished"]);
@@ -21,7 +59,7 @@ function refreshQuestionarieList() {
         console.log("Publish button is not clicked.........................");
       } else {
         let hide_score_button =
-          JSON.stringify(questionarieObject["scoreAttempts"]) == '{}' ? "hidden" : "";
+          JSON.stringify(userObj["scores"][scoreId]["scoreAttempts"]) == '{}' ? "hidden" : "";
         $("div#questionarie-list").append(questionarieListItem(questionarieId, questionarieObject["name"], hide_score_button));
     }
         $("div#questionarie-grid")
@@ -99,24 +137,162 @@ function appendquestionForStudent(questionId,nDigits,countQuestion,questionType,
   } else if(questionType == "/"){
     //append division questions
     console.log("Appending Division Questions");
-    $("div#questions-list").append(appendDivisionQuestions(questionId,countQuestion,firstNum,secondNum));
+    let correctAnswerObj = calculateAnswer(firstNum,secondNum,questionType);
+    console.log("Division Questions  before Appending: ",correctAnswerObj.quotient, typeof(correctAnswerObj["quotient"].toString().length));
+    $("div#questions-list").append(appendDivisionQuestions(questionId,countQuestion,firstNum,secondNum,correctAnswerObj));
   } else {
     console.log("question type is not defined or selected");
   }
 }
 
 
-//Score -Record
+  // for (const questionarieId in questionaries) {
+  //     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
+  //      // let scoreObject = questionaries[questionarieId]["scoreAttempts"];
+  //       console.log("Questionarie ID: ",questionarieId);
+       
+  //     } else {
+  //       console.log("The following Id not found", questionarieId);
+  //     }
+  //   }
+//}
+
+
+// function getScoresAdmin(){
+//   let questionaries = getQuestionaries();
+//   let questionarieId = getQuestionarieID();
+//   let users = getRegisteredUsers();
+
+//   console.log("users: ",users);
+//   for(const [u_k, u_v] of Object.entries(users)){
+//     console.log(`USER: ${u_v["username"]}\n${'_'.repeat(10)}\n${u_v["scores"]}`);
+//     //u_v["scores"]
+//     if(!u_v["isAdmin"]){
+//       console.log("id: ",u_k);
+//       let scoreId = questionarieId+"_"+u_k;
+//       console.log("Score id: ",scoreId);
+//       if(Object.keys(u_v["scores"][scoreId]["scoreAttempts"])!=0 ){
+//         console.log("Score Objects: ",  Object.values(u_v["scores"][scoreId]["scoreAttempts"]));
+//       }else{
+//         console.log("Attempts are not made yet...");
+//       }
+//     }else{
+//       console.log("User is Admin....");
+//     }
+//     }
+    
+//     console.log(`\n${'*'.repeat(10)}\n`);
+// }
+
+function refreshScoreRecordAttemptAdmin(scoreRecordObject,attemptId,attemptCount,questionId,countQuestion){
+  console.log("Score Record Object: ",scoreRecordObject,"Question Id: ",questionId);
+  let firstNum = scoreRecordObject.questions[questionId].num1;
+  let secondNum = scoreRecordObject.questions[questionId].num2;
+  let questionType = scoreRecordObject.questions[questionId].type;
+  let givenAnswer = scoreRecordObject.questions[questionId].givenAns;
+  let correctAnswer = scoreRecordObject.questions[questionId].correctAns;
+  let question ="Q" + countQuestion + ". " +firstNum + " " + questionType + " " +secondNum;
+  console.log(question);
+  console.log("Given Answer: ", givenAnswer,"Correct Answer: ", correctAnswer);
+  if(questionType == "/"){
+    let givenInputAnswer = "Q : "+givenAnswer.quotient+" , R : "+givenAnswer.remainder;
+    let calcCorrectAnswer = "Q : "+correctAnswer.quotient+" , R : "+correctAnswer.remainder;
+    $("div#score-accordion-body-"+ `${attemptId}`+"-" + `${attemptCount}`)
+    .append(appendScoreRecord(question,questionId,attemptCount,calcCorrectAnswer,givenInputAnswer));
+    if(givenAnswer.quotient == correctAnswer.quotient && givenAnswer.remainder == correctAnswer.remainder){
+      displayCorrectSignOnScoreRecord(attemptCount,questionId);
+    } else {
+      displayWrongSignOnScoreRecord(attemptCount,questionId);
+    }
+  }else {
+  $("div#score-accordion-body-"+ `${attemptId}`+"-" + `${attemptCount}`)
+    .append(appendScoreRecord(question,questionId,attemptCount,correctAnswer,givenAnswer));
+  if (givenAnswer === correctAnswer) {
+    console.log("Score Record Check -- Question is Correct");
+    displayCorrectSignOnScoreRecord(attemptCount,questionId);
+  } else {
+    console.log("Score Record Check -- Question is Wrong");
+    displayWrongSignOnScoreRecord(attemptCount,questionId);
+  }
+  }
+}
+
+function displayUserNames(questionarieObject,questionarieId){
+  console.log("Displaying user names");
+  let users = getRegisteredUsers();
+  console.log("users: ",users);
+  $("div#questionarie-score-record").append( scoreRecord(questionarieId, questionarieObject["name"]));
+  for(const [u_k, u_v] of Object.entries(users)){
+   // console.log(`USER: ${u_v["username"]}\n${'_'.repeat(10)}\n${u_v["scores"]}`);
+    //u_v["scores"]
+    if(!u_v["isAdmin"]){
+      console.log("id: ",u_k);
+      let scoreId = questionarieId+"_"+u_k;
+      console.log(`USER: ${u_v["username"]}\n${'_'.repeat(10)}`);
+     // $("div#questionarie-score-record").append(scoreAdminUserNames(u_v["username"]));
+      let username = u_v["username"];
+      console.log("Score Objects: ", (u_v["scores"][scoreId]));
+      if((u_v["scores"][scoreId]) && Object.keys(u_v["scores"][scoreId]["scoreAttempts"])!=0 ){
+        // console.log("Score Objects: ", (u_v["scores"][scoreId]["scoreAttempts"]));
+        // let scoreObject = Object.keys(u_v["scores"][scoreId]);
+        //  console.log("Score object: ",scoreObject);
+         let attemptCount = 1;
+      
+    for(const attemptId in (u_v["scores"][scoreId]["scoreAttempts"])){
+      console.log("Attempt id: ",attemptId);
+      let scoreRecordObject = (u_v["scores"][scoreId]["scoreAttempts"])[attemptId];
+      $("div#accordion-"+`${questionarieId}`).append(appendAttemptHeaderAdmin(attemptId,username,scoreRecordObject.dateQuestionarie,scoreRecordObject.score,attemptCount));
+      let countQuestion = 1;
+      for (let questionId in scoreRecordObject["questions"]) {
+        console.log("questionId: ",questionId);
+        refreshScoreRecordAttemptAdmin(scoreRecordObject,attemptId,attemptCount,questionId,countQuestion);
+        countQuestion = countQuestion + 1;
+      }
+      attemptCount = attemptCount + 1;
+    }
+              }else{
+                console.log("Attempts are not made yet...");
+              }
+      
+      
+    }else{
+      console.log("User is Admin....");
+    }
+    }
+}
+
+
 function refreshScoreRecord() {
+  console.log("refreshing Score record.........................");
   let questionaries = getQuestionaries();
   let questionarieId = getQuestionarieID();
-  console.log("Initializing score record for Questionarie: ", questionarieId);
-  if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
+  //check user is admin or student
+  let userObj = getRegisteredUsers();
+  let loggedInUserId = localStorage.getItem("loggedInUserID");
+  let isAdmin = userObj[loggedInUserId].isAdmin;
+  console.log("Current user is Student or Admin : ",isAdmin);
+  let scoreId = questionarieId+"_"+loggedInUserId;
+  let scoreObject = userObj[loggedInUserId]["scores"][scoreId];
+  console.log("Score Record Object....... ",scoreObject);
+  //create new score object for questionary
+
+  if(isAdmin){
+    if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
+      let questionarieObject = questionaries[questionarieId];
+      displayUserNames(questionarieObject,questionarieId);
+     
+       //getScoresAdmin();
+    }
+    //displayScoreRecordAdmin();
+    console.log("User is Admin..");
+  }else{
+    console.log("Initializing score record for Questionarie: ", questionarieId);
+    if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
     let questionarieObject = questionaries[questionarieId];
     $("div#questionarie-score-record").append( scoreRecord(questionarieId, questionarieObject["name"]));
     let attemptCount = 1;
-    for(const attemptId in questionarieObject["scoreAttempts"]){
-      let scoreRecordObject = questionarieObject["scoreAttempts"][attemptId];
+    for(const attemptId in scoreObject["scoreAttempts"]){
+      let scoreRecordObject = scoreObject["scoreAttempts"][attemptId];
       $("div#accordion-"+`${questionarieId}`).prepend(appendAttemptHeader(questionarieId,scoreRecordObject.dateQuestionarie,scoreRecordObject.score,attemptCount));
       let countQuestion = 1;
       for (const questionId in scoreRecordObject["questions"]) {
@@ -126,7 +302,42 @@ function refreshScoreRecord() {
       attemptCount = attemptCount + 1;
     }
   }
+  }
+  
 }
+
+// //Score -Record
+// function refreshScoreRecord() {
+//   console.log("refreshing Score record.........................");
+//   let questionaries = getQuestionaries();
+//   let questionarieId = getQuestionarieID();
+//   //check user is admin or student
+//   let userObj = getRegisteredUsers();
+//   let loggedInUserId = localStorage.getItem("loggedInUserID");
+//   let isAdmin = userObj[loggedInUserId].isAdmin;
+//   console.log("Current user is Student or Admin : ",isAdmin);
+//   // if(isAdmin){
+//   //   getScoresAdmin();
+//   // }else{
+//     console.log("Initializing score record for Questionarie: ", questionarieId);
+//     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
+//     let questionarieObject = questionaries[questionarieId];
+//     $("div#questionarie-score-record").append( scoreRecord(questionarieId, questionarieObject["name"]));
+//     let attemptCount = 1;
+//     for(const attemptId in questionarieObject["scoreAttempts"]){
+//       let scoreRecordObject = questionarieObject["scoreAttempts"][attemptId];
+//       $("div#accordion-"+`${questionarieId}`).prepend(appendAttemptHeader(questionarieId,scoreRecordObject.dateQuestionarie,scoreRecordObject.score,attemptCount));
+//       let countQuestion = 1;
+//       for (const questionId in scoreRecordObject["questions"]) {
+//         refreshScoreRecordAttempt(scoreRecordObject,attemptCount,questionId,countQuestion);
+//         countQuestion = countQuestion + 1;
+//       }
+//       attemptCount = attemptCount + 1;
+//     }
+//   //}
+//   }
+  
+// }
 
 //Append Score-Record Questions
 function refreshScoreRecordAttempt(scoreRecordObject,attemptCount,questionId,countQuestion){

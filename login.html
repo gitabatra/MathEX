@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+     <!--MDBootstrap libraries-->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet"/>
+    
+     <!-- Font Awesome -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+     <link href="https://parsleyjs.org/src/parsley.css" rel="stylesheet"/>
+
+     <link
+     href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+     rel="stylesheet"
+   />
+     <!--Local Stylesheet-->
+     <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="gradient-custom">
+<section id="login" class="loginSection" >
+    <!-- <div class="bg-image hover-zoom" style="height: 300px;">
+        <img src="images/numbersImg.png" class="img-responsive w-100 h-100"/>
+      </div> -->
+      <div class="text-center pb-4">
+        <h2 id="login-status"></h2>
+    </div>
+    <form id="login-form" class="formAlign" data-parsley-validate>
+        
+        <div class="text-center pb-4">
+            <h2>Login</h2>
+        </div>
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <input type="email" id="form2Example1" name="email" class="form-control" required/>
+          <label class="form-label" for="form2Example1">Email address</label>
+        </div>
+      
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <input type="password" id="form2Example2" name="password" class="form-control" required/>
+          <label class="form-label" for="form2Example2">Password</label>
+        </div>
+      
+        <!-- Submit button -->
+        <button type="submit" id="user-login" class="btn saveBtn btn-block mb-4">Sign in</button>
+      
+        <!-- Register buttons -->
+        <div class="text-center">
+          <p>Not a member? <a id="register-new-user" href="#">Register</a></p>
+          
+        </div>
+      </form>
+    </section>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+    src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+    crossorigin="anonymous"></script>
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
+  ></script>
+
+  <script type="text/javascript" src="https://parsleyjs.org/dist/parsley.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/data/data.js"></script>
+    <script type="text/javascript" src="assets/js/validation/validate.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
+    <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
+    <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
+    <script type="text/javascript" src="assets/js/templates/questions.js"></script>
+    <script type="text/javascript" src="assets/js/templates/scores.js"></script>
+    <script type="text/javascript" src="assets/js/utils.js"></script>
+    <script type="text/javascript" src="assets/js/element-interactions.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
+   
+</body>
+</html>

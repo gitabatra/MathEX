@@ -33,15 +33,21 @@
           >
             <i class="fas fa-bars"></i>
           </button>
-           <div class="collapse navbar-collapse" id="navigation-bar">
+           <div class="collapse navbar-collapse" id="navigation-nav-bar">
                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item px-2">
-                         <a id="navbar-student-btn" class="nav-link active" aria-current="page" href="#" onclick="onChange(this)">Student</a>
+                         <a id="navbar-student-btn" class="nav-link active" aria-current="page" href="#" onclick="onChange(this)"><i class="fas fa-user fa-sm"></i> Student</a>
                     </li>
                     <li class="nav-item px-2">
-                         <a id="navbar-admin-btn" class="nav-link" href="#" onclick="onChange(this)" >Admin</a>
+                         <a id="navbar-admin-btn" class="nav-link" href="#" onclick="onChange(this)"><i class="fas fa-user-gear fa-sm"></i> Admin</a>
                     </li>
                 </ul>
+            </div>
+            <div class="d-flex align-items-center">
+              <!-- Icon -->
+              <a class="link-secondary me-3" id="navbar-logout-btn" href="#">
+                <i class="fas fa-power-off"></i> Logout
+              </a>
             </div>
         </div>
     </nav>
@@ -68,37 +74,36 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
   ></script>
-    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="assets/js/data/data.js"></script>
     <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
+    <script type="text/javascript" src="assets/js/templates/scores.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
-    <!-- <script type="text/javascript" src="assets/js/validation/validate.js"></script> -->
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
     <script>
          $(document).ready(function () {
         toastr.options = {
           debug: false,
           newestOnTop: false,
-          positionClass: "toast-top-right",
-          progressBar: true,
+          positionClass: "toast-bottom-right",
+          preventDuplicates: true,
+          progressBar: false,
           onclick: null,
           fadeIn: 300,
           fadeOut: 3000,
-          timeOut: 2000,
+          timeOut: 3000,
           extendedTimeOut: 1000,
         };
         // show when page load
+        //toastr.info("Login Successful!!");
         toastr.info("You can Click Go Button to start the test");
-        
 
         $(".scoreCheckMsg").mouseenter(function () {
           // show when the button is clicked
-          //toastr.info("Checking answers...");
-         
           toastr.success("You can Check your score here.");
         });
         
