@@ -27,8 +27,8 @@
     background-color: #0C2D48;
     color: #fff;
  }
- .addTestBtn:hover, .addBtn:hover, .saveBtn:hover{
-  background: #1572A1;
+ .addTestBtn:hover, .addBtn:hover, .saveBtn:hover, .addTestBtn:active{
+  background-color: #1572A1;
   color: #fff;
 }
 

@@ -1,8 +1,9 @@
  //Pop up Client-side parsley Validation
  $("#inputNumber").change(function () {
     let inputDigit = parseInt($("#inputNumber").val());
-    $("#inputNumber1").attr("data-parsley-min", 1);
-    $("#inputNumber2").attr("data-parsley-min", 1);
+    console.log("Input Digit: ",inputDigit);
+    $("#inputNumber1").attr("data-parsley-min", 0);
+    $("#inputNumber2").attr("data-parsley-min", 0);
     if (inputDigit === 1) {
       console.log("digit 1");
       $("#inputNumber1").attr("data-parsley-max", 9);
@@ -14,6 +15,9 @@
       $("#inputNumber1").attr("data-parsley-max", 999);
       $("#inputNumber2").attr("data-parsley-max", 999);
     } else if (inputDigit === 4) {
+      $("#inputNumber1").attr("data-parsley-max", 9999);
+      $("#inputNumber2").attr("data-parsley-max", 9999);
+    } else {
       $("#inputNumber1").attr("data-parsley-max", 9999);
       $("#inputNumber2").attr("data-parsley-max", 9999);
     }

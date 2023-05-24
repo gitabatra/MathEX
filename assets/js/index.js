@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  var forcedUserLogoutTimout;
   // Handler for .ready() called.
   console.log("Initializing Events");
   initLocalStorage();
@@ -26,6 +27,7 @@ function checkIfLoggedIn(){
       window.location.replace("http://localhost:5500/login.html");
    }else{
      console.log("Item exists in localstoarge");
+     forcedUserLogoutTimout = setTimeout(logout, 1800000);
      initEvents();
      initElements();
    }

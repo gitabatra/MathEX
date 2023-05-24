@@ -70,9 +70,7 @@ function initLocalStorage(){
                     "q-20230405-05": {ndigit:1, num1: 7, num2: 4,type: "+"}
                 },
                 isQuestionariePublished: true,
-                // scoreAttempts: {
-                // }
-                // ,
+                
                 // modifiedDate: {
                 //     day: 10,
                 //     month: 10,
@@ -88,9 +86,8 @@ function initLocalStorage(){
                     "q-20230405-04": {ndigit:2, num1: 41, num2: 36,type: "-"},
                     "q-20230405-05": {ndigit:2, num1: 27, num2: 4,type: "-"}                 
                 },
-                isQuestionariePublished: true,
-                // scoreAttempts: {
-                // }
+                isQuestionariePublished: true
+                
             },
             "qs-20230405-03": {
                 name: "Test 3", 
@@ -101,9 +98,8 @@ function initLocalStorage(){
                     "q-20230405-04": {ndigit:2, num1: 39, num2: 39,type: "/"},
                     "q-20230405-05": {ndigit:2, num1: 84, num2: 17,type: "/"}                 
                 },
-                isQuestionariePublished: true,
-                // scoreAttempts: {
-                // }
+                isQuestionariePublished: true
+                
             }
         };
     localStorage.setItem("questionaries", JSON.stringify(questionaries));

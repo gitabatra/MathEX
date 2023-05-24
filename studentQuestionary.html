@@ -64,13 +64,13 @@
         <input
           type="button"
           id="student-questionarie-check-btn"
-          class="btn btn-dark saveBtn"
+          class="btn btn-dark checkBtn saveBtn"
           value="Check"
         />
         <input
           type="button"
           id="student-questionarie-finish-btn"
-          class="btn btn-dark saveBtn"
+          class="btn btn-dark submitBtn saveBtn"
           value="Finish"
           disabled="true"
         />
@@ -91,13 +91,13 @@
         <input
           type="button"
           id="student-questionarie-check-btn"
-          class="btn btn-dark saveBtn"
+          class="btn btn-dark checkBtn saveBtn"
           value="Check"
         />
         <input
           type="button"
           id="student-questionarie-finish-btn"
-          class="btn btn-dark saveBtn"
+          class="btn btn-dark submitBtn saveBtn"
           value="Finish"
           disabled="true"
         />
@@ -118,27 +118,28 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     ></script>
-    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="assets/js/data/data.js"></script>
     <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
+    <script type="text/javascript" src="assets/js/templates/scores.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
-    <!-- <script type="text/javascript" src="assets/js/validation/validate.js"></script> -->
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
     <script>
       $(document).ready(function () {
         toastr.options = {
           debug: false,
           newestOnTop: false,
           positionClass: "toast-bottom-right",
+          preventDuplicates: true,
           progressBar: false,
           onclick: null,
           fadeIn: 300,
-          fadeOut: 2000,
-          timeOut: 2000,
+          fadeOut: 3000,
+          timeOut: 3000,
           extendedTimeOut: 1000,
         };
         // show when page load
@@ -153,7 +154,7 @@
         });
         $(".submitBtn").mouseenter(function () {
           // show when the button is clicked
-          toastr.warning("Make sure you have attempted all Questions!!");
+          toastr.warning("Make sure you have attempted all Questions!");
           console.log("Checking the Questionaries event is executing");
           //toastr.success("Submitted succesfully.");
         });

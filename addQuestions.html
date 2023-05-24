@@ -222,16 +222,17 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
   ></script>
-    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="assets/js/data/data.js"></script>
     <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
+    <script type="text/javascript" src="assets/js/templates/scores.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
    
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
   </body>
   <script>
     $(document).ready(function () {
@@ -246,11 +247,12 @@ $(document).ready(function () {
           debug: false,
           newestOnTop: false,
           positionClass: "toast-bottom-right",
+          preventDuplicates: true,
           progressBar: false,
           onclick: null,
           fadeIn: 300,
-          fadeOut: 3000,
-          timeOut: 3000,
+          fadeOut: 1000,
+          timeOut: 1000,
           extendedTimeOut: 1000,
         };
        

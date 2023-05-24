@@ -61,10 +61,10 @@
         </div>  
         <form class="was-validated">
           <div class="row">
-                  <div class="col-md-4 mt-3 text-center">
+                  <div class="col-sm-4 mt-3 text-center">
                       <p>Basic Addition/Subtraction/Multiplication/Division</p>
                   </div>
-                  <div class="form-group col-md-4 text-center">
+                  <div class="form-group col-sm-4 text-center">
                     <div class = "mb-3 mt-3">
                     <input type="text" class="testNameBox mb-3" id="new-questionarie-name" name="testName" placeholder="Questionary Name" required/>
                     <div class="invalid-feedback testNameValid">
@@ -72,7 +72,7 @@
                     </div>
                     </div> 
                   </div>
-                  <div class="col-md-4 mt-3 text-center">
+                  <div class="col-sm-4 mt-3 text-center">
                       <input type="button" id="add-new-questionarie-test-btn" class="btn addBtn" value="+"  disabled="true" data-mdb-toggle="modal" data-mdb-target="#basicQuestionModal">
                   </div>
               </div>  
@@ -151,16 +151,17 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     ></script>
-    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="assets/js/data/data.js"></script>
      <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="events.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
+    <script type="text/javascript" src="assets/js/templates/scores.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
     <!-- <script type="text/javascript" src="assets/js/validation/validate.js"></script> -->
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
     <script>
         $(document).ready(function () {
           $('#basicQuestionModal').draggable();
@@ -170,11 +171,12 @@
           debug: false,
           newestOnTop: false,
           positionClass: "toast-bottom-right",
+          preventDuplicates: true,
           progressBar: false,
           onclick: null,
           fadeIn: 300,
-          fadeOut: 1000,
-          timeOut: 1000,
+          fadeOut: 2000,
+          timeOut: 2000,
           extendedTimeOut: 1000,
         };
         // show when page load
