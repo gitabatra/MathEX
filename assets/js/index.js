@@ -8,15 +8,6 @@ $(document).ready(function () {
   // initElements();
 });
 
-// function checkIfLoggedIn(){
-//   console.log("logn Id : ", localStorage.getItem("loggedInUserID"),"window location: ",window.location.href);
-//   if(window.location.href != "/login.html" || window.location.href != "/register.html"){
-//     if(localStorage.getItem("loggedInUserID") == null){
-//       console.log("logn Id : ", localStorage.getItem("loggedInUserID"));
-//       window.location.replace = "/login.html"
-//     }
-//   }
-// }
 
 function checkIfLoggedIn(){
   if(window.location.href != "http://localhost:5500/login.html" && window.location.href != "http://localhost:5500/register.html"){
@@ -31,6 +22,8 @@ function checkIfLoggedIn(){
      initEvents();
      initElements();
    }
+  }else {
+    console.log("Location is login or Register");
   }
 }
 

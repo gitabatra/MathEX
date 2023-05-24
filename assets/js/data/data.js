@@ -104,7 +104,7 @@ function initLocalStorage(){
         };
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
     localStorage.setItem("users", JSON.stringify(users));
-    // localStorage.setItem("loggedInUserID", JSON.stringify(users)); // windw.href = "/signin"
+    //localStorage.setItem("loggedInUserID", JSON.stringify(users)); // windw.href = "/signin"
 
     console.log("Checking Questionaries Array", JSON.parse(localStorage.getItem("questionaries")));
 }
