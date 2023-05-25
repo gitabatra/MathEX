@@ -52,6 +52,16 @@
   color: #fff;
 }
 
+.nav-pills > li > a.nav-link {
+  background-color: #86A3B8;
+  color: white;
+}
+
+.nav-pills > li > a.nav-link.active {
+  background-color: #0C2D48;;
+  color: white;
+}
+
 .gradient-custom {
   /* fallback for old browsers */
   background: #fff1eb;
@@ -86,7 +96,6 @@
 }
 
 
-
 .testNameBox{
   width: 50%;
 }
@@ -95,14 +104,6 @@
   width:fit-content;
   margin-left:6.5%;
 }
-
-/* .errorMsg {
-  color:rgb(205, 68, 68);
-  font-size: small;
-  margin-left: 0%;
-  padding: 0;
-} */
-
 
 #questionsList {
   margin:2% 10%;
@@ -121,15 +122,17 @@
 }
 
 .loginSection{
-  margin: 10% 10%;
+  margin: 10% 15%;
   padding: 2rem;
+  border: 2px solid #BDBDBD;
+  border-radius: 10px;
 }
-.formAlign {
+/* .formAlign {
   margin: 0% 10%;
   border: 2px solid #BDBDBD;
   border-radius: 10px;
   padding: 2rem;
-}
+} */
 
 .testPapers > .row  {
   border:2px solid black;
@@ -172,6 +175,12 @@
   background-color:#B1D4E0;
 }
 
+.finalInputBoxZero{
+  border:1px solid #0C2D48;
+  width:70px;
+  text-align:center;
+  background-color:#B1D4E0;
+}
 
 .inputBox:focus {
   outline: none;
@@ -219,9 +228,3 @@
   color: #1572A1;
   text-decoration: underline;
 }
-/*custom position for toast notifications*/
-
-/* .toast-custom-position{
-  top: 80px;
-  right: 0px;
-} */

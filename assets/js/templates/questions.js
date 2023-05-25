@@ -35,7 +35,7 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
 }
   
   function appendFirstNumberInRow(questionId,number,nDigits){
-    console.log("First Number--- No of Digits: ",nDigits);
+    console.log("First Number---",number," No of Digits: ",nDigits);
     console.log("first number type", typeof(number));
     let firstNumLength = number.length;
     console.log("Length of Second number: ", firstNumLength);
@@ -83,6 +83,8 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
   
   function appendInputBoxForAnswer(questionId,nDigits,firstNum,secondNum,questionType){
     console.log("QuestionType: ",questionType);
+    let firstNumLength = firstNum.toString().length;
+    let secondNumLength = secondNum.toString().length;
     let answer;
     let maxInput;
     if(questionType == "+"){
@@ -94,6 +96,8 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
     // if(answerLength == nDigits){
     //   $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
     // }
+
+
     if(answerLength <= nDigits){
       maxInput = nDigits;
       $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
@@ -114,14 +118,21 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
 
   function appendMultiplicationQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum){
     $("div#questions-list").append(appendMultiplicationQuestionsStudentQuestionary(questionId,countQuestion,questionType));
-    let answerLength = (parseInt(firstNum)*parseInt(secondNum)).toString().length;
+    let answer = parseInt(firstNum)*parseInt(secondNum);
+    let answerLength;
+    if(answer === 0){
+      answerLength = nDigits;
+      console.log("No of digits: ",answerLength);
+    }else{
+      answerLength = (answer).toString().length;
+    }
     console.log("Multiply Answer length: ",answerLength);
     appendFirstNumberInRow(questionId,firstNum,answerLength);
     appendSecondNumberInRow(questionId,secondNum,answerLength);
      $("#answer-input-box-"+`${questionId}`).append(appendRowsForMultiplyAnswer(questionId,firstNum,secondNum));
   }
 
-  function appendMultiplicationQuestionsStudentQuestionary(questionId,countQuestion,questionType,j){
+  function appendMultiplicationQuestionsStudentQuestionary(questionId,countQuestion,questionType){
     return(`<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
     <div class="card text-center">
     <div class="card-header">Question ${countQuestion}</div>
@@ -148,10 +159,25 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
   function appendRowsForMultiplyAnswer(questionId,firstNum,secondNum){
     console.log("InputBox for Multiplication.......");
     console.log("First number and Second Number", firstNum, typeof(firstNum),secondNum, typeof(secondNum));
-    let secondNumLength = secondNum.length;
+    let totalAnswerLength;
+    let firstNumLength = firstNum.toString().length;
+    let secondNumLength = secondNum.toString().length;
+    if(parseInt(firstNum) === 0 || parseInt(secondNum) === 0){
+        //display single box to enter 0 as answer
+        console.log("One of the number is zero---------------");
+      if(firstNumLength > secondNumLength){
+        totalAnswerLength = firstNumLength;
+      }else {
+        totalAnswerLength = secondNumLength;
+      }
+    
+      $(`#multiplication-questionarie-table-${questionId}`).append(`<tr id="answer-input-box-final-${questionId}"><td class="text-center align-bottom"></td></tr>`);
+      displayFinalAnswerRow(questionId,totalAnswerLength);
+    } else{
+      let secondNumLength = secondNum.length;
     //let totalAnswerRows = secondNumLength+1;
     console.log("second number, Length of Second Number: ",secondNum, secondNumLength);
-    let totalAnswerLength = ((parseInt(firstNum)*parseInt(secondNum)).toString().length);
+    totalAnswerLength = ((parseInt(firstNum)*parseInt(secondNum)).toString().length);
     let countX=0;
     if(secondNumLength == 1){
       $(`#multiplication-questionarie-table-${questionId}`).append(`<tr id="answer-input-box-final-${questionId}"><td class="text-center align-bottom"></td></tr>`);
@@ -167,7 +193,7 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
       $(`#multiplication-questionarie-table-${questionId}`).append(`<tr id="answer-input-box-final-${questionId}"><td class="text-center align-bottom"></td></tr>`);
       displayFinalAnswerRow(questionId,totalAnswerLength);
     }
-
+    }
   }
 
   function displayFinalAnswerRow(questionId,totalAnswerLength){

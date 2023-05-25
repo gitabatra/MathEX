@@ -10,7 +10,9 @@ function initLocalStorage(){
     // if else condition in every page, if is LoggedIn is false or last Session >= TIMOUT (10mins) send them to the login page. window.href = /signin
     // user management page, list all users, edit their values 
     // user edit page
+    // let notifications = {
 
+    // }
 
     let users = {
         "u-20230405-01": {
@@ -27,13 +29,16 @@ function initLocalStorage(){
             scores: {
 
             },
-            notifications: {
-                n1: {description: ""},
-                creationDate: {
-                    day: 10,
-                    month: 10,
-                    year: 2020
-                } //"YYYY-MM
+            hasNotifications: true,
+            inbox: {
+                n1: {
+                    description: "",
+                    creationDate: {
+                        day: 10,
+                        month: 10,
+                        year: 2020
+                    } //"YYYY-MM
+                },
             }
         },
         "u-20230405-02": {

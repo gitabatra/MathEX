@@ -346,10 +346,10 @@ function findLoginId(loginData,event){
   // }
 }
 
-$("a#register-new-user").on("click", function(event){
-  console.log("register event is executing.....");
-  window.location.href = "/register.html";
-});
+// $("a#register-new-user").on("click", function(event){
+//   console.log("register event is executing.....");
+//   window.location.href = "/register.html";
+// });
 
 $("a#navbar-logout-btn").on("click", function(event){
   logout();
@@ -371,5 +371,5 @@ function logout(){
     clearTimeout(forcedUserLogoutTimout);
     forcedUserLogoutTimout = null;
   }   
-  window.location.href = "/login.html";
+  window.location.href = "/loginRegister.html";
 }

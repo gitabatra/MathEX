@@ -1,9 +1,3 @@
-
-// function generateNewScoreAttemptID(questionarieId){
-//     //getcurrent date in format 20230501 and generate new key
-//     let scoreAttemptID = "sa-20230405-1-"+questionarieId;
-// }
-
 function createNewQuestionarie(newQuestionarieKey,testName,popupData){
     let newQuestionariesObj = {
         [newQuestionarieKey]: {
@@ -20,41 +14,15 @@ function createNewQuestionarie(newQuestionarieKey,testName,popupData){
           isQuestionariePublished: false,
         },
       };
+
+      // FOR LOOP ON ALL USERS AND ADD A NOTIFICATION SAYING A NEW QUESTIONARIE IS AVAILABLE
+
       return newQuestionariesObj;
 }
 
-// function createNewScoreAttemptID(questionarieId,loggedInUserId){
-//     console.log("Creating new Score attempt Id for user: ",loggedInUserId);
-//     let currentDate = new Date();
-//      let year = currentDate.getFullYear().toString();
-//      let month = currentDate.getMonth().toString();
-//      let day = currentDate.getDate().toString();
-//      month = (month>9 ? "":"0")+month;
-//      day = (day>9 ? "":"0")+day;
-//      let dateString =  (year+month+day);
-
-//      let questionaries = getQuestionaries();
-//      let questionarieObj = questionaries[questionarieId];
-
-//     //  let keys =  Object.keys(questionarieObj["scoreAttempts"]);
-//     //  console.log("keys saved in scoreAttempts: ",keys)
-    
-//      let qlength = Object.keys(questionarieObj["scoreAttempts"]).length;
-//      let attemptCount = qlength+1;
-//      console.log("ScoreObject Attempts: ",questionarieObj["scoreAttempts"],"Qlength: ",qlength);
-
-//      console.log("Current Date: ",dateString);
-//      dateString = questionarieId+"_"+loggedInUserId+"_"+"sa-"+dateString+"-"+attemptCount;
-//      console.log("New AttemptID :", dateString);
-//      return (dateString);
-// }
 
 function createNewScoreObject(scoreId){
   console.log("Creating new score object...... ");
-  // let currentDate = getDateForQuestionaryAttempt();
-  // console.log("Date String: ",currentDate);
-  // let attemptId =  "sa-"+currentDate+"-1"+"_"+questionarieId+"_"+loggedInUserId;
-  //console.log("First Attempt ID: ",attemptId);
   let newScoreObject = {
      [scoreId] :{
       "scoreAttempts" :{
