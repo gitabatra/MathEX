@@ -80,39 +80,39 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
       }
     }
   }
-  
-  function appendInputBoxForAnswer(questionId,nDigits,firstNum,secondNum,questionType){
-    console.log("QuestionType: ",questionType);
-    let firstNumLength = firstNum.toString().length;
-    let secondNumLength = secondNum.toString().length;
-    let answer;
-    let maxInput;
-    if(questionType == "+"){
-      answer = parseInt(firstNum)+parseInt(secondNum);
-    } else if(questionType == "-"){
-      answer = parseInt(firstNum)-parseInt(secondNum);
-    }
-    let answerLength = answer.toString().length;
-    // if(answerLength == nDigits){
-    //   $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
-    // }
 
-
+  function addSubtractAnswerInputBox(answerLength,questionId,nDigits){
     if(answerLength <= nDigits){
-      maxInput = nDigits;
       $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
+      let calcdiff = nDigits-answerLength;
+      for(let i=0;i<calcdiff; i++){
+        $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
+      }
     }
-    else {
-      maxInput = answerLength;
-    }
-    console.log("ADD / Subtract -- maximum input Boxes for answer ",maxInput);
-    for(let i=0; i<maxInput; i++){
+    console.log("ADD / Subtract -- maximum input Boxes for answer ",answerLength);
+    for(let i=0; i<answerLength; i++){
       console.log("AnswerLength: ",answerLength);
      
         console.log("AnswerLength is equal to number of Digits.");
         $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom">
         <input id="answer-box-${questionId}-${i}" class="no-outline finalInputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
         </td>`); 
+    }
+  }
+  
+  function appendInputBoxForAnswer(questionId,nDigits,firstNum,secondNum,questionType){
+    console.log("QuestionType: ",questionType);
+    let firstNumLength = firstNum.toString().length;
+    //let secondNumLength = secondNum.toString().length;
+    let answer,answerLength;
+    if(questionType == "+"){
+      answer = parseInt(firstNum)+parseInt(secondNum);
+      answerLength = answer.toString().length;
+      addSubtractAnswerInputBox(answerLength,questionId,nDigits);
+    } else if(questionType == "-"){
+      answer = parseInt(firstNum)-parseInt(secondNum);
+      answerLength = answer.toString().length;
+      addSubtractAnswerInputBox(firstNumLength,questionId,nDigits);
     }
   }
 
@@ -129,7 +129,7 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
     console.log("Multiply Answer length: ",answerLength);
     appendFirstNumberInRow(questionId,firstNum,answerLength);
     appendSecondNumberInRow(questionId,secondNum,answerLength);
-     $("#answer-input-box-"+`${questionId}`).append(appendRowsForMultiplyAnswer(questionId,firstNum,secondNum));
+     $("#answer-input-box-"+`${questionId}`).append(appendRowsForMultiplyAnswer(questionId,firstNum,secondNum,nDigits));
   }
 
   function appendMultiplicationQuestionsStudentQuestionary(questionId,countQuestion,questionType){
@@ -156,7 +156,7 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
 `)
   }
 
-  function appendRowsForMultiplyAnswer(questionId,firstNum,secondNum){
+  function appendRowsForMultiplyAnswer(questionId,firstNum,secondNum,nDigits){
     console.log("InputBox for Multiplication.......");
     console.log("First number and Second Number", firstNum, typeof(firstNum),secondNum, typeof(secondNum));
     let totalAnswerLength;
@@ -170,8 +170,11 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
       }else {
         totalAnswerLength = secondNumLength;
       }
-    
+      let calcdiff = nDigits-totalAnswerLength;
       $(`#multiplication-questionarie-table-${questionId}`).append(`<tr id="answer-input-box-final-${questionId}"><td class="text-center align-bottom"></td></tr>`);
+      for(let i=0;i<calcdiff; i++){
+        $("#answer-input-box-final-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
+      }
       displayFinalAnswerRow(questionId,totalAnswerLength);
     } else{
       let secondNumLength = secondNum.length;
