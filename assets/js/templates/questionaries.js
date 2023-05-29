@@ -12,30 +12,52 @@ function questionarieListItem(questionarieId, questionarieName, hideScoreButton)
     </div>`
 }
 
+// function questionarieListItemAdmin(questionarieId, questionarieName){
+//     return `<div id="questionarie-grid-item-${questionarieId}" class="row">
+//     <div class="col text-end">
+//      <label><h2 class="px-4"> ${questionarieName} </h2></label>
+//    </div>
+//     <div class="col text-start">
+//      <a href="/score_record.html?questionarie-id=${questionarieId}">
+//        <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
+//      </a>
+//      <a href="/addQuestions.html?questionarie-id=${questionarieId}">
+//        <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
+//      </a>
+//      <a href="#" key="${questionarieId}">
+//        <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
+//      <a>
+//     </div>
+//     </div>`
+// <div class="d-flex flex-wrap flex-lg-row flex-md-row flex-sm-column align-content-center justify-content-md-start justify-content-lg-start">
+// }
+
 function questionarieListItemAdmin(questionarieId, questionarieName){
-    return `<div id="questionarie-grid-item-${questionarieId}" class="row">
-    <div class="col text-end">
-     <label><h2 class="px-4"> ${questionarieName} </h2></label>
+  return `<div id="questionarie-grid-item-${questionarieId}" class="row">
+  <div class="d-flex flex-wrap flex-column flex-md-row  align-content-sm-center justify-content-md-evenly justify-content-lg-between">
+  <div class="col text-center">
+   <label><h2 class="px-4"> ${questionarieName} </h2></label>
+ </div>
+  <div class="col text-center">
+   <a href="/score_record.html?questionarie-id=${questionarieId}">
+     <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
+   </a>
+   <a href="/addQuestions.html?questionarie-id=${questionarieId}">
+     <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
+   </a>
+   <a href="#" key="${questionarieId}">
+     <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
+   <a>
    </div>
-    <div class="col text-start">
-     <a href="/score_record.html?questionarie-id=${questionarieId}">
-       <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
-     </a>
-     <a href="/addQuestions.html?questionarie-id=${questionarieId}">
-       <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
-     </a>
-     <a href="#" key="${questionarieId}">
-       <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
-     <a>
-    </div>
-    </div>`
+  </div>
+  </div>`
 }
 
 
 
 
   function appendDivisionQuestions(questionId,countQuestion,firstNum,secondNum,correctAnswerObj){
-    return `<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
+    return `<div id="question-col-${questionId}" class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
     <div class="card text-center">
       <div class="card-header">Question ${countQuestion}</div>
       <div class="card-body">

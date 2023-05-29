@@ -12,6 +12,12 @@ function createNewQuestionarie(newQuestionarieKey,testName,popupData){
           },
           // scoreAttempts: {},
           isQuestionariePublished: false,
+          isModified:false,
+          modifiedDate: {
+            day: 10,
+            month: 10,
+            year: 2020
+        }
         },
       };
 
@@ -106,23 +112,32 @@ function createNewUserRegistrationObject(newUserID,registrationData,sessionDate)
               day: sessionDate[0],
               month: sessionDate[1],
               year: sessionDate[2]
-            }, //"YYYY-MM-DD"
+            },
             isAdmin: false,
             isLoggedIn: true,
             scores: {},
-            notifications: {
-                n1: {description: ""},
-                creationDate: {
-                    day: "",
-                    month: "",
-                    year: ""
-                } //"YYYY-MM
+            inbox: {
+             
             }
-      },
-      
+      }
     };
     console.log("New Registered user: ",newUserObject);
     return newUserObject;
+}
+
+function createNewNotificationObject(newNotificationId,description){
+  let currentDate = getSessionDate();
+  let newNotificationObj = {
+    [newNotificationId]: {
+      description: description,
+      creationDate: {
+        day: currentDate[0],
+        month: currentDate[1],
+        year: currentDate[2]
+      }
+}
+  }
+  return newNotificationObj;
 }
 
 function getSessionDate(){
@@ -132,4 +147,10 @@ function getSessionDate(){
   let year = currentDate.getFullYear();
   console.log("Current date: day, month, year ---",[day,month,year]);
   return ([day,month,year]);
+}
+
+function getMonthName(monthNumber) {
+  const date = new Date();
+  date.setMonth(monthNumber - 1);
+  return date.toLocaleString('en-US', { month: 'short' });
 }

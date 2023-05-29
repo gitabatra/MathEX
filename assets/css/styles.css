@@ -12,17 +12,9 @@
  {
     font-family: 'Helvetica', 'Arial', sans-serif;
     font-size: large;
-    display: flex;
- }
- .heading {
-   width:50%;
- }
- .addTestPapers { 
-    width:50%;
  }
 
  .addTestBtn {
-    float: right;
     font-size: large;
     background-color: #0C2D48;
     color: #fff;
@@ -58,7 +50,7 @@
 }
 
 .nav-pills > li > a.nav-link.active {
-  background-color: #0C2D48;;
+  background-color: #1572A1;
   color: white;
 }
 
@@ -127,12 +119,6 @@
   border: 2px solid #BDBDBD;
   border-radius: 10px;
 }
-/* .formAlign {
-  margin: 0% 10%;
-  border: 2px solid #BDBDBD;
-  border-radius: 10px;
-  padding: 2rem;
-} */
 
 .testPapers > .row  {
   border:2px solid black;
@@ -193,8 +179,8 @@
 .inputDivisionBox {
   width:60px;
   text-align:center;
-  background-color:#90CAF9;
-  border:none;
+  background-color:#B1D4E0;
+  border:1px solid #0C2D48;
 }
 
 .inputDivisionBox:focus {
@@ -205,7 +191,7 @@
   width:60px;
   text-align:center;
   background-color:#E1BEE7;
-  border:none;
+  border:1px solid #0C2D48;
 }
 
 .inputRemainderBox:focus {
@@ -227,4 +213,38 @@
   font-weight: 400;
   color: #1572A1;
   text-decoration: underline;
+}
+
+.inbox > .row  {
+  border:1px solid #BDBDBD;
+  border-radius: 10px;
+  /* margin: 1% auto;  */
+  padding:1% 3%;
+  text-align: left;
+  font-size: small;
+}
+
+.editNotification {
+     background-color: #E8F5E9;
+}
+
+.removeNotification {
+     background-color: #FBE9E7;
+}
+
+.newNotification {
+     background-color: #E3F2FD;
+}
+
+.link-secondary:active {
+  color: #E3F2FD;
+}
+
+.questionaryStatus{
+  color: green;
+  font-size: medium;
+  font-weight: 600;
+}
+.statusModified{
+  color: red;
 }

@@ -61,11 +61,24 @@
                   ><i class="fas fa-user-gear fa-sm"></i> Admin</a
                 >
               </li>
+              <li class="nav-item px-2">
+                <a
+                  id="navbar-user-management-btn"
+                  class="nav-link"
+                  href="#"
+                  onclick="onChange(this)"
+                  ><i class="fas fa-users-gear fa-sm"></i></i> User Management</a
+                >
+              </li>
             </ul>
           </div>
           <div class="d-flex align-items-center">
+            <a class="link-secondary me-3 px-2" id="navbar-notification-btn" href="#">
+              <i class="fas fa-envelope fa-lg"></i>
+              <span id="inbox-total-notification" class="badge rounded-pill badge-notification bg-danger"></span>
+            </a>
             <!-- Icon -->
-            <a class="link-secondary me-3" id="navbar-logout-btn" href="#">
+            <a class="link-secondary me-3 px-2" id="navbar-logout-btn" href="#">
               <i class="fas fa-power-off"></i> Logout
             </a>
           </div>
@@ -73,20 +86,19 @@
       </nav>
     </header>
     <section id="testPapers">
-      <div class="container">
-        <div class="heading">
-          <h1>List of Test Papers</h1>
-        </div>
-        <div class="addTestPapers">
-          <button
-            id="add-new-questionarie-btn"
-            class="btn btn-info addTestBtn"
-            href="#"
-            role="button"
-          >
-            Add New Test Paper
-          </button>
-        </div>
+     <div class="container">
+      <div class="d-flex flex-wrap flex-column flex-md-row  align-content-sm-center justify-content-md-evenly justify-content-lg-between">
+          <div class="col text-center"><h1>List of Test Papers</h1></div>
+              <div class="col text-center">  <button
+          id="add-new-questionarie-btn"
+          class="btn btn-info addTestBtn"
+          href="#"
+          role="button"
+        >
+          Add New Test Paper
+        </button></div>
+          
+       </div>
       </div>
       <div class="testPaperList">
         <div id="questionarie-grid" class="testPapers justify-content-center">
@@ -115,6 +127,7 @@
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
     <script type="text/javascript" src="assets/js/templates/scores.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
+    <script type="text/javascript" src="assets/js/users.js"></script>
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
   </body>

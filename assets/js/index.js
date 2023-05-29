@@ -26,7 +26,7 @@ function checkIfLoggedIn(){
      let currrentUser = userObj[loggedInUserID];
    
      adminRestrictedPathnames = [
-        "/admin.html", "/addNewTest.html","/addQuestions.html"
+        "/admin.html", "/addNewTest.html","/addQuestions.html", "/userManagement.html"
      ]
      if(currrentUser.isAdmin != true && adminRestrictedPathnames.includes(pathname)){
       window.location.replace("/index.html");

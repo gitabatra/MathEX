@@ -63,11 +63,24 @@
                   ><i class="fas fa-user-gear fa-sm"></i> Admin</a
                 >
               </li>
+              <li class="nav-item px-2">
+                <a
+                  id="navbar-user-management-btn"
+                  class="nav-link"
+                  href="#"
+                  onclick="onChange(this)"
+                  ><i class="fas fa-users-gear fa-sm"></i></i> User Management</a
+                >
+              </li>
             </ul>
           </div>
           <div class="d-flex align-items-center">
+            <a class="link-secondary me-3 px-2" id="navbar-notification-btn" href="#">
+              <i class="fas fa-envelope fa-lg"></i>
+              <span id="inbox-total-notification" class="badge rounded-pill badge-notification bg-danger"></span>
+            </a>
             <!-- Icon -->
-            <a class="link-secondary me-3"id="navbar-logout-btn" href="#">
+            <a class="link-secondary me-3 px-2"id="navbar-logout-btn" href="#">
               <i class="fas fa-power-off"></i> Logout
             </a>
           </div>
@@ -78,6 +91,9 @@
       <div class="bigHeading">
         <h1 id="add-heading-questionarie">Test</h1>
       </div>
+      <p id="questionary-status" class="text-end px-4 questionaryStatus">
+       <!-- Status : Published -->
+      </p>
       <form class="align-items-sm-center">
         <div id="add-question-from-popupdata" class="mb-4">
         </div>
@@ -93,8 +109,15 @@
           <input
             type="button"
             id="publish-btn"
-            class="btn btn-dark saveBtn"
+            class="btn btn-dark saveBtn publish-questionarie-msg"
             value="Publish"
+          />
+          <input
+            type="button"
+            id="notify-btn"
+            class="btn btn-dark saveBtn notify-questionarie-msg"
+            value="Notify Users"
+            hidden
           />
           
         </div>
@@ -230,7 +253,7 @@
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
     <script type="text/javascript" src="assets/js/templates/scores.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
-   
+    <script type="text/javascript" src="assets/js/users.js"></script>
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
   </body>
@@ -238,11 +261,11 @@
     $(document).ready(function () {
     $("#popup-form").parsley().validate();
     let $modal = $("#basicQuestionModal");
-$modal.draggable({
-  handle: ".modal-header",
-});
+    $modal.draggable({
+    handle: ".modal-header",
+    });
 //$modal.resizable();
-$(document).ready(function () {
+// $(document).ready(function () {
         toastr.options = {
           debug: false,
           newestOnTop: false,
@@ -251,8 +274,8 @@ $(document).ready(function () {
           progressBar: false,
           onclick: null,
           fadeIn: 300,
-          fadeOut: 1000,
-          timeOut: 1000,
+          fadeOut: 2000,
+          timeOut: 2000,
           extendedTimeOut: 1000,
         };
        
@@ -262,8 +285,27 @@ $(document).ready(function () {
       
           toastr.success("Published succesfully.");
         });
+    
+    //check if questioanry is published then disable the publish button
+    let questionaries = getQuestionaries();
+    let questioanryId = getQuestionarieID();
+    console.log("-----------------------------------Ques Id: ",questioanryId);
+    let questioanrieObj = questionaries[questioanryId];
+    if(questioanrieObj.isQuestionariePublished){
+      console.log("Questionarie is already published..");
+      $("input#publish-btn").hide();
       
-      });
+      $("p#questionary-status").text("Status: Published");
+    }
+    // if(questioanrieObj.isQuestionariePublished && questioanrieObj.isModified){
+    //   $('input#notify-btn').removeAttr('hidden');
+    // }
+    
+    $(".notify-questionarie-msg").click(function () {
+          // show when the button is clicked
+      toastr.success("Notification sent to all users!!");
+    });
+  
     });
   </script>
 </html>

@@ -9,7 +9,7 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
 }
 
 function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionType){
-  return`<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
+  return`<div id="question-col-${questionId}" class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
   <div class="card text-center">
     <div class="card-header">Question ${countQuestion}</div>
     <div class="card-body">
@@ -133,7 +133,7 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
   }
 
   function appendMultiplicationQuestionsStudentQuestionary(questionId,countQuestion,questionType){
-    return(`<div id="question-col-${questionId}" class="col-sm-6 col-md-4">
+    return(`<div id="question-col-${questionId}" class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
     <div class="card text-center">
     <div class="card-header">Question ${countQuestion}</div>
     <div class="card-body">
