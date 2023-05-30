@@ -91,9 +91,18 @@
       <div class="bigHeading">
         <h1 id="add-heading-questionarie">Test</h1>
       </div>
-      <p id="questionary-status" class="text-end px-4 questionaryStatus">
-       <!-- Status : Published -->
-      </p>
+      <div class="row">
+        <div class="col-auto">
+        <p id="questionary-status" class="px-2 questionaryStatus">
+          <!-- Status : Published -->
+         </p>
+         </div>
+         <div class="col-auto">
+          <p id="questionary-modified-status" class="px-2"></p>
+         </div>
+        
+      </div>
+      
       <form class="align-items-sm-center">
         <div id="add-question-from-popupdata" class="mb-4">
         </div>
@@ -297,9 +306,9 @@
       
       $("p#questionary-status").text("Status: Published");
     }
-    // if(questioanrieObj.isQuestionariePublished && questioanrieObj.isModified){
-    //   $('input#notify-btn').removeAttr('hidden');
-    // }
+    if(questioanrieObj.isQuestionariePublished && questioanrieObj.isModified){
+      changeQuestionaryStatus(questioanrieObj);
+    }
     
     $(".notify-questionarie-msg").click(function () {
           // show when the button is clicked

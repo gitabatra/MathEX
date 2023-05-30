@@ -54,10 +54,7 @@ function initEvents() {
     if(questionaries[questionarieId].isQuestionariePublished){
       Object.assign(questionaries[questionarieId],{isModified: true});
       localStorage.setItem("questionaries", JSON.stringify(questionaries));
-      toastr.warning("Notify Users once editing is done!");
-      $('input#notify-btn').removeAttr('hidden');
-      $("p#questionary-status").text("Status: Modified");
-      $("p#questionary-status").addClass("statusModified");
+      changeQuestionaryStatus(questionaries[questionarieId]);
     }
   });
 

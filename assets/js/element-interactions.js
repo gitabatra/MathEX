@@ -106,23 +106,26 @@ function appendNewQuestionToList(popupData) {
       }
     });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    toastr.warning("Notify Users once editing is done!");
-    $('input#notify-btn').removeAttr('hidden');
-    $("p#questionary-status").text("Status: Modified");
-    $("p#questionary-status").addClass("statusModified");
+    changeQuestionaryStatus(questionaries[questionarieId]);
     }
     if(questionarieObject.isModified){
-      toastr.warning("Notify Users once editing is done!");
-      $('input#notify-btn').removeAttr('hidden');
-      $("p#questionary-status").text("Status: Modified");
-      $("p#questionary-status").addClass("statusModified");
+      changeQuestionaryStatus(questionaries[questionarieId]);
     }
   }
   appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);
   setQuestionary(questionarieId, questionarieObject);
 }
 
+function changeQuestionaryStatus(questionarieObj){
+  let modifiedDate = questionarieObj.modifiedDate;
+  let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
+  // let text = ""
+  toastr.warning("Notify Users once editing is done!");
+      $('input#notify-btn').removeAttr('hidden');
+      $("p#questionary-modified-status").text("Modified on "+dateObj.toLocaleDateString());
+      $("p#questionary-modified-status").addClass("statusModified");
 
+}
 
 
 //Refresh QuestionList
