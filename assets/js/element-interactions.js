@@ -196,13 +196,13 @@ function refreshScoreRecordAttemptAdmin(scoreRecordObject,userId,attemptId,attem
     let givenInputAnswer = "Q : "+givenAnswer.quotient+" , R : "+givenAnswer.remainder;
     let calcCorrectAnswer = "Q : "+correctAnswer.quotient+" , R : "+correctAnswer.remainder;
     $("div#score-accordion-body-"+ `${attemptId}`+"-" + `${attemptCount}`)
-    .append(appendScoreRecordAdmin(question,questionId,attemptId,attemptCount,calcCorrectAnswer,givenInputAnswer));
+    .append(appendScoreRecord(question,questionId,attemptCount,calcCorrectAnswer,givenInputAnswer));
     if(givenAnswer.quotient == correctAnswer.quotient && givenAnswer.remainder == correctAnswer.remainder){
       console.log("Display indicator for AttemptID: ",attemptId);
       displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
     } else {
       console.log("Display indicator for AttemptID: ",attemptId);
-      displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
+      displayWrongSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
     }
   }else {
   $("div#score-accordion-body-"+ `${attemptId}`+"-" + `${attemptCount}`)
@@ -214,7 +214,7 @@ function refreshScoreRecordAttemptAdmin(scoreRecordObject,userId,attemptId,attem
   } else {
     console.log("Score Record Check -- Question is Wrong");
     console.log("Display indicator for AttemptID: ",attemptId);
-    displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
+    displayWrongSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
   }
   }
 }
