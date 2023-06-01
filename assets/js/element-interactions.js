@@ -180,8 +180,10 @@ function appendquestionForStudent(questionId,nDigits,countQuestion,questionType,
   }
 }
 
-function refreshScoreRecordAttemptAdmin(scoreRecordObject,attemptId,attemptCount,questionId,countQuestion){
-  console.log("Score Record Object: ",scoreRecordObject,"Question Id: ",questionId);
+function refreshScoreRecordAttemptAdmin(scoreRecordObject,userId,attemptId,attemptCount,questionId,countQuestion){
+  console.log("Score Record Object: ",scoreRecordObject,"user Id: ",userId,"Question Id: ",questionId);
+  // let attemptKey = userId+"-"+attemptId;
+  // console.log("Attempt Key: ",attemptKey);
   let firstNum = scoreRecordObject.questions[questionId].num1;
   let secondNum = scoreRecordObject.questions[questionId].num2;
   let questionType = scoreRecordObject.questions[questionId].type;
@@ -194,21 +196,25 @@ function refreshScoreRecordAttemptAdmin(scoreRecordObject,attemptId,attemptCount
     let givenInputAnswer = "Q : "+givenAnswer.quotient+" , R : "+givenAnswer.remainder;
     let calcCorrectAnswer = "Q : "+correctAnswer.quotient+" , R : "+correctAnswer.remainder;
     $("div#score-accordion-body-"+ `${attemptId}`+"-" + `${attemptCount}`)
-    .append(appendScoreRecord(question,questionId,attemptCount,calcCorrectAnswer,givenInputAnswer));
+    .append(appendScoreRecordAdmin(question,questionId,attemptId,attemptCount,calcCorrectAnswer,givenInputAnswer));
     if(givenAnswer.quotient == correctAnswer.quotient && givenAnswer.remainder == correctAnswer.remainder){
-      displayCorrectSignOnScoreRecord(attemptCount,questionId);
+      console.log("Display indicator for AttemptID: ",attemptId);
+      displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
     } else {
-      displayWrongSignOnScoreRecord(attemptCount,questionId);
+      console.log("Display indicator for AttemptID: ",attemptId);
+      displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
     }
   }else {
   $("div#score-accordion-body-"+ `${attemptId}`+"-" + `${attemptCount}`)
-    .append(appendScoreRecord(question,questionId,attemptCount,correctAnswer,givenAnswer));
+    .append(appendScoreRecordAdmin(question,questionId,attemptId,attemptCount,correctAnswer,givenAnswer));
   if (givenAnswer === correctAnswer) {
     console.log("Score Record Check -- Question is Correct");
-    displayCorrectSignOnScoreRecord(attemptCount,questionId);
+    console.log("Display indicator for AttemptID: ",attemptId);
+    displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
   } else {
     console.log("Score Record Check -- Question is Wrong");
-    displayWrongSignOnScoreRecord(attemptCount,questionId);
+    console.log("Display indicator for AttemptID: ",attemptId);
+    displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
   }
   }
 }
@@ -235,7 +241,7 @@ function displayUserNames(questionarieObject,questionarieId){
       let countQuestion = 1;
       for (let questionId in scoreRecordObject["questions"]) {
         console.log("questionId: ",questionId);
-        refreshScoreRecordAttemptAdmin(scoreRecordObject,attemptId,attemptCount,questionId,countQuestion);
+        refreshScoreRecordAttemptAdmin(scoreRecordObject,u_k,attemptId,attemptCount,questionId,countQuestion);
         countQuestion = countQuestion + 1;
       }
       attemptCount = attemptCount + 1;
@@ -333,4 +339,16 @@ function displayCorrectSignOnScoreRecord(attemptCount,questionId){
 function displayWrongSignOnScoreRecord(attemptCount,questionId){
   $("i#question-" + `${attemptCount}`+ "-" +`${questionId}` + "-wrong").show();
   $(`i#question-${attemptCount}-${questionId}-correct`).hide();
+}
+
+function displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId){
+  console.log("Displaying correct sign for Admin........ : AttemptCount: ",attemptCount);
+  $(`i#question-${attemptId}-${attemptCount}-${questionId}-correct`).show();
+  $(`i#question-${attemptId}-${attemptCount}-${questionId}-wrong`).hide();
+}
+
+function displayWrongSignOnScoreRecordAdmin(attemptCount,questionId,attemptId){
+  console.log("Displaying wrong sign for Admin........ : AttemptCount: ",attemptCount);
+ $(`i#question-${attemptId}-${attemptCount}-${questionId}-wrong`).show();
+ $(`i#question-${attemptId}-${attemptCount}-${questionId}-correct`).hide();
 }
