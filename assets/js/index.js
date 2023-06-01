@@ -17,7 +17,7 @@ function checkIfLoggedIn(){
     console.log("Location is not login or register....");
     if(!("loggedInUserID" in localStorage) || (localStorage.getItem("loggedInUserID") === "null")){
       console.log("Item doesn't exist in localstorage");
-      window.location.replace("/loginRegister.html");
+      window.location.replace("./loginRegister.html");
    }else{
      console.log("Item exists in localstoarge");
      forcedUserLogoutTimout = setTimeout(logout, 1800000);
@@ -29,7 +29,7 @@ function checkIfLoggedIn(){
         "/admin.html", "/addNewTest.html","/addQuestions.html", "/userManagement.html"
      ]
      if(currrentUser.isAdmin != true && adminRestrictedPathnames.includes(pathname)){
-      window.location.replace("/index.html");
+      window.location.replace("./index.html");
      }
 
      initEvents();
