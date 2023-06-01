@@ -81,3 +81,18 @@ function scoreRecord(questionarieId, questionarieName){
     </div>
   </div>`
   }
+
+  function appendScoreRecordAdmin(question,questionId,attemptId,attemptCount,correctAnswer,givenAnswer){
+    return `<div class="row">
+    <div class="col-sm-12 col-md-4">${question}</div>
+    <div class="col-sm-12 col-md-4 correctAns">Correct Answer - ${correctAnswer}</div>
+    <div class="col-sm-12 col-md-4 givenAns">
+      Given Answer -  ${givenAnswer}
+     
+    </div>
+  </div>`
+  }
+  /*
+   <i id="question-${attemptId}-${attemptCount}-${questionId}-correct" class="fas fa-check text-success"></i>
+      <i id="question-${attemptId}-${attemptCount}-${questionId}-wrong" class="fas fa-xmark text-danger"></i>
+      */

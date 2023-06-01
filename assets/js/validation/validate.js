@@ -25,8 +25,6 @@
 
 function validatePopUpData(popupData,event){
   console.log("Validating popup data.....");
-   
-      console.log("Validating popup data.....");
       event.preventDefault();
       popupData["num1"] = popupData["num1"].replace(/[^0-9 ]/g, "");
       popupData["num2"] = popupData["num2"].replace(/[^0-9 ]/g, "");

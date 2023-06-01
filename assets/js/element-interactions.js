@@ -3,11 +3,13 @@ function initElements() {
   console.log("Admin or not: ",isAdmin);
   if(!isAdmin){
     $("a#navbar-admin-btn").hide();
+    $("a#navbar-user-management-btn").hide();
   }else {
     $("a#navbar-admin-btn").show();
+    $("a#navbar-user-management-btn").show();
   }
- // checkUserLoggedIn();
   initQuestions();
+  initUsers();
 }
 
 function initQuestions() {
@@ -85,8 +87,41 @@ function appendNewQuestionToList(popupData) {
   console.log("Pop up data while appending for Admin: ",popupData);
   questionarieObject["questions"][newQuestionKey] = popupData;
   console.log(questionarieObject["questions"][newQuestionKey]);
+  console.log("*******************************Questionary is published or not: ",questionarieObject.isQuestionariePublished);
+  let isModified;
+  if(questionarieObject.isQuestionariePublished){
+    console.log("Questionarie is already published so modify the date...");
+    //check the date
+    console.log("Creation date: ",questionarieObject.modifiedDate);
+    let isModified = checkQuestionaryUpdated(questionarieObject.modifiedDate);
+    //modify the date and set isModified to true
+    if(isModified){
+      let currentDate = getSessionDate();
+      Object.assign(questionaries[questionarieId], {
+        isModified:true,
+        modifiedDate: {
+          day: currentDate[0],
+          month: currentDate[1],
+          year: currentDate[2]
+      }
+    });
+    localStorage.setItem("questionaries", JSON.stringify(questionaries));
+    changeQuestionaryStatus(questionaries[questionarieId]);
+    }
+  }
   appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);
   setQuestionary(questionarieId, questionarieObject);
+}
+
+function changeQuestionaryStatus(questionarieObj){
+  let modifiedDate = questionarieObj.modifiedDate;
+  let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
+  // let text = ""
+  toastr.warning("Notify Users once editing is done!");
+      $('input#notify-btn').removeAttr('hidden');
+      $("p#questionary-modified-status").text("Modified on "+dateObj.toLocaleDateString());
+      $("p#questionary-modified-status").addClass("statusModified");
+
 }
 
 
@@ -145,47 +180,10 @@ function appendquestionForStudent(questionId,nDigits,countQuestion,questionType,
   }
 }
 
-
-  // for (const questionarieId in questionaries) {
-  //     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
-  //      // let scoreObject = questionaries[questionarieId]["scoreAttempts"];
-  //       console.log("Questionarie ID: ",questionarieId);
-       
-  //     } else {
-  //       console.log("The following Id not found", questionarieId);
-  //     }
-  //   }
-//}
-
-
-// function getScoresAdmin(){
-//   let questionaries = getQuestionaries();
-//   let questionarieId = getQuestionarieID();
-//   let users = getRegisteredUsers();
-
-//   console.log("users: ",users);
-//   for(const [u_k, u_v] of Object.entries(users)){
-//     console.log(`USER: ${u_v["username"]}\n${'_'.repeat(10)}\n${u_v["scores"]}`);
-//     //u_v["scores"]
-//     if(!u_v["isAdmin"]){
-//       console.log("id: ",u_k);
-//       let scoreId = questionarieId+"_"+u_k;
-//       console.log("Score id: ",scoreId);
-//       if(Object.keys(u_v["scores"][scoreId]["scoreAttempts"])!=0 ){
-//         console.log("Score Objects: ",  Object.values(u_v["scores"][scoreId]["scoreAttempts"]));
-//       }else{
-//         console.log("Attempts are not made yet...");
-//       }
-//     }else{
-//       console.log("User is Admin....");
-//     }
-//     }
-    
-//     console.log(`\n${'*'.repeat(10)}\n`);
-// }
-
-function refreshScoreRecordAttemptAdmin(scoreRecordObject,attemptId,attemptCount,questionId,countQuestion){
-  console.log("Score Record Object: ",scoreRecordObject,"Question Id: ",questionId);
+function refreshScoreRecordAttemptAdmin(scoreRecordObject,userId,attemptId,attemptCount,questionId,countQuestion){
+  console.log("Score Record Object: ",scoreRecordObject,"user Id: ",userId,"Question Id: ",questionId);
+  // let attemptKey = userId+"-"+attemptId;
+  // console.log("Attempt Key: ",attemptKey);
   let firstNum = scoreRecordObject.questions[questionId].num1;
   let secondNum = scoreRecordObject.questions[questionId].num2;
   let questionType = scoreRecordObject.questions[questionId].type;
@@ -198,21 +196,25 @@ function refreshScoreRecordAttemptAdmin(scoreRecordObject,attemptId,attemptCount
     let givenInputAnswer = "Q : "+givenAnswer.quotient+" , R : "+givenAnswer.remainder;
     let calcCorrectAnswer = "Q : "+correctAnswer.quotient+" , R : "+correctAnswer.remainder;
     $("div#score-accordion-body-"+ `${attemptId}`+"-" + `${attemptCount}`)
-    .append(appendScoreRecord(question,questionId,attemptCount,calcCorrectAnswer,givenInputAnswer));
+    .append(appendScoreRecordAdmin(question,questionId,attemptId,attemptCount,calcCorrectAnswer,givenInputAnswer));
     if(givenAnswer.quotient == correctAnswer.quotient && givenAnswer.remainder == correctAnswer.remainder){
-      displayCorrectSignOnScoreRecord(attemptCount,questionId);
+      console.log("Display indicator for AttemptID: ",attemptId);
+      displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
     } else {
-      displayWrongSignOnScoreRecord(attemptCount,questionId);
+      console.log("Display indicator for AttemptID: ",attemptId);
+      displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
     }
   }else {
   $("div#score-accordion-body-"+ `${attemptId}`+"-" + `${attemptCount}`)
-    .append(appendScoreRecord(question,questionId,attemptCount,correctAnswer,givenAnswer));
+    .append(appendScoreRecordAdmin(question,questionId,attemptId,attemptCount,correctAnswer,givenAnswer));
   if (givenAnswer === correctAnswer) {
     console.log("Score Record Check -- Question is Correct");
-    displayCorrectSignOnScoreRecord(attemptCount,questionId);
+    console.log("Display indicator for AttemptID: ",attemptId);
+    displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
   } else {
     console.log("Score Record Check -- Question is Wrong");
-    displayWrongSignOnScoreRecord(attemptCount,questionId);
+    console.log("Display indicator for AttemptID: ",attemptId);
+    displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId);
   }
   }
 }
@@ -223,8 +225,6 @@ function displayUserNames(questionarieObject,questionarieId){
   console.log("users: ",users);
   $("div#questionarie-score-record").append( scoreRecord(questionarieId, questionarieObject["name"]));
   for(const [u_k, u_v] of Object.entries(users)){
-   // console.log(`USER: ${u_v["username"]}\n${'_'.repeat(10)}\n${u_v["scores"]}`);
-    //u_v["scores"]
     if(!u_v["isAdmin"]){
       console.log("id: ",u_k);
       let scoreId = questionarieId+"_"+u_k;
@@ -233,11 +233,7 @@ function displayUserNames(questionarieObject,questionarieId){
       let username = u_v["username"];
       console.log("Score Objects: ", (u_v["scores"][scoreId]));
       if((u_v["scores"][scoreId]) && Object.keys(u_v["scores"][scoreId]["scoreAttempts"])!=0 ){
-        // console.log("Score Objects: ", (u_v["scores"][scoreId]["scoreAttempts"]));
-        // let scoreObject = Object.keys(u_v["scores"][scoreId]);
-        //  console.log("Score object: ",scoreObject);
          let attemptCount = 1;
-      
     for(const attemptId in (u_v["scores"][scoreId]["scoreAttempts"])){
       console.log("Attempt id: ",attemptId);
       let scoreRecordObject = (u_v["scores"][scoreId]["scoreAttempts"])[attemptId];
@@ -245,7 +241,7 @@ function displayUserNames(questionarieObject,questionarieId){
       let countQuestion = 1;
       for (let questionId in scoreRecordObject["questions"]) {
         console.log("questionId: ",questionId);
-        refreshScoreRecordAttemptAdmin(scoreRecordObject,attemptId,attemptCount,questionId,countQuestion);
+        refreshScoreRecordAttemptAdmin(scoreRecordObject,u_k,attemptId,attemptCount,questionId,countQuestion);
         countQuestion = countQuestion + 1;
       }
       attemptCount = attemptCount + 1;
@@ -280,10 +276,7 @@ function refreshScoreRecord() {
     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
       let questionarieObject = questionaries[questionarieId];
       displayUserNames(questionarieObject,questionarieId);
-     
-       //getScoresAdmin();
     }
-    //displayScoreRecordAdmin();
     console.log("User is Admin..");
   }else{
     console.log("Initializing score record for Questionarie: ", questionarieId);
@@ -303,41 +296,7 @@ function refreshScoreRecord() {
     }
   }
   }
-  
 }
-
-// //Score -Record
-// function refreshScoreRecord() {
-//   console.log("refreshing Score record.........................");
-//   let questionaries = getQuestionaries();
-//   let questionarieId = getQuestionarieID();
-//   //check user is admin or student
-//   let userObj = getRegisteredUsers();
-//   let loggedInUserId = localStorage.getItem("loggedInUserID");
-//   let isAdmin = userObj[loggedInUserId].isAdmin;
-//   console.log("Current user is Student or Admin : ",isAdmin);
-//   // if(isAdmin){
-//   //   getScoresAdmin();
-//   // }else{
-//     console.log("Initializing score record for Questionarie: ", questionarieId);
-//     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
-//     let questionarieObject = questionaries[questionarieId];
-//     $("div#questionarie-score-record").append( scoreRecord(questionarieId, questionarieObject["name"]));
-//     let attemptCount = 1;
-//     for(const attemptId in questionarieObject["scoreAttempts"]){
-//       let scoreRecordObject = questionarieObject["scoreAttempts"][attemptId];
-//       $("div#accordion-"+`${questionarieId}`).prepend(appendAttemptHeader(questionarieId,scoreRecordObject.dateQuestionarie,scoreRecordObject.score,attemptCount));
-//       let countQuestion = 1;
-//       for (const questionId in scoreRecordObject["questions"]) {
-//         refreshScoreRecordAttempt(scoreRecordObject,attemptCount,questionId,countQuestion);
-//         countQuestion = countQuestion + 1;
-//       }
-//       attemptCount = attemptCount + 1;
-//     }
-//   //}
-//   }
-  
-// }
 
 //Append Score-Record Questions
 function refreshScoreRecordAttempt(scoreRecordObject,attemptCount,questionId,countQuestion){
@@ -380,4 +339,16 @@ function displayCorrectSignOnScoreRecord(attemptCount,questionId){
 function displayWrongSignOnScoreRecord(attemptCount,questionId){
   $("i#question-" + `${attemptCount}`+ "-" +`${questionId}` + "-wrong").show();
   $(`i#question-${attemptCount}-${questionId}-correct`).hide();
+}
+
+function displayCorrectSignOnScoreRecordAdmin(attemptCount,questionId,attemptId){
+  console.log("Displaying correct sign for Admin........ : AttemptCount: ",attemptCount);
+  $(`i#question-${attemptId}-${attemptCount}-${questionId}-correct`).show();
+  $(`i#question-${attemptId}-${attemptCount}-${questionId}-wrong`).hide();
+}
+
+function displayWrongSignOnScoreRecordAdmin(attemptCount,questionId,attemptId){
+  console.log("Displaying wrong sign for Admin........ : AttemptCount: ",attemptCount);
+ $(`i#question-${attemptId}-${attemptCount}-${questionId}-wrong`).show();
+ $(`i#question-${attemptId}-${attemptCount}-${questionId}-correct`).hide();
 }

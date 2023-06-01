@@ -1,9 +1,3 @@
-
-// function generateNewScoreAttemptID(questionarieId){
-//     //getcurrent date in format 20230501 and generate new key
-//     let scoreAttemptID = "sa-20230405-1-"+questionarieId;
-// }
-
 function createNewQuestionarie(newQuestionarieKey,testName,popupData){
     let newQuestionariesObj = {
         [newQuestionarieKey]: {
@@ -18,43 +12,24 @@ function createNewQuestionarie(newQuestionarieKey,testName,popupData){
           },
           // scoreAttempts: {},
           isQuestionariePublished: false,
+          isModified:false,
+          isNotificationSent: false,
+          modifiedDate: {
+            day: 10,
+            month: 10,
+            year: 2020
+        }
         },
       };
+
+      // FOR LOOP ON ALL USERS AND ADD A NOTIFICATION SAYING A NEW QUESTIONARIE IS AVAILABLE
+
       return newQuestionariesObj;
 }
 
-// function createNewScoreAttemptID(questionarieId,loggedInUserId){
-//     console.log("Creating new Score attempt Id for user: ",loggedInUserId);
-//     let currentDate = new Date();
-//      let year = currentDate.getFullYear().toString();
-//      let month = currentDate.getMonth().toString();
-//      let day = currentDate.getDate().toString();
-//      month = (month>9 ? "":"0")+month;
-//      day = (day>9 ? "":"0")+day;
-//      let dateString =  (year+month+day);
-
-//      let questionaries = getQuestionaries();
-//      let questionarieObj = questionaries[questionarieId];
-
-//     //  let keys =  Object.keys(questionarieObj["scoreAttempts"]);
-//     //  console.log("keys saved in scoreAttempts: ",keys)
-    
-//      let qlength = Object.keys(questionarieObj["scoreAttempts"]).length;
-//      let attemptCount = qlength+1;
-//      console.log("ScoreObject Attempts: ",questionarieObj["scoreAttempts"],"Qlength: ",qlength);
-
-//      console.log("Current Date: ",dateString);
-//      dateString = questionarieId+"_"+loggedInUserId+"_"+"sa-"+dateString+"-"+attemptCount;
-//      console.log("New AttemptID :", dateString);
-//      return (dateString);
-// }
 
 function createNewScoreObject(scoreId){
   console.log("Creating new score object...... ");
-  // let currentDate = getDateForQuestionaryAttempt();
-  // console.log("Date String: ",currentDate);
-  // let attemptId =  "sa-"+currentDate+"-1"+"_"+questionarieId+"_"+loggedInUserId;
-  //console.log("First Attempt ID: ",attemptId);
   let newScoreObject = {
      [scoreId] :{
       "scoreAttempts" :{
@@ -138,23 +113,32 @@ function createNewUserRegistrationObject(newUserID,registrationData,sessionDate)
               day: sessionDate[0],
               month: sessionDate[1],
               year: sessionDate[2]
-            }, //"YYYY-MM-DD"
+            },
             isAdmin: false,
             isLoggedIn: true,
             scores: {},
-            notifications: {
-                n1: {description: ""},
-                creationDate: {
-                    day: "",
-                    month: "",
-                    year: ""
-                } //"YYYY-MM
+            inbox: {
+             
             }
-      },
-      
+      }
     };
     console.log("New Registered user: ",newUserObject);
     return newUserObject;
+}
+
+function createNewNotificationObject(newNotificationId,description){
+  let currentDate = getSessionDate();
+  let newNotificationObj = {
+    [newNotificationId]: {
+      description: description,
+      creationDate: {
+        day: currentDate[0],
+        month: currentDate[1],
+        year: currentDate[2]
+      }
+}
+  }
+  return newNotificationObj;
 }
 
 function getSessionDate(){
@@ -164,4 +148,10 @@ function getSessionDate(){
   let year = currentDate.getFullYear();
   console.log("Current date: day, month, year ---",[day,month,year]);
   return ([day,month,year]);
+}
+
+function getMonthName(monthNumber) {
+  const date = new Date();
+  date.setMonth(monthNumber - 1);
+  return date.toLocaleString('en-US', { month: 'short' });
 }

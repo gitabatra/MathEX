@@ -4,33 +4,39 @@ $(document).ready(function () {
   console.log("Initializing Events");
   initLocalStorage();
   checkIfLoggedIn();
-  // initEvents();
-  // initElements();
 });
 
-// function checkIfLoggedIn(){
-//   console.log("logn Id : ", localStorage.getItem("loggedInUserID"),"window location: ",window.location.href);
-//   if(window.location.href != "/login.html" || window.location.href != "/register.html"){
-//     if(localStorage.getItem("loggedInUserID") == null){
-//       console.log("logn Id : ", localStorage.getItem("loggedInUserID"));
-//       window.location.replace = "/login.html"
-//     }
-//   }
-// }
 
 function checkIfLoggedIn(){
-  if(window.location.href != "http://localhost:5500/login.html" && window.location.href != "http://localhost:5500/register.html"){
+  const {
+    host, hostname, href, origin, pathname, port, protocol, search
+  } = window.location
+
+  // if(pathname != "/login.html" && pathname != "/register.html"){
+  if(pathname != "/loginRegister.html"){
     console.log("Location is not login or register....");
     if(!("loggedInUserID" in localStorage) || (localStorage.getItem("loggedInUserID") === "null")){
       console.log("Item doesn't exist in localstorage");
-      //console.log("logn Id : ", localStorage.getItem("loggedInUserID"));
-      window.location.replace("http://localhost:5500/login.html");
+      window.location.replace("/loginRegister.html");
    }else{
      console.log("Item exists in localstoarge");
      forcedUserLogoutTimout = setTimeout(logout, 1800000);
+     let loggedInUserID = localStorage.getItem("loggedInUserID");
+     let userObj = getRegisteredUsers();
+     let currrentUser = userObj[loggedInUserID];
+   
+     adminRestrictedPathnames = [
+        "/admin.html", "/addNewTest.html","/addQuestions.html", "/userManagement.html"
+     ]
+     if(currrentUser.isAdmin != true && adminRestrictedPathnames.includes(pathname)){
+      window.location.replace("/index.html");
+     }
+
      initEvents();
      initElements();
    }
+  }else {
+    console.log("Location is login or Register");
   }
 }
 

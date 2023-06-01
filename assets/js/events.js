@@ -2,7 +2,7 @@ function initEvents() {
   //Open page to add new Questionarie
   $("button#add-new-questionarie-btn").click(function () {
     console.log("Add new Questionarie button event is executing");
-    window.location.href = "http://localhost:5500/addNewTest.html";
+    window.location.href = "/addNewTest.html";
   });
 
   //Delete questionarie
@@ -20,6 +20,14 @@ function initEvents() {
     console.log(targetId);
 
     let questionaries = getQuestionaries();
+    //if questionary was published then push notification that questionary is deleted
+    if(questionaries[questionaryKey].isQuestionariePublished){
+      // let isDateModified = checkQuestionaryUpdated(questionaries[questionaryKey].modifiedDate);
+      // if(isDateModified){
+        console.log("Date is modified, so creating notification..........");
+        createDeleteQuestioanryNotification(questionaryKey);
+      // }
+    }
     delete questionaries[questionaryKey];
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
   });
@@ -44,6 +52,26 @@ function initEvents() {
 
     delete questionaries[questionarieId]["questions"][questionKey];
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
+    if(questionaries[questionarieId].isQuestionariePublished){
+      let isModified = checkQuestionaryUpdated(questionaries[questionarieId].modifiedDate);
+      if(isModified){
+        let currentDate = getSessionDate();
+        Object.assign(questionaries[questionarieId], {
+          isModified:true,
+          modifiedDate: {
+            day: currentDate[0],
+            month: currentDate[1],
+            year: currentDate[2]
+        }
+      });
+      localStorage.setItem("questionaries", JSON.stringify(questionaries));
+      changeQuestionaryStatus(questionaries[questionarieId]);
+    }
+
+      // Object.assign(questionaries[questionarieId],{isModified: true});
+      // localStorage.setItem("questionaries", JSON.stringify(questionaries));
+      // changeQuestionaryStatus(questionaries[questionarieId]);
+    }
   });
 
   $("input#student-questionarie-finish-btn").click(function () {
@@ -129,10 +157,21 @@ function initEvents() {
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
     console.log(questionaries[questionarieId].isQuestionariePublished);
+    let currentDate = getSessionDate();
+    console.log("Date of publishing test: ",currentDate);
     Object.assign(questionaries[questionarieId], {
-      isQuestionariePublished: true
+      isQuestionariePublished: true, modifiedDate: {
+        day: currentDate[0],
+        month: currentDate[1],
+        year: currentDate[2]
+    }
     });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
+    //once published push notification to user that new test is available
+    createNewquestioanryNotification(questionarieId);
+    $("p#questionary-status").text("Status: Published");
+    $("input#publish-btn").hide();
+    $("input#add-new-question-btn").hide();
   });
 
   $("button#pop-up-submit-btn").click(function (event) {
@@ -222,11 +261,15 @@ function onChange(obj) {
   var id = $(obj).attr("id");
   switch (id) {
     case "navbar-student-btn":
-      window.location.href = "http://localhost:5500/index.html";
+      window.location.href = "/index.html";
       break;
 
     case "navbar-admin-btn":
-      window.location.href = "http://localhost:5500/admin.html";
+      window.location.href = "/admin.html";
+      break;
+
+    case "navbar-user-management-btn":
+      window.location.href = "/userManagement.html";
       break;
   }
 }
@@ -346,9 +389,9 @@ function findLoginId(loginData,event){
   // }
 }
 
-$("a#register-new-user").on("click", function(event){
-  console.log("register event is executing.....");
-  window.location.href = "/register.html";
+
+$("a#navbar-notification-btn").on("click", function(event){
+  window.location.href = "/notification.html";
 });
 
 $("a#navbar-logout-btn").on("click", function(event){
@@ -371,5 +414,17 @@ function logout(){
     clearTimeout(forcedUserLogoutTimout);
     forcedUserLogoutTimout = null;
   }   
-  window.location.href = "/login.html";
+  window.location.href = "/loginRegister.html";
 }
+
+// $("h2#add-heading-questionarie").change(function (){
+//   console.log("*************  Heading is changed *************");
+// })
+
+$(document).on("input", "h2#add-heading-questionarie", function () {
+  console.log("*************  Heading is changed *************");
+});
+
+$("h2#add-heading-questionarie").on("input", function(){
+  console.log("*************  Heading is changed *************");
+})
