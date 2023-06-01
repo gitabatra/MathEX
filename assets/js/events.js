@@ -2,7 +2,7 @@ function initEvents() {
   //Open page to add new Questionarie
   $("button#add-new-questionarie-btn").click(function () {
     console.log("Add new Questionarie button event is executing");
-    window.location.href = "/addNewTest.html";
+    window.location.href = "./addNewTest.html";
   });
 
   //Delete questionarie
@@ -105,7 +105,7 @@ function initEvents() {
             Object.assign(userObject["scores"][scoreObjectId]["scoreAttempts"],{[scoreAttemptID]: scoreRecordObj});
             console.log("User object after assigning scores: ",userObject);
             localStorage.setItem("users", JSON.stringify(users));
-            window.location.href = "/index.html";
+            window.location.href = "./index.html";
     }
   });
 
@@ -261,15 +261,15 @@ function onChange(obj) {
   var id = $(obj).attr("id");
   switch (id) {
     case "navbar-student-btn":
-      window.location.href = "/index.html";
+      window.location.href = "./index.html";
       break;
 
     case "navbar-admin-btn":
-      window.location.href = "/admin.html";
+      window.location.href = "./admin.html";
       break;
 
     case "navbar-user-management-btn":
-      window.location.href = "/userManagement.html";
+      window.location.href = "./userManagement.html";
       break;
   }
 }
@@ -321,7 +321,7 @@ function registerNewUser(registrationData,e){
   localStorage.setItem("users", JSON.stringify(userObj));
   //set loggedinUserId to localstorage
   setLoggedInUserId(userObj,newUserId);
-  $('#registration-form').attr('action', '/index.html');
+  $('#registration-form').attr('action', './index.html');
   //window.location.href = "/index.html";
 }
 
@@ -369,9 +369,9 @@ function findLoginId(loginData,event){
         setLoggedInUserId(userObj,userId);
         console.log("Admin is loggin in : ",userObj,userObj[userId].isAdmin);
         if(userObj[userId].isAdmin){
-          window.location.href = "/admin.html";
+          window.location.href = "./admin.html";
         } else {
-          window.location.href = "/index.html";
+          window.location.href = "./index.html";
         }
        
         // $('#login-form').attr('action', '/index.html');
@@ -391,7 +391,7 @@ function findLoginId(loginData,event){
 
 
 $("a#navbar-notification-btn").on("click", function(event){
-  window.location.href = "/notification.html";
+  window.location.href = "./notification.html";
 });
 
 $("a#navbar-logout-btn").on("click", function(event){
@@ -414,17 +414,5 @@ function logout(){
     clearTimeout(forcedUserLogoutTimout);
     forcedUserLogoutTimout = null;
   }   
-  window.location.href = "/loginRegister.html";
+  window.location.href = "./loginRegister.html";
 }
-
-// $("h2#add-heading-questionarie").change(function (){
-//   console.log("*************  Heading is changed *************");
-// })
-
-$(document).on("input", "h2#add-heading-questionarie", function () {
-  console.log("*************  Heading is changed *************");
-});
-
-$("h2#add-heading-questionarie").on("input", function(){
-  console.log("*************  Heading is changed *************");
-})
