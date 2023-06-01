@@ -37,6 +37,7 @@ function checkIfLoggedIn(){
    }
   }else {
     console.log("Location is login or Register");
+    localStorage.setItem("loggedInUserID","null");
   }
 }
 
