@@ -273,8 +273,6 @@
     $modal.draggable({
     handle: ".modal-header",
     });
-//$modal.resizable();
-// $(document).ready(function () {
         toastr.options = {
           debug: false,
           newestOnTop: false,
@@ -295,23 +293,37 @@
           toastr.success("Published succesfully.");
         });
     
-    //check if questioanry is published then disable the publish button
+    //check if questioanry is published then disable/hide the publish button
     let questionaries = getQuestionaries();
     let questioanryId = getQuestionarieID();
-    console.log("-----------------------------------Ques Id: ",questioanryId);
     let questioanrieObj = questionaries[questioanryId];
     if(questioanrieObj.isQuestionariePublished){
       console.log("Questionarie is already published..");
       $("input#publish-btn").hide();
-      
       $("p#questionary-status").text("Status: Published");
     }
     if(questioanrieObj.isQuestionariePublished && questioanrieObj.isModified){
       changeQuestionaryStatus(questioanrieObj);
+      // let modifiedDate = questioanrieObj.modifiedDate;
+      // let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
+      // $("p#questionary-modified-status").text("Modified on "+dateObj.toLocaleDateString());
+      // $("p#questionary-modified-status").addClass("statusModified");
+      // $('input#notify-btn').removeAttr('hidden');
+      
+      // let isModified = checkQuestionaryUpdated(questioanrieObj.modifiedDate);
+      // if(isModified){
+      //   changeQuestionaryStatus(questioanrieObj);
+      // }
+      if(questioanrieObj.isNotificationSent){
+        console.log("Notification is sent!!!!");
+        $("input#notify-btn").hide();
+      }else{
+        $("input#notify-btn").show();
+      }
     }
     
     $(".notify-questionarie-msg").click(function () {
-          // show when the button is clicked
+      // show when the button is clicked
       toastr.success("Notification sent to all users!!");
     });
   

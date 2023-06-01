@@ -144,19 +144,19 @@
 }
 
 .inputBox {
-  width:35px;
+  width:32px;
   text-align:center;
   background-color:#BBDEFB;
   border:none;
 }
 .emptyBox{
-  width:33px;
+  width:30px;
   text-align:center;
 }
 
 .finalInputBox {
   border:1px solid #0C2D48;
-  width:35px;
+  width:32px;
   text-align:center;
   background-color:#B1D4E0;
 }

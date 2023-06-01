@@ -13,6 +13,7 @@ function createNewQuestionarie(newQuestionarieKey,testName,popupData){
           // scoreAttempts: {},
           isQuestionariePublished: false,
           isModified:false,
+          isNotificationSent: false,
           modifiedDate: {
             day: 10,
             month: 10,

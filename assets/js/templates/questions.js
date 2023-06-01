@@ -134,9 +134,9 @@ function appendQuestionsToStudentQuestionary(questionId,countQuestion,questionTy
 
   function appendMultiplicationQuestionsStudentQuestionary(questionId,countQuestion,questionType){
     return(`<div id="question-col-${questionId}" class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
-    <div class="card text-center">
+    <div class="card text-center w-100">
     <div class="card-header">Question ${countQuestion}</div>
-    <div class="card-body">
+    <div class="card-body table-responsive-sm">
       <table class="tableAlign">
         <tbody id="multiplication-questionarie-table-${questionId}">
           <tr id="first-number-${questionId}">

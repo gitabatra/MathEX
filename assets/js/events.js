@@ -22,10 +22,11 @@ function initEvents() {
     let questionaries = getQuestionaries();
     //if questionary was published then push notification that questionary is deleted
     if(questionaries[questionaryKey].isQuestionariePublished){
-      let isDateModified = checkQuestionaryUpdated(questionaries[questionaryKey].modifiedDate);
-      if(isDateModified){
+      // let isDateModified = checkQuestionaryUpdated(questionaries[questionaryKey].modifiedDate);
+      // if(isDateModified){
+        console.log("Date is modified, so creating notification..........");
         createDeleteQuestioanryNotification(questionaryKey);
-      }
+      // }
     }
     delete questionaries[questionaryKey];
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
@@ -52,9 +53,24 @@ function initEvents() {
     delete questionaries[questionarieId]["questions"][questionKey];
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
     if(questionaries[questionarieId].isQuestionariePublished){
-      Object.assign(questionaries[questionarieId],{isModified: true});
+      let isModified = checkQuestionaryUpdated(questionaries[questionarieId].modifiedDate);
+      if(isModified){
+        let currentDate = getSessionDate();
+        Object.assign(questionaries[questionarieId], {
+          isModified:true,
+          modifiedDate: {
+            day: currentDate[0],
+            month: currentDate[1],
+            year: currentDate[2]
+        }
+      });
       localStorage.setItem("questionaries", JSON.stringify(questionaries));
       changeQuestionaryStatus(questionaries[questionarieId]);
+    }
+
+      // Object.assign(questionaries[questionarieId],{isModified: true});
+      // localStorage.setItem("questionaries", JSON.stringify(questionaries));
+      // changeQuestionaryStatus(questionaries[questionarieId]);
     }
   });
 

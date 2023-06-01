@@ -88,12 +88,12 @@ function appendNewQuestionToList(popupData) {
   questionarieObject["questions"][newQuestionKey] = popupData;
   console.log(questionarieObject["questions"][newQuestionKey]);
   console.log("*******************************Questionary is published or not: ",questionarieObject.isQuestionariePublished);
+  let isModified;
   if(questionarieObject.isQuestionariePublished){
     console.log("Questionarie is already published so modify the date...");
     //check the date
     console.log("Creation date: ",questionarieObject.modifiedDate);
     let isModified = checkQuestionaryUpdated(questionarieObject.modifiedDate);
-   // checkQuestionaryUpdated();
     //modify the date and set isModified to true
     if(isModified){
       let currentDate = getSessionDate();
@@ -107,9 +107,6 @@ function appendNewQuestionToList(popupData) {
     });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
     changeQuestionaryStatus(questionaries[questionarieId]);
-    }
-    if(questionarieObject.isModified){
-      changeQuestionaryStatus(questionaries[questionarieId]);
     }
   }
   appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);

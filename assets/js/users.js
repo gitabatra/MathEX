@@ -63,7 +63,7 @@ function refreshNotification(){
 
 function appendNewNotificationListItem(notificationId,description,dateString){
     return(`<div id="notification-list-item-${notificationId}" class="row mb-2 newNotification">
-    <div class="col-auto px-0"><label><h6 class="px-0"><i class="fas fa-square-plus text-success"></i> ${description}</h6> 
+    <div class="col-auto px-0"><label><h6 class="px-0"><i class="fas fa-bell text-warning"></i> ${description}</h6> 
     </label></div>
     <div class="col text-end"><b>${dateString}</b></div>      
    </div>`)
@@ -198,16 +198,19 @@ function checkQuestionaryUpdated(modifiedDate){
   }
 
   $('input#notify-btn').click(function(){
-    // console.log("Notify users while updating the questionary..........");
-    // let questionaries = getQuestionaries();
-    // let questionarieId = getQuestionarieID();
-    // let questionarieObj = questionaries[questionarieId];
+    console.log("Notify users while updating the questionary..........");
+    //isNotificationSent: false,
+    let questionaries = getQuestionaries();
+    let questionarieId = getQuestionarieID();
+    //let questionarieObj = questionaries[questionarieId];
     // isModified = checkQuestionaryUpdated(questionarieObj.modifiedDate);
     // if(isModified){
         createEditquestionaryNotification();
         //hide the buttons again
         $("input#notify-btn").hide();
         $("input#add-new-question-btn").hide();
+        Object.assign(questionaries[questionarieId],{isNotificationSent: true});
+        localStorage.setItem("questionaries", JSON.stringify(questionaries));
     // }else{
     //     console.log("Modifying on the same day");
     //    // $("input#notify-btn").prop("disabled","true");

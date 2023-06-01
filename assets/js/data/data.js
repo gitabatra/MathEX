@@ -78,6 +78,7 @@ function initLocalStorage(){
                 },
                 isQuestionariePublished: true,
                 isModified:false,
+                isNotificationSent: false,
                 modifiedDate: {
                     day: 10,
                     month: 10,
@@ -95,6 +96,7 @@ function initLocalStorage(){
                 },
                 isQuestionariePublished: true,
                 isModified:false,
+                isNotificationSent: false,
                 modifiedDate: {
                     day: 10,
                     month: 10,
@@ -113,6 +115,7 @@ function initLocalStorage(){
                 },
                 isQuestionariePublished: true,
                 isModified:false,
+                isNotificationSent: false,
                 modifiedDate: {
                     day: 10,
                     month: 10,
