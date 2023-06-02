@@ -6,15 +6,13 @@ $(document).ready(function () {
   checkIfLoggedIn();
 });
 
-
 function checkIfLoggedIn(){
   const {
     host, hostname, href, origin, pathname, port, protocol, search
   } = window.location
 
-  // if(pathname != "/login.html" && pathname != "/register.html"){
   if(pathname != "/loginRegister.html"){
-    console.log("Location is not login or register....");
+    console.log("Location is not login or register....",localStorage.getItem("loggedInUserID"));
     if(!("loggedInUserID" in localStorage) || (localStorage.getItem("loggedInUserID") === "null")){
       console.log("Item doesn't exist in localstorage");
       window.location.replace("./loginRegister.html");
@@ -36,8 +34,8 @@ function checkIfLoggedIn(){
      initElements();
    }
   }else {
-    console.log("Location is login or Register");
-    localStorage.setItem("loggedInUserID","null");
+    console.log("Location is  login or register....",localStorage.getItem("loggedInUserID"));
+   localStorage.setItem("loggedInUserID","null");
   }
 }
 

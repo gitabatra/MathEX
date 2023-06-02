@@ -177,6 +177,8 @@ function initEvents() {
   $("button#pop-up-submit-btn").click(function (event) {
     console.log("PopUp Submit button on AddNewTest page is executing");
     let testName = $("input#new-questionarie-name").val();
+   // $("input#add-heading-questionarie-text").val(testName);
+   
     let popupData = fetchPopUpData(event);
     if (popupData != null) {
       console.log("PopupData : ", popupData);
@@ -415,4 +417,12 @@ function logout(){
     forcedUserLogoutTimout = null;
   }   
   window.location.href = "./loginRegister.html";
+}
+
+function changeQuestionaryName(questioanrieObj){
+  console.log("Changing Questionary name..............",questioanrieObj);
+  $("input#add-heading-questionarie-text").attr("placeholder", "Enter test name");
+  // var sd = $(this).attr('placeholder');  
+   $("input#add-heading-questionarie-text").val(questioanrieObj["name"]);
+   console.log("------------Input placeholder value: ",$("input#add-heading-questionarie-text").attr("placeholder"));
 }

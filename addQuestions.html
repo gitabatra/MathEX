@@ -89,7 +89,15 @@
     </header>
     <section id="questionsList">
       <div class="bigHeading">
-        <h1 id="add-heading-questionarie">Test</h1>
+        <div class="row justify-content-center">
+          <div class="col-lg-9 text-center">
+            <input type="text" id="add-heading-questionarie-text" class="testNameInput" placeholder="Enter Questionary Name" value="" maxlength="100"/>
+          </div>
+          <div class="col-lg-3 align-self-center mb-0">
+            <button id="questionarie-rename-btn" type="" class="btn saveBtn">Rename Test</button>
+          </div>
+        </div>
+        <!-- <h1 id="add-heading-questionarie">Test</h1> -->
       </div>
       <div class="row">
         <div class="col-auto">
@@ -293,16 +301,21 @@
       
           toastr.success("Published succesfully.");
         });
+
+       // changeQuestionaryName();
     
     //check if questioanry is published then disable/hide the publish button
     let questionaries = getQuestionaries();
     let questioanryId = getQuestionarieID();
     let questioanrieObj = questionaries[questioanryId];
+    changeQuestionaryName(questioanrieObj);
     if(questioanrieObj.isQuestionariePublished){
       console.log("Questionarie is already published..");
       $("input#publish-btn").hide();
       $("p#questionary-status").text("Status: Published");
     }
+   
+   // $("button#questionarie-rename-btn").show();
     if(questioanrieObj.isQuestionariePublished && questioanrieObj.isModified){
       changeQuestionaryStatus(questioanrieObj);
       // let modifiedDate = questioanrieObj.modifiedDate;

@@ -2,10 +2,10 @@ function questionarieListItem(questionarieId, questionarieName, hideScoreButton)
     return `<div id="questionarie-list-item-${questionarieId}" class="row">
         <div id="questionarie-list-col-${questionarieId}" class="col">
             <label><h2 class="px-4"> ${questionarieName} </h2></label>
-            <a href="/studentQuestionary.html?questionarie-id=${questionarieId}">
+            <a href="./studentQuestionary.html?questionarie-id=${questionarieId}">
             <button id="open-questionarie-btn-${questionarieId}" class="btn btn-success px-4 mb-2">Go <i class="fas fa-angle-double-right"></i></button>   
             </a>
-            <a ${hideScoreButton} id="score-record-${questionarieId}" class="scoreCheckMsg" href="/score_record.html?questionarie-id=${questionarieId}">
+            <a ${hideScoreButton} id="score-record-${questionarieId}" class="scoreCheckMsg" href="./score_record.html?questionarie-id=${questionarieId}">
             <button id="open-score-questionarie-btn-${questionarieId}" class="btn btn-info px-4 mb-2 score-indicator">Scores <i class="fas fa-star"></i></button>   
         </a>   
         </div>
@@ -19,10 +19,10 @@ function questionarieListItemAdmin(questionarieId, questionarieName){
    <label><h2 class="px-4"> ${questionarieName} </h2></label>
  </div>
   <div class="col text-center">
-   <a href="/score_record.html?questionarie-id=${questionarieId}">
+   <a href="./score_record.html?questionarie-id=${questionarieId}">
      <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
    </a>
-   <a href="/addQuestions.html?questionarie-id=${questionarieId}">
+   <a href="./addQuestions.html?questionarie-id=${questionarieId}">
      <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
    </a>
    <a href="#" key="${questionarieId}">
