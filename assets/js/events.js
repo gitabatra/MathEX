@@ -419,10 +419,49 @@ function logout(){
   window.location.href = "./loginRegister.html";
 }
 
-function changeQuestionaryName(questioanrieObj){
-  console.log("Changing Questionary name..............",questioanrieObj);
-  $("input#add-heading-questionarie-text").attr("placeholder", "Enter test name");
-  // var sd = $(this).attr('placeholder');  
-   $("input#add-heading-questionarie-text").val(questioanrieObj["name"]);
-   console.log("------------Input placeholder value: ",$("input#add-heading-questionarie-text").attr("placeholder"));
+
+$("button#questionarie-rename-btn").on("click", function(event){
+  console.log("Changing Questionary name..............");
+  let questionarieId = getQuestionarieID();
+  let questionaries = getQuestionaries();
+  let questioanrieObj = questionaries[questionarieId];
+  console.log("questioanry Object: ",questioanrieObj);
+  let oldtestName = questioanrieObj["name"];
+  console.log("Old Test Name in local Storage.......: ",oldtestName);
+  let newTestName = $("input#add-heading-questionarie-text").val();
+  console.log("New Test Name.......: ",newTestName);
+   Object.assign(questionaries[questionarieId],{name: newTestName});
+   localStorage.setItem("questionaries", JSON.stringify(questionaries));
+});
+
+
+$("a#student-dashboard-link").on("click", function(event){
+  let loggedInUserID = localStorage.getItem("loggedInUserID");
+  let users = getRegisteredUsers();
+  let userObj = users[loggedInUserID];
+  if(userObj.isAdmin){
+     window.location.href = "./admin.html";
+  }
+  else{
+    window.location.href = "./index.html";
+  }
+});
+
+function appendQuestionaryNameToSecondaryNavbar()
+{
+  let questionarieId = getQuestionarieID();
+  let questionaries = getQuestionaries();
+  let questioanrieObj = questionaries[questionarieId];
+  console.log("questioanry Object: ",questioanrieObj);
+  let testName = questioanrieObj["name"];
+  console.log("Test Name.......: ",testName);
+  let loggedInUserID = localStorage.getItem("loggedInUserID");
+  let users = getRegisteredUsers();
+  let userObj = users[loggedInUserID];
+  console.log("Current value of test: ",$("span#student-dashboard-questionarie-name").val());
+  if(userObj.isAdmin){
+  $("span#student-dashboard-questionarie-name").val("Score Record");
+  }else{
+    $("span#student-dashboard-questionarie-name").val(testName);
+  }
 }
