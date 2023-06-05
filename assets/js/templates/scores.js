@@ -1,9 +1,9 @@
 function scoreRecord(questionarieId, questionarieName){
     return `<div id="score-record-${questionarieId}" class="row gx-3 mt-3">
-    <div class="col-sm-6 col-md-4">
+    <div class="col-sm-6 col-md-6 col-lg-4 text-center">
       <h3>${questionarieName}</h3>
     </div>
-    <div class="col-sm-6 col-md-4">
+    <div class="col-sm-6 col-md-6 col-lg-4 text-center">
       <a
         id="open-questionarie-score-btn"
         class="btn btn-dark ms-3 px-4"

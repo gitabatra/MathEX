@@ -70,10 +70,10 @@
   margin:2% 10%;
 }
 
-/* .bigHeading {
+.bigHeading {
   margin: 2% 0;
   text-align: center;
-} */
+}
 
 .StudentNotification{
   margin: 2% 1%;
@@ -89,7 +89,7 @@
 
 
 .testNameBox{
-  width: 50%;
+  width: 100%;
 }
 
 .testNameValid {
@@ -257,5 +257,15 @@
   /* font-size: 30px; */
   font-weight:300;
   background-color: transparent;
-  font-size: clamp(1rem, -0.8750rem + 8.3333vw, 3rem);
+  /* font-size: clamp(1rem, -0.8750rem + 8.3333vw, 3rem); */
+  font-size: clamp(1rem, 0.1456rem + 3.7975vw, 2.5rem);
 }
+
+.checkedReadNotification {
+  background-color: #E8F5E9;
+}
+
+.list-group-item {
+  background-color: transparent;
+}
+

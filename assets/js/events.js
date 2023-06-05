@@ -465,3 +465,19 @@ function appendQuestionaryNameToSecondaryNavbar()
     $("span#student-dashboard-questionarie-name").val(testName);
   }
 }
+
+//window resize event
+$( window ).on( "resize", function() {
+  console.log("Window resizing event is executing...........");
+  console.log("Width os screen: ",$( window ).width());
+  let width = $( window ).width();
+  let height = $( window ).height();
+  if(width<768){
+   localStorage.setItem("screenWidth", width);
+   $("div#user-data-table").hide();
+   $("div#small-screen-user-list").show();
+  } else {
+    $("div#user-data-table").show();
+    $("div#small-screen-user-list").hide();
+  }
+} );

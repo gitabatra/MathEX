@@ -135,7 +135,8 @@ function createNewNotificationObject(newNotificationId,description){
         day: currentDate[0],
         month: currentDate[1],
         year: currentDate[2]
-      }
+      },
+      isRead:false
 }
   }
   return newNotificationObj;

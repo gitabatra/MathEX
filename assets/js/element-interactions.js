@@ -137,6 +137,8 @@ function refreshQuestionsList() {
     // if(isAdmin){}else
     $("#student-dashboard-questionarie-name").text(questionarieObject["name"]);
     $("input#add-heading-questionarie-text").val(questionarieObject["name"]);
+    $("h3#add-heading-questionarie-student").text(questionarieObject["name"]);
+    
     
     let countQuestion = 1;
     for (const questionId in questionarieObject["questions"]) {

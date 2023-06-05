@@ -72,24 +72,24 @@
         <div>
             <h1 class="bigHeading">Add Test Paper</h1>  
         </div>  
+       
         <form class="was-validated">
-          <div class="row">
-                  <div class="col-sm-4 mt-3 text-center">
-                      <p>Basic Addition/Subtraction/Multiplication/Division</p>
-                  </div>
-                  <div class="form-group col-sm-4 text-center">
-                    <div class = "mb-3 mt-3">
-                    <input type="text" class="testNameBox mb-3" id="new-questionarie-name" name="testName" placeholder="Questionary Name" required/>
-                    <div class="invalid-feedback testNameValid">
-                      Please enter questionary name.
+          <div class="d-flex flex-wrap flex-column flex-md-column flex-lg-row align-content-sm-center justify-content-md-evenly justify-content-lg-center">
+            <div class="col text-center mt-4"> <h6 class="text-center">Basic Addition/Subtraction/Multiplication/Division</h6></div>
+            <div class="col text-center"> 
+              <div class="form-group text-center">
+                      <div class = "mb-3 mt-3 text-center">
+                      <input type="text" class="testNameBox mb-3" id="new-questionarie-name" name="testName" placeholder="Questionary Name" required/>
+                      <div class="invalid-feedback text-center">
+                        Please enter questionary name.
+                      </div>
+                      </div> 
                     </div>
-                    </div> 
-                  </div>
-                  <div class="col-sm-4 mt-3 text-center">
-                      <input type="button" id="add-new-questionarie-test-btn" class="btn addBtn" value="+"  disabled="true" data-mdb-toggle="modal" data-mdb-target="#basicQuestionModal">
-                  </div>
-              </div>  
               </div>
+            <div class="col text-center mt-3">
+              <input type="button" id="add-new-questionarie-test-btn" class="btn addBtn" value="+"  disabled="true" data-mdb-toggle="modal" data-mdb-target="#basicQuestionModal">
+            </div>
+         </div>
          </form>        
       </section>
       
