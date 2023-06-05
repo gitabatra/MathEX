@@ -14,6 +14,11 @@ function initLocalStorage(){
 
     // }
 
+    // let screenSize = {
+    //     width: 922,
+    //     height: 1000
+    // }
+
     let users = {
         "u-20230405-01": {
             username: "Gita",
@@ -65,7 +70,7 @@ function initLocalStorage(){
             }
         }
     }
-    //let scores = {}
+
     let questionaries = {
             "qs-20230405-01": {
                 name: "Test 1 - 1 Digit Addition", 
@@ -125,7 +130,8 @@ function initLocalStorage(){
         };
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
     localStorage.setItem("users", JSON.stringify(users));
-    //localStorage.setItem("loggedInUserID", JSON.stringify(users)); // windw.href = "/signin"
+    localStorage.setItem("screenWidth", "768");
+    localStorage.setItem("loggedInUserID", null);
 
     console.log("Checking Questionaries Array", JSON.parse(localStorage.getItem("questionaries")));
 }

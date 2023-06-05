@@ -1,16 +1,36 @@
 function initUsers(){
     refreshUserManagement();
+    displayUserData();
     refreshNotification();
 }
 
+function displayUserData(){
+    let screenWidth = localStorage.getItem("screenWidth");
+    let width = $( window ).width();
+    localStorage.setItem("screenWidth",width);
+    console.log("------------------------------------------Width of screen: ",width);
+    if(width<768){
+        console.log("Screen size is small");
+        $("div#user-data-table").hide();
+        $("div#small-screen-user-list").show();
+    }else{
+        console.log("Screen size is 768 or up.......");
+        $("div#user-data-table").show();
+        $("div#small-screen-user-list").hide();
+    }
+}
+
 function refreshUserManagement(){
-    console.log("Adding users to User Management...............................");
+   console.log("Adding users to User Management...............................");
+   $("section#user-management-section").append(appendUserDataTable());
    let users = getRegisteredUsers();
    console.log("All users : ",users);
+   //let isScreenSmall = checkIfScreenSmall();
    for (const userId in users) {
     let mainAdmin = (userId === "u-20230405-01");
     console.log("userId : ",userId);
     if (Object.hasOwnProperty.call(users, userId)) {
+       
         let userObject = users[userId];
         console.log("userId : ",userObject);
         let email = userObject.email;
@@ -19,16 +39,18 @@ function refreshUserManagement(){
         let position;
         let disable_toggle_button = mainAdmin ? "disabled" : "";
         let checked_toggle_button = "checked";
+        
         if(isAdmin){
             position = "Admin";
             checked_toggle_button = "checked";
-            //if(mainAdmin){}
+            $("div#small-screen-user-list").append(appendUsersListSmallScreen(userId,userObject,position,disable_toggle_button,checked_toggle_button));
             $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button)); 
             $(`span#position-badge-${userId}-${position}`).addClass('badge badge-success rounded-pill d-inline');
         }else {
             position = "Student";
             checked_toggle_button = "";
-            $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button));
+            $("div#small-screen-user-list").append(appendUsersListSmallScreen(userId,userObject,position,disable_toggle_button,checked_toggle_button));
+            $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button)); 
             $(`span#position-badge-${userId}-${position}`).addClass('badge badge-info rounded-pill d-inline');
         }
         console.log("userId : ",userId,"email: ",email,"password: ",password);
@@ -46,8 +68,6 @@ function refreshNotification(){
     let userObj = users[loggedInUserID];
     let inboxObj =userObj["inbox"];
     let count = 0;
-    //createEditquestionaryNotification();
-    //checkQuestionaryUpdated();
     for(const notifyId in inboxObj){
         if (Object.hasOwnProperty.call(inboxObj, notifyId)) {
             count = count+1;
@@ -56,37 +76,18 @@ function refreshNotification(){
             let dateString = monthName+" "+(inboxObj[notifyId]["creationDate"].day)+", "+(inboxObj[notifyId]["creationDate"].year)
             console.log("creation date: ",dateString);
             $("div#notification-list").append(appendNewNotificationListItem(notifyId,inboxObj[notifyId].description,dateString));
+            console.log("Notification has been read or not: ",inboxObj[notifyId].isRead);
+            if(inboxObj[notifyId].isRead){
+                $(`input#flex-read-check_${notifyId}`).prop("checked", true);
+                $(`#notification-list-item-${notifyId}`).addClass("checkedReadNotification");
+            }
         }
     }
     $("span#inbox-total-notification").text(count);
+    
 }
 
-function appendNewNotificationListItem(notificationId,description,dateString){
-    return(`<div id="notification-list-item-${notificationId}" class="row mb-2 newNotification">
-    <div class="col-auto px-0"><label><h6 class="px-0"><i class="fas fa-bell text-warning"></i> ${description}</h6> 
-    </label></div>
-    <div class="col text-end"><b>${dateString}</b></div>      
-   </div>`)
-}
-
-function appendUserToUsersTable(userId,userObj,position,disable_toggle_button,checked_toggle_button){
-    return(` <tr>
-    <td>${userObj.username}</td>
-    <td><p class="fw-normal mb-1"> ${userObj.email}</p></td>
-    <td><span id="position-badge-${userId}-${position}" class="user-position-${userId}">${position}</span></td>
-    <td class="w-auto align-content-center">
-      <div class="form-check form-switch align-content-center">
-       <div class="d-flex flex-wrap align-content-center justify-content-center">
-          <input class="form-check-input" type="checkbox" role="switch" id="flex-switch-check_${userId}" ${checked_toggle_button} ${disable_toggle_button}/>
-          <label id="switch-check-label-${userId}" class="form-check-label" for="flex-switch-check">Turn to Admin</label>
-        </div>
-      </div>
-  </td>
-  </tr>`)
-}
-
-
-$(document).on('change', '[type=checkbox]', function(event) {
+$(document).on('change', '.switchAdmin[type=checkbox]', function(event) {
     let targetId = event.target.id;
     console.log("Checked the Switch********",targetId);
     let target = targetId.split("_");
@@ -218,3 +219,25 @@ function checkQuestionaryUpdated(modifiedDate){
     
   })
 
+$(document).on('change', '.switchRead[type=checkbox]', function(event) {
+    console.log("On clicking /read notification........");
+    let targetId = event.target.id;
+    let target = targetId.split("_");
+    let notificationId = target[1];
+    let users = getRegisteredUsers();
+    let userId = localStorage.getItem("loggedInUserID");
+    let userObj = users[userId];
+    console.log("USer object: ",userObj);
+    
+    if($('#'+targetId).is(':checked')){
+        $(`#notification-list-item-${notificationId}`).addClass("checkedReadNotification");
+        Object.assign(userObj["inbox"][notificationId],{isRead: true});
+        
+    } else {
+        console.log("USer is Admin so no modification in notifiactions.......");
+        $(`#notification-list-item-${notificationId}`).removeClass("checkedReadNotification");
+        Object.assign(userObj["inbox"][notificationId],{isRead: false});
+    }
+    localStorage.setItem("users", JSON.stringify(users));
+        console.log("Read after assigning: ", users[userId]);
+}); 

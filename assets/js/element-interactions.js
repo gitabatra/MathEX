@@ -132,7 +132,14 @@ function refreshQuestionsList() {
   console.log("Rendering Questions for Questionarie: ", questionarieId);
   if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
     let questionarieObject = questionaries[questionarieId];
-    $("#add-heading-questionarie").text(questionarieObject["name"]);
+    $("#add-heading-questionarie-text").text(questionarieObject["name"]);
+    // let isAdmin = checkIfLoggedInUserAdmin();
+    // if(isAdmin){}else
+    $("#student-dashboard-questionarie-name").text(questionarieObject["name"]);
+    $("input#add-heading-questionarie-text").val(questionarieObject["name"]);
+    $("h3#add-heading-questionarie-student").text(questionarieObject["name"]);
+    
+    
     let countQuestion = 1;
     for (const questionId in questionarieObject["questions"]) {
       let nDigits = questionarieObject.questions[questionId].ndigit;
