@@ -186,7 +186,7 @@ function checkQuestionaryUpdated(modifiedDate){
         let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
         console.log("converted date...........",dateObj,dateObj.getTime());
         let currentDate = new Date();
-        currentDate.setHours(0,0,0,0);
+        //currentDate.setHours(0,0,0,0);
         console.log("Current Date getTime() : ",currentDate.getTime());
         if (dateObj.getTime() < currentDate.getTime()) {
             return true;
@@ -198,25 +198,26 @@ function checkQuestionaryUpdated(modifiedDate){
     }
   }
 
-  $('input#notify-btn').click(function(){
+  $('input#republish-btn').click(function(){
     console.log("Notify users while updating the questionary..........");
     //isNotificationSent: false,
     let questionaries = getQuestionaries();
     let questionarieId = getQuestionarieID();
-    //let questionarieObj = questionaries[questionarieId];
-    // isModified = checkQuestionaryUpdated(questionarieObj.modifiedDate);
-    // if(isModified){
+    let questionarieObj = questionaries[questionarieId];
+    console.log("Notification sent or not: ",questionarieObj.isNotificationSent);
+    $(`div#questionarie-list-item-${questionarieId}`).show();
+    $("input#republish-btn").hide();
+    $("input#add-new-question-btn").hide();
+
+    Object.assign(questionaries[questionarieId],{isModified: false});
+    if(!questionarieObj.isNotificationSent){
         createEditquestionaryNotification();
-        //hide the buttons again
-        $("input#notify-btn").hide();
-        $("input#add-new-question-btn").hide();
         Object.assign(questionaries[questionarieId],{isNotificationSent: true});
-        localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    // }else{
-    //     console.log("Modifying on the same day");
-    //    // $("input#notify-btn").prop("disabled","true");
-    // }
-    
+    }
+    else{
+      console.log("Modifying on the same day");
+    }
+    localStorage.setItem("questionaries", JSON.stringify(questionaries));
   })
 
 $(document).on('change', '.switchRead[type=checkbox]', function(event) {

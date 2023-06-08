@@ -32,7 +32,7 @@
   color: #fff;
 }
 
-.addBtn:disabled,
+.addBtn:disabled,.saveBtn[disabled],
 .addBtn[disabled]{
   background-color: #0C2D48;
   color: #fff;
@@ -254,7 +254,6 @@
   height:fit-content;
   text-align:center;
   border: none;
-  /* font-size: 30px; */
   font-weight:300;
   background-color: transparent;
   /* font-size: clamp(1rem, -0.8750rem + 8.3333vw, 3rem); */
