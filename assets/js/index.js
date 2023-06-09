@@ -23,17 +23,21 @@ function initializeDate(){
         host, hostname, href, origin, pathname, port, protocol, search
       } = window.location
 
-  if(pathname != "/loginRegister.html"){
+  let pathnameArr = pathname.split("/");
+  let pathName = pathnameArr[pathnameArr.length - 1];
+  console.log(pathName);
+
+  if(pathName != "loginRegister.html"){
     if(isUserLoggedIn){
       let loggedInUserID = localStorage.getItem("loggedInUserID");
      let userObj = getRegisteredUsers();
      let currrentUser = userObj[loggedInUserID];
    
      adminRestrictedPathnames = [
-        "/admin.html", "/addNewTest.html","/addQuestions.html", "/userManagement.html"
+        "admin.html", "addNewTest.html","addQuestions.html", "userManagement.html"
      ]
 
-     if(currrentUser.isAdmin != true && adminRestrictedPathnames.includes(pathname)){
+     if(currrentUser.isAdmin != true && adminRestrictedPathnames.includes(pathName)){
             window.location.replace("./index.html");
       }
 
