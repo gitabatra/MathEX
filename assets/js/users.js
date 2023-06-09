@@ -25,9 +25,9 @@ function refreshUserManagement(){
    $("section#user-management-section").append(appendUserDataTable());
    let users = getRegisteredUsers();
    console.log("All users : ",users);
-   //let isScreenSmall = checkIfScreenSmall();
+   const loggedInUserID = localStorage.getItem('loggedInUserID');
    for (const userId in users) {
-    let mainAdmin = (userId === "u-20230405-01");
+    let mainAdmin = ((userId === "u-20230405-01") || (userId === loggedInUserID));
     console.log("userId : ",userId);
     if (Object.hasOwnProperty.call(users, userId)) {
        
@@ -38,17 +38,17 @@ function refreshUserManagement(){
         let isAdmin = userObject.isAdmin;
         let position;
         let disable_toggle_button = mainAdmin ? "disabled" : "";
-        let checked_toggle_button = "checked";
+        let checked_toggle_button = "";
         
         if(isAdmin){
             position = "Admin";
-            checked_toggle_button = "checked";
+            //checked_toggle_button = "checked";
             $("div#small-screen-user-list").append(appendUsersListSmallScreen(userId,userObject,position,disable_toggle_button,checked_toggle_button));
             $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button)); 
             $(`span#position-badge-${userId}-${position}`).addClass('badge badge-success rounded-pill d-inline');
         }else {
             position = "Student";
-            checked_toggle_button = "";
+            //checked_toggle_button = "";
             $("div#small-screen-user-list").append(appendUsersListSmallScreen(userId,userObject,position,disable_toggle_button,checked_toggle_button));
             $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button)); 
             $(`span#position-badge-${userId}-${position}`).addClass('badge badge-info rounded-pill d-inline');
@@ -105,19 +105,18 @@ $(document).on('change', '.switchAdmin[type=checkbox]', function(event) {
     let target = targetId.split("_");
     let userId = target[1];
     let users = getRegisteredUsers();
-    //let chck = ( $('#'+targetId).attr('Checked','Checked'));
-   // console.log("USerId: ",userId,targetId,$('#'+targetId).is(':checked').length, chck, $('#'+targetId).is(':checked'));
-   //$('#flex-switch-check_u-20230405-02[type=checkbox]').is(":checked")
+    
+    console.log("Checked property",$((`#${targetId}[type = checkbox]`)));
 
     if( $((`#${targetId}[type = checkbox]`)).is(':checked') ){
-        console.log("Turned ON the Admin switch");
+        console.log("Turned ON the Admin switch",users[userId].isAdmin);
         users[userId].isAdmin = true;
         position = "Admin";
         $(`.user-position-${userId}`).text("Admin");
         $(`label#switch-check-label-${userId}`).text("Turn to Student");
         //$('#'+targetId).attr('Checked','Checked');
     } else{
-        console.log("Turned OFF the Admin switch");
+        console.log("Turned OFF the Admin switch",users[userId].isAdmin);
         users[userId].isAdmin = false;
         position = "Student";
         $(`.user-position-${userId}`).text("Student");
