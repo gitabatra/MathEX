@@ -5,7 +5,7 @@ function scoreRecord(questionarieId, questionarieName){
     </div>
     <div class="col-sm-6 col-md-6 col-lg-4 text-center">
       <a
-        id="open-questionarie-score-btn"
+        id="open-questionarie-score-record-btn"
         class="btn btn-dark ms-3 px-4"
         data-mdb-toggle="collapse"
         href="#questionarie-score-${questionarieId}"

@@ -315,8 +315,10 @@ $("form#login-form").on("submit", function(event) {
       loginData.constructor === Object
     );
   console.log("loginData data object is empty: ",isObjectEmpty);
-  if (!isObjectEmpty){
+ // if(loginData.hasOwnProperty('email') && loginData.hasOwnProperty('password'))
+  if (!isObjectEmpty && loginData.hasOwnProperty('email') && loginData.hasOwnProperty('password')){
     //check if email already exists then find login Id and save into the localstoarge
+    $("h6#login-status").text("");
       findLoginId(loginData,event);
   }
 });

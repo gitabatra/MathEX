@@ -76,21 +76,7 @@ function refreshQuestionarieList() {
   }
 }
 
-
-// $(`p#questionary-status-${questionarieId}`).text("Status: Published");
-// console.log("Publish button is clicked.........................");
-// $("input#publish-btn").hide();
-// if(questionarieObject.isModified){
-// console.log(".............questionarie is modified..............");
-
-// changeQuestionaryStatus(questionarieObject,questionarieId);
-// //hide the questionarie for student
-// $(`div#questionarie-list-item-${questionarieId}`).hide();
-// //$("input#republish-btn").show();
-// }
-
 //Appending questions to Questionarie by taking input from pop up
-
 function appendNewQuestionToList(popupData) {
   let questionaries = getQuestionaries();
   let questionarieId = getQuestionarieID();

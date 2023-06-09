@@ -67,43 +67,62 @@ function refreshNotification(){
     let loggedInUserID = localStorage.getItem("loggedInUserID");
     let userObj = users[loggedInUserID];
     let inboxObj =userObj["inbox"];
-    let count = 0;
-    for(const notifyId in inboxObj){
-        if (Object.hasOwnProperty.call(inboxObj, notifyId)) {
-            count = count+1;
-            console.log("Notification Id: ",notifyId);
-            let monthName =  getMonthName(inboxObj[notifyId]["creationDate"].month);
-            let dateString = monthName+" "+(inboxObj[notifyId]["creationDate"].day)+", "+(inboxObj[notifyId]["creationDate"].year)
-            console.log("creation date: ",dateString);
-            $("div#notification-list").append(appendNewNotificationListItem(notifyId,inboxObj[notifyId].description,dateString));
-            console.log("Notification has been read or not: ",inboxObj[notifyId].isRead);
-            if(inboxObj[notifyId].isRead){
-                $(`input#flex-read-check_${notifyId}`).prop("checked", true);
-                $(`#notification-list-item-${notifyId}`).addClass("checkedReadNotification");
+    console.log("Notifications are there ornot: ",inboxObj);
+    const isNotificationObjectEmpty =  (
+        inboxObj &&
+        Object.keys(inboxObj).length === 0 &&
+        inboxObj.constructor === Object
+      );
+    if(isNotificationObjectEmpty){
+        //toastr.warning("No new Notifications!","",{positionClass: "toast-bottom-right",extendedTimeOut: 1000,timeOut: 3000});
+        console.log("No new notification............");
+        $("h3#notification-status-message").text("No new notification");
+    }else{
+        console.log("Check the Notifications......");
+        let count = 0;
+        for(const notifyId in inboxObj){
+            if (Object.hasOwnProperty.call(inboxObj, notifyId)) {
+                count = count+1;
+                console.log("Notification Id: ",notifyId);
+                let monthName =  getMonthName(inboxObj[notifyId]["creationDate"].month);
+                let dateString = monthName+" "+(inboxObj[notifyId]["creationDate"].day)+", "+(inboxObj[notifyId]["creationDate"].year)
+                console.log("creation date: ",dateString);
+                $("div#notification-list").append(appendNewNotificationListItem(notifyId,inboxObj[notifyId].description,dateString));
+                console.log("Notification has been read or not: ",inboxObj[notifyId].isRead);
+                if(inboxObj[notifyId].isRead){
+                    $(`input#flex-read-check_${notifyId}`).prop("checked", true);
+                    $(`#notification-list-item-${notifyId}`).addClass("checkedReadNotification");
+                }
             }
         }
+        $("span#inbox-total-notification").text(count);
     }
-    $("span#inbox-total-notification").text(count);
-    
 }
 
 $(document).on('change', '.switchAdmin[type=checkbox]', function(event) {
     let targetId = event.target.id;
-    console.log("Checked the Switch********",targetId);
+    console.log("Checked the Switch********",targetId,event.target);
     let target = targetId.split("_");
     let userId = target[1];
     let users = getRegisteredUsers();
-    if( $('#'+targetId).is(':checked') ){
+    //let chck = ( $('#'+targetId).attr('Checked','Checked'));
+   // console.log("USerId: ",userId,targetId,$('#'+targetId).is(':checked').length, chck, $('#'+targetId).is(':checked'));
+   //$('#flex-switch-check_u-20230405-02[type=checkbox]').is(":checked")
+
+    if( $((`#${targetId}[type = checkbox]`)).is(':checked') ){
+        console.log("Turned ON the Admin switch");
         users[userId].isAdmin = true;
         position = "Admin";
         $(`.user-position-${userId}`).text("Admin");
         $(`label#switch-check-label-${userId}`).text("Turn to Student");
-        $('#'+targetId).attr('Checked','Checked');
+        //$('#'+targetId).attr('Checked','Checked');
     } else{
+        console.log("Turned OFF the Admin switch");
         users[userId].isAdmin = false;
         position = "Student";
         $(`.user-position-${userId}`).text("Student");
         $(`label#switch-check-label-${userId}`).text("Turn to Admin");
+        //$('#'+targetId).attr('Checked','');
     }
     Object.assign(users,  users[userId].isAdmin);
     localStorage.setItem("users", JSON.stringify(users));
@@ -228,7 +247,7 @@ $(document).on('change', '.switchRead[type=checkbox]', function(event) {
     let users = getRegisteredUsers();
     let userId = localStorage.getItem("loggedInUserID");
     let userObj = users[userId];
-    console.log("USer object: ",userObj);
+    console.log("**************USer object: ",userObj,$('#'+targetId).is(':checked'));
     
     if($('#'+targetId).is(':checked')){
         $(`#notification-list-item-${notificationId}`).addClass("checkedReadNotification");

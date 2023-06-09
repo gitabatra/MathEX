@@ -43,10 +43,28 @@ return(scoreRecordObject[scoreAttemptID]);
     console.log("Register new user......");
     let userObj = getRegisteredUsers();
     console.log("User Object in local Storage: ",userObj);
-    //e.preventDefault();
+    let isAlreadyRegistered = false;
+    if(userObj!=null){
+      let userId = Object.keys(userObj);
+      console.log("user Keys: ",userId);
   
-    let ulength = Object.keys(userObj).length;
-    if(ulength>0){
+       for (const userId in userObj) {
+        console.log("userId : ",userId);
+        let email = userObj[userId].email;
+        console.log("email Id : ",email,"Registration data: ",registrationData);
+        if(email === registrationData.email){
+          console.log("User Already registered!!");
+          isAlreadyRegistered = true;
+        }
+       }}
+
+    if(isAlreadyRegistered){
+        e.preventDefault();
+        toastr.warning("This email-id is already registered!!!","",{positionClass: "toast-bottom-right",extendedTimeOut: 1000,timeOut: 3000});
+        // $("h6#login-status").text("This email-id is already registered!!!");
+    } else{
+      let ulength = Object.keys(userObj).length;
+      if(ulength>0){
       ulength = Object.keys(userObj)[ulength - 1].substring(12);
     }
     let newUserId = "u-20230405-0" + (parseInt(ulength) + 1);
@@ -63,14 +81,15 @@ return(scoreRecordObject[scoreAttemptID]);
     setLoggedInUserId(userObj,newUserId);
     $('#registration-form').attr('action', './index.html');
     //window.location.href = "/index.html";
+       }
   }
   
   
   function findLoginId(loginData,event){
     console.log("Find logged in user event is executing...");
     let userObj = getRegisteredUsers();
+    let isAlreadyRegistered = false;
     console.log("User Object in local Storage: ",userObj);
-   
     if(userObj!=null){
       let userId = Object.keys(userObj);
       console.log("user Keys: ",userId);
@@ -81,7 +100,9 @@ return(scoreRecordObject[scoreAttemptID]);
         let password = userObj[userId].password;
         console.log("userId : ",userId,"email: ",email,"password: ",password,"loginData: ",loginData);
         if(loginData.email === email && loginData.password === password){
-          console.log("This email id is already registered");
+          isAlreadyRegistered = true;
+          $("h6#login-status").text("");
+          console.log("This email-id is already registered");
           //set loggedIn to true
           setLoggedInUserId(userObj,userId);
           console.log("Admin is loggin in : ",userObj,userObj[userId].isAdmin);
@@ -90,20 +111,15 @@ return(scoreRecordObject[scoreAttemptID]);
           } else {
             window.location.href = "./index.html";
           }
-         
-          // $('#login-form').attr('action', '/index.html');
-          // $('#login-form').submit();
         } else{
           event.preventDefault();
-          console.log("User is not registered");
-          $("h2#login-status").text("Please register!!!");
+          // $("h6#login-status").text("This email-id is not registered or your password is not correct!");
         }
       }
+      if(!isAlreadyRegistered){
+        toastr.warning("This email-id is not registered or your password is not correct!","",{positionClass: "toast-bottom-right",extendedTimeOut: 1000,timeOut: 3000});
+      }
     }
-    // else{
-    //   console.log("User is not registered");
-    //   $("h2#login-status").text("Please register!!!");
-    // }
   }
 
   function logout(){
@@ -172,4 +188,12 @@ function appendQuestionaryNameToSecondaryNavbar()
   }
 }
 
+function checkIfScoreRecordExists(){
+  let questionarieId = getQuestionarieID();
+  if(($(`#accordion-${questionarieId}` ).has( "div" ).length) > 0 ){
+    return true
+  }else{
+    return false
+  }
+}
   

@@ -245,7 +245,7 @@
   font-size: medium;
   font-weight: 600;
 }
-.statusModified{
+.statusModified, .loginStatus{
   color: red;
 }
 

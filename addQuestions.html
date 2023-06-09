@@ -100,14 +100,14 @@
       </nav>
       <!-- Breadcrumb -->
     </div>
-    <section id="questionsList">
+    <section id="questionsList" class="mb-5">
       <div class="mx-0 text-center">
         <div class="row justify-content-center">
           <div class="col-lg-9 text-center">
             <input type="text" id="add-heading-questionarie-text" class="testNameInput" placeholder="Enter Questionary Name" value="Test" maxlength="50"/>
           </div>
           <div class="col-lg-3 align-self-center mb-0">
-            <button id="questionarie-rename-btn" type="" class="btn saveBtn">Rename Test</button>
+            <button id="questionarie-rename-btn" type="" class="btn saveBtn renameBtnMsg">Rename Test</button>
           </div>
         </div>
         <!-- <h1 id="add-heading-questionarie">Test</h1> -->
@@ -300,8 +300,17 @@
           timeOut: 3000,
           extendedTimeOut: 1000,
         };
+        $(".notify-questionarie-msg").click(function () {
+      // show when the button is clicked
+      toastr.success("Republished successfully!!");
+    });
+    
+    $(".renameBtnMsg").mouseenter(function () {
+      // show when the button is clicked
+      toastr.info("To rename the test, Click on the test name, edit and press rename","",{extendedTimeOut: 1000,timeOut: 3000});
+    });
 
-        toastr.warning("If you remove or add new questions to Published test then test will be hidden to Students until you republish","",{closeButton: true,
+        toastr.warning("If you remove or add new questions to the published test then that test will remain hidden to students until you republish","",{closeButton: true,
         extendedTimeOut: 0,
         timeOut: 0,
         tapToDismiss: false});
@@ -313,10 +322,7 @@
           toastr.success("Published succesfully.","",{extendedTimeOut: 1000,timeOut: 3000});
         });
     
-    $(".notify-questionarie-msg").click(function () {
-      // show when the button is clicked
-      toastr.success("Republished successfully!!");
-    });
+   
   
     });
   </script>
