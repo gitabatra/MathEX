@@ -25,9 +25,9 @@ function refreshUserManagement(){
    $("section#user-management-section").append(appendUserDataTable());
    let users = getRegisteredUsers();
    console.log("All users : ",users);
-   //let isScreenSmall = checkIfScreenSmall();
+   const loggedInUserID = localStorage.getItem('loggedInUserID');
    for (const userId in users) {
-    let mainAdmin = (userId === "u-20230405-01");
+    let mainAdmin = ((userId === "u-20230405-01") || (userId === loggedInUserID));
     console.log("userId : ",userId);
     if (Object.hasOwnProperty.call(users, userId)) {
        
@@ -38,17 +38,17 @@ function refreshUserManagement(){
         let isAdmin = userObject.isAdmin;
         let position;
         let disable_toggle_button = mainAdmin ? "disabled" : "";
-        let checked_toggle_button = "checked";
+        let checked_toggle_button = "";
         
         if(isAdmin){
             position = "Admin";
-            checked_toggle_button = "checked";
+            //checked_toggle_button = "checked";
             $("div#small-screen-user-list").append(appendUsersListSmallScreen(userId,userObject,position,disable_toggle_button,checked_toggle_button));
             $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button)); 
             $(`span#position-badge-${userId}-${position}`).addClass('badge badge-success rounded-pill d-inline');
         }else {
             position = "Student";
-            checked_toggle_button = "";
+            //checked_toggle_button = "";
             $("div#small-screen-user-list").append(appendUsersListSmallScreen(userId,userObject,position,disable_toggle_button,checked_toggle_button));
             $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button)); 
             $(`span#position-badge-${userId}-${position}`).addClass('badge badge-info rounded-pill d-inline');
@@ -67,43 +67,61 @@ function refreshNotification(){
     let loggedInUserID = localStorage.getItem("loggedInUserID");
     let userObj = users[loggedInUserID];
     let inboxObj =userObj["inbox"];
-    let count = 0;
-    for(const notifyId in inboxObj){
-        if (Object.hasOwnProperty.call(inboxObj, notifyId)) {
-            count = count+1;
-            console.log("Notification Id: ",notifyId);
-            let monthName =  getMonthName(inboxObj[notifyId]["creationDate"].month);
-            let dateString = monthName+" "+(inboxObj[notifyId]["creationDate"].day)+", "+(inboxObj[notifyId]["creationDate"].year)
-            console.log("creation date: ",dateString);
-            $("div#notification-list").append(appendNewNotificationListItem(notifyId,inboxObj[notifyId].description,dateString));
-            console.log("Notification has been read or not: ",inboxObj[notifyId].isRead);
-            if(inboxObj[notifyId].isRead){
-                $(`input#flex-read-check_${notifyId}`).prop("checked", true);
-                $(`#notification-list-item-${notifyId}`).addClass("checkedReadNotification");
+    console.log("Notifications are there ornot: ",inboxObj);
+    const isNotificationObjectEmpty =  (
+        inboxObj &&
+        Object.keys(inboxObj).length === 0 &&
+        inboxObj.constructor === Object
+      );
+    if(isNotificationObjectEmpty){
+        //toastr.warning("No new Notifications!","",{positionClass: "toast-bottom-right",extendedTimeOut: 1000,timeOut: 3000});
+        console.log("No new notification............");
+        $("h3#notification-status-message").text("No new notification");
+    }else{
+        console.log("Check the Notifications......");
+        let count = 0;
+        for(const notifyId in inboxObj){
+            if (Object.hasOwnProperty.call(inboxObj, notifyId)) {
+                count = count+1;
+                console.log("Notification Id: ",notifyId);
+                let monthName =  getMonthName(inboxObj[notifyId]["creationDate"].month);
+                let dateString = monthName+" "+(inboxObj[notifyId]["creationDate"].day)+", "+(inboxObj[notifyId]["creationDate"].year)
+                console.log("creation date: ",dateString);
+                $("div#notification-list").append(appendNewNotificationListItem(notifyId,inboxObj[notifyId].description,dateString));
+                console.log("Notification has been read or not: ",inboxObj[notifyId].isRead);
+                if(inboxObj[notifyId].isRead){
+                    $(`input#flex-read-check_${notifyId}`).prop("checked", true);
+                    $(`#notification-list-item-${notifyId}`).addClass("checkedReadNotification");
+                }
             }
         }
+        $("span#inbox-total-notification").text(count);
     }
-    $("span#inbox-total-notification").text(count);
-    
 }
 
 $(document).on('change', '.switchAdmin[type=checkbox]', function(event) {
     let targetId = event.target.id;
-    console.log("Checked the Switch********",targetId);
+    console.log("Checked the Switch********",targetId,event.target);
     let target = targetId.split("_");
     let userId = target[1];
     let users = getRegisteredUsers();
-    if( $('#'+targetId).is(':checked') ){
+    
+    console.log("Checked property",$((`#${targetId}[type = checkbox]`)));
+
+    if( $((`#${targetId}[type = checkbox]`)).is(':checked') ){
+        console.log("Turned ON the Admin switch",users[userId].isAdmin);
         users[userId].isAdmin = true;
         position = "Admin";
         $(`.user-position-${userId}`).text("Admin");
         $(`label#switch-check-label-${userId}`).text("Turn to Student");
-        $('#'+targetId).attr('Checked','Checked');
+        //$('#'+targetId).attr('Checked','Checked');
     } else{
+        console.log("Turned OFF the Admin switch",users[userId].isAdmin);
         users[userId].isAdmin = false;
         position = "Student";
         $(`.user-position-${userId}`).text("Student");
         $(`label#switch-check-label-${userId}`).text("Turn to Admin");
+        //$('#'+targetId).attr('Checked','');
     }
     Object.assign(users,  users[userId].isAdmin);
     localStorage.setItem("users", JSON.stringify(users));
@@ -186,7 +204,7 @@ function checkQuestionaryUpdated(modifiedDate){
         let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
         console.log("converted date...........",dateObj,dateObj.getTime());
         let currentDate = new Date();
-        currentDate.setHours(0,0,0,0);
+        //currentDate.setHours(0,0,0,0);
         console.log("Current Date getTime() : ",currentDate.getTime());
         if (dateObj.getTime() < currentDate.getTime()) {
             return true;
@@ -198,25 +216,26 @@ function checkQuestionaryUpdated(modifiedDate){
     }
   }
 
-  $('input#notify-btn').click(function(){
+  $('input#republish-btn').click(function(){
     console.log("Notify users while updating the questionary..........");
     //isNotificationSent: false,
     let questionaries = getQuestionaries();
     let questionarieId = getQuestionarieID();
-    //let questionarieObj = questionaries[questionarieId];
-    // isModified = checkQuestionaryUpdated(questionarieObj.modifiedDate);
-    // if(isModified){
+    let questionarieObj = questionaries[questionarieId];
+    console.log("Notification sent or not: ",questionarieObj.isNotificationSent);
+    $(`div#questionarie-list-item-${questionarieId}`).show();
+    $("input#republish-btn").hide();
+    $("input#add-new-question-btn").hide();
+
+    Object.assign(questionaries[questionarieId],{isModified: false});
+    if(!questionarieObj.isNotificationSent){
         createEditquestionaryNotification();
-        //hide the buttons again
-        $("input#notify-btn").hide();
-        $("input#add-new-question-btn").hide();
         Object.assign(questionaries[questionarieId],{isNotificationSent: true});
-        localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    // }else{
-    //     console.log("Modifying on the same day");
-    //    // $("input#notify-btn").prop("disabled","true");
-    // }
-    
+    }
+    else{
+      console.log("Modifying on the same day");
+    }
+    localStorage.setItem("questionaries", JSON.stringify(questionaries));
   })
 
 $(document).on('change', '.switchRead[type=checkbox]', function(event) {
@@ -227,7 +246,7 @@ $(document).on('change', '.switchRead[type=checkbox]', function(event) {
     let users = getRegisteredUsers();
     let userId = localStorage.getItem("loggedInUserID");
     let userObj = users[userId];
-    console.log("USer object: ",userObj);
+    console.log("**************USer object: ",userObj,$('#'+targetId).is(':checked'));
     
     if($('#'+targetId).is(':checked')){
         $(`#notification-list-item-${notificationId}`).addClass("checkedReadNotification");

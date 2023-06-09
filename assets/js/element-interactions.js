@@ -57,15 +57,19 @@ function refreshQuestionarieList() {
     if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
       let questionarieObject = questionaries[questionarieId];
       console.log("questionary object: ",questionarieObject,"published: ",questionarieObject["isQuestionariePublished"]);
-      if (!(questionarieObject.isQuestionariePublished)) {
-        console.log("Publish button is not clicked.........................");
-      } else {
+      if (questionarieObject.isQuestionariePublished) {
         let hide_score_button =
-          JSON.stringify(userObj["scores"][scoreId]["scoreAttempts"]) == '{}' ? "hidden" : "";
+        JSON.stringify(userObj["scores"][scoreId]["scoreAttempts"]) == '{}' ? "hidden" : "";
         $("div#questionarie-list").append(questionarieListItem(questionarieId, questionarieObject["name"], hide_score_button));
+        if(questionarieObject.isModified){
+           $(`div#questionarie-list-item-${questionarieId}`).hide();
+        }
+      } else {
+        console.log("Publish button is not clicked.........................");
     }
         $("div#questionarie-grid")
           .append(questionarieListItemAdmin(questionarieId, questionarieObject["name"]));
+         
     } else {
       console.log("The following Id not found", questionarieId);
     }
@@ -73,7 +77,6 @@ function refreshQuestionarieList() {
 }
 
 //Appending questions to Questionarie by taking input from pop up
-
 function appendNewQuestionToList(popupData) {
   let questionaries = getQuestionaries();
   let questionarieId = getQuestionarieID();
@@ -106,22 +109,20 @@ function appendNewQuestionToList(popupData) {
       }
     });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    changeQuestionaryStatus(questionaries[questionarieId]);
+    changeQuestionaryStatus(questionaries[questionarieId],questionarieId);
     }
   }
   appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);
   setQuestionary(questionarieId, questionarieObject);
 }
 
-function changeQuestionaryStatus(questionarieObj){
+function changeQuestionaryStatus(questionarieObj,questionarieId){
+  console.log("Changing Questionary modified Date.....",questionarieId, questionarieObj)
   let modifiedDate = questionarieObj.modifiedDate;
   let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
-  // let text = ""
-  toastr.warning("Notify Users once editing is done!");
-      $('input#notify-btn').removeAttr('hidden');
-      $("p#questionary-modified-status").text("Modified on "+dateObj.toLocaleDateString());
-      $("p#questionary-modified-status").addClass("statusModified");
-
+  $('input#republish-btn').removeAttr('hidden');
+  $(`p#questionary-modified-status-${questionarieId}`).text("Modified on "+dateObj.toLocaleDateString());
+  $(`p#questionary-modified-status-${questionarieId}`).addClass("statusModified");
 }
 
 
@@ -138,7 +139,20 @@ function refreshQuestionsList() {
     $("#student-dashboard-questionarie-name").text(questionarieObject["name"]);
     $("input#add-heading-questionarie-text").val(questionarieObject["name"]);
     $("h3#add-heading-questionarie-student").text(questionarieObject["name"]);
-    
+    $("div#questionarie-status-row").append(questionarieStatus(questionarieId));
+
+    if(questionarieObject.isQuestionariePublished){
+      $(`p#questionary-status-${questionarieId}`).text("Status: Published");
+      console.log("Publish button is clicked.........................");
+      $("input#publish-btn").hide();
+      if(questionarieObject.isModified){
+      console.log(".............questionarie is modified..............");
+      changeQuestionaryStatus(questionarieObject,questionarieId);
+     //hide the questionarie for student
+      // $(`div#questionarie-list-item-${questionarieId}`).hide();
+      $("input#republish-btn").show();
+     }
+    }
     
     let countQuestion = 1;
     for (const questionId in questionarieObject["questions"]) {

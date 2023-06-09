@@ -85,7 +85,7 @@
         </div>
       </nav>
     </header>
-    <section id="testPapers">
+    <section id="testPapers" class="mb-5">
      <div class="container">
       <div class="d-flex flex-wrap flex-column flex-md-row  align-content-sm-center justify-content-md-evenly justify-content-lg-between">
           <div class="col text-center"><h1>List of Test Papers</h1></div>
@@ -118,19 +118,47 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
   ></script>
+  <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+></script> 
 
     <script type="text/javascript" src="assets/js/data/data.js"></script>
-    <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionformat.js"></script>
     <script type="text/javascript" src="assets/js/templates/scores.js"></script>
+    <script type="text/javascript" src="assets/js/templates/usersNotification.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
     <script type="text/javascript" src="assets/js/users.js"></script>
-    <script type="text/javascript" src="assets/js/templates/usersNotification.js"></script>
+    <script type="text/javascript" src="assets/js/validation/validate.js"></script>
+    <script type="text/javascript" src="assets/js/events-util.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
+    <script>
+      $(document).ready(function () {
+     toastr.options = {
+       debug: false,
+       newestOnTop: false,
+       positionClass: "toast-bottom-right",
+       preventDuplicates: true,
+       progressBar: false,
+       onclick: null,
+       fadeIn: 300,
+       fadeOut: 3000,
+       timeOut: 3000,
+       extendedTimeOut: 1000,
+     };
+    
+     $(".questionaryScoreRecord").mouseenter(function () {
+       // show when the button is clicked
+       toastr.info("You can Check scores of all students for this test here");
+     });
+     
+     
+   });
+ </script>
   </body>
 </html>

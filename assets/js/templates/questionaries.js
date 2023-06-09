@@ -20,15 +20,25 @@ function questionarieListItemAdmin(questionarieId, questionarieName){
  </div>
   <div class="col text-center">
    <a href="./score_record.html?questionarie-id=${questionarieId}">
-     <button id="open-score-record-btn" class="btn btn-info px-4 mb-2">Scores <i class="fas fa-star"></i></button>
+     <button id="open-score-record-btn" class="btn btn-info px-4 mb-2 questionaryScoreRecord">Scores <i class="fas fa-star"></i></button>
    </a>
    <a href="./addQuestions.html?questionarie-id=${questionarieId}">
-     <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2">Edit <i class="fas fa-edit"></i></button>
+     <button id="open-edit-questionarie-btn" class="btn btn-success px-4 mb-2 questionaryEditBtn">Edit <i class="fas fa-edit"></i></button>
    </a>
    <a href="#" key="${questionarieId}">
-     <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2">Delete <i class="fas fa-trash-alt"></i></button>
+     <button id="delete-questionarie-btn" class="btn btn-danger px-4 mb-2 questionaryDeleteBtn">Delete <i class="fas fa-trash-alt"></i></button>
    <a>
    </div>
   </div>
   </div>`
+}
+
+function questionarieStatus(questionarieId){
+  return `<div class="col-auto">
+  <p id="questionary-status-${questionarieId}" class="px-2 questionaryStatus">
+   </p>
+   </div>
+   <div class="col-auto">
+    <p id="questionary-modified-status-${questionarieId}" class="px-2"></p>
+   </div>`
 }

@@ -35,7 +35,7 @@ function appendUsersListSmallScreen(
       <small><div class="form-check form-switch align-content-center">
        <div class="d-flex flex-wrap align-content-center justify-content-center">
           <input class="form-check-input switchAdmin" type="checkbox" role="switch" id="flex-switch-check_${userId}" ${checked_toggle_button} ${disable_toggle_button}/>
-          <label id="switch-check-label-${userId}" class="form-check-label" for="flex-switch-check">Turn to Admin</label>
+          <label id="switch-check-label-${userId}" class="form-check-label" for="flex-switch-check_${userId}">Turn to Admin</label>
         </div>
       </div></small>
     </div>

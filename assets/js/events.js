@@ -22,11 +22,8 @@ function initEvents() {
     let questionaries = getQuestionaries();
     //if questionary was published then push notification that questionary is deleted
     if(questionaries[questionaryKey].isQuestionariePublished){
-      // let isDateModified = checkQuestionaryUpdated(questionaries[questionaryKey].modifiedDate);
-      // if(isDateModified){
         console.log("Date is modified, so creating notification..........");
         createDeleteQuestioanryNotification(questionaryKey);
-      // }
     }
     delete questionaries[questionaryKey];
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
@@ -49,11 +46,11 @@ function initEvents() {
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
     console.log(questionaries[questionarieId]["questions"][questionKey]);
-
-    delete questionaries[questionarieId]["questions"][questionKey];
-    localStorage.setItem("questionaries", JSON.stringify(questionaries));
+    // delete questionaries[questionarieId]["questions"][questionKey];
+    // localStorage.setItem("questionaries", JSON.stringify(questionaries));
     if(questionaries[questionarieId].isQuestionariePublished){
       let isModified = checkQuestionaryUpdated(questionaries[questionarieId].modifiedDate);
+      console.log("After deleting a question, check questionary is modified or not: ",isModified);
       if(isModified){
         let currentDate = getSessionDate();
         Object.assign(questionaries[questionarieId], {
@@ -64,13 +61,10 @@ function initEvents() {
             year: currentDate[2]
         }
       });
+      delete questionaries[questionarieId]["questions"][questionKey];
       localStorage.setItem("questionaries", JSON.stringify(questionaries));
       changeQuestionaryStatus(questionaries[questionarieId]);
     }
-
-      // Object.assign(questionaries[questionarieId],{isModified: true});
-      // localStorage.setItem("questionaries", JSON.stringify(questionaries));
-      // changeQuestionaryStatus(questionaries[questionarieId]);
     }
   });
 
@@ -109,47 +103,6 @@ function initEvents() {
     }
   });
 
-  function getScoreRecordObject(questionarieObject,scoreAttemptID,scoreRecordObject,totalQuestions){
-    let correctCount = 0, inputAnswer = 0;
-    for (const questionId in questionarieObject["questions"]) {
-      let questionsObj = questionarieObject["questions"][questionId];
-      let correctAnswer = calculateAnswer(questionsObj.num1,questionsObj.num2,questionsObj.type);
-      if(questionsObj.type == "/"){
-        //call 
-        let inputAnswerObj = checkAnswerForDivision(questionId,questionsObj);
-        //let quotient = inputAnswerObj.inputAnswer;
-        console.log("InputAnswerObject",inputAnswerObj);
-        if(inputAnswerObj.quotient == correctAnswer.quotient && inputAnswerObj.remainder == correctAnswer.remainder){
-          console.log("For Division, InputAnswer object is equal to CorrectAnswer Object", inputAnswerObj,correctAnswer);
-          correctCount = correctCount+1;
-        }
-        Object.assign(scoreRecordObject[scoreAttemptID]["questions"], { [questionId] :{num1 : questionsObj.num1, num2 : questionsObj.num2,ndigit: questionsObj.ndigit,type: questionsObj.type, 
-          givenAns: {"quotient":inputAnswerObj.quotient,"remainder":inputAnswerObj.remainder}, correctAns: {"quotient":correctAnswer.quotient,"remainder":correctAnswer.remainder}}});
-
-          console.log("********Score Object for Division:",scoreRecordObject[scoreAttemptID]["questions"]);
-      }else{
-        if(questionsObj.type == "+" || questionsObj.type == "-"){
-          inputAnswer = checkAnswerForAdditionSubtraction(questionId,questionsObj,correctAnswer);
-       }else if(questionsObj.type == "x"){
-         inputAnswer = checkAnswerForMultiplication(questionId,questionsObj,correctAnswer); 
-       } 
-       console.log("Questions-- Input Answer: ",inputAnswer);
-       if (isNaN(inputAnswer) || inputAnswer == null) {
-         inputAnswer = "";
-       }
-       if(inputAnswer == correctAnswer){
-         correctCount = correctCount+1;
-       }
-       
-       Object.assign(scoreRecordObject[scoreAttemptID]["questions"], { [questionId] :{num1 : questionsObj.num1, num2 : questionsObj.num2,ndigit: questionsObj.ndigit,type: questionsObj.type, 
-         givenAns: inputAnswer, correctAns: correctAnswer}});
-      }
-      
-    }
-   Object.assign(scoreRecordObject[scoreAttemptID], { dateQuestionarie: getDateForQuestionarieAttempt(),score: correctCount + " / " + totalQuestions });
-  return(scoreRecordObject[scoreAttemptID]);
-  }
-
   //Admin Publish Button
   $("input#publish-btn").click(function (event) {
     console.log(event.delegateTarget);
@@ -169,7 +122,7 @@ function initEvents() {
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
     //once published push notification to user that new test is available
     createNewquestioanryNotification(questionarieId);
-    $("p#questionary-status").text("Status: Published");
+    $(`p#questionary-status-${questionarieId}`).text("Status: Published");
     $("input#publish-btn").hide();
     $("input#add-new-question-btn").hide();
   });
@@ -197,32 +150,6 @@ function initEvents() {
         "./addQuestions.html?questionarie-id=" + newQuestionarieKey;
     }
   });
-
-  function fetchPopUpData(event) {
-    let $inputs = $("#popup-form :input");
-    let popupData = {};
-    $inputs.each(function () {
-      popupData[this.name] = $(this).val();
-      console.log(popupData[this.name]);
-      console.log(typeof popupData[this.name]);
-    });
-
-    if (popupData["ndigit"] != "" && popupData["num1"] != ""  &&  popupData["num2"] != "") {
-      console.log("Popup data not null and validate data");
-      console.log("No of digits entered in pop up: ",popupData["ndigit"]);
-      if(parseInt(popupData["ndigit"])<=0 || parseInt(popupData["ndigit"])>4){
-        console.log("Greater than 4...........");
-        event.preventDefault();
-      }else{
-        let popupDataObj = validatePopUpData(popupData,event);
-        return (popupDataObj);
-      }
-      
-    } else {
-      console.log("Pop up data is null");
-      return null;
-    }
-  }
 
   $("button#pop-up-submit-save-btn").click(function (event) {
     console.log("Pop up Save Btn event is executing...");
@@ -257,139 +184,23 @@ function initEvents() {
       $("#add-new-questionarie-test-btn").prop("disabled", true);
     }
   });
-}
 
-function onChange(obj) {
-  var id = $(obj).attr("id");
-  switch (id) {
-    case "navbar-student-btn":
-      window.location.href = "./index.html";
-      break;
+  $("input#add-heading-questionarie-text").keyup(function () {
+    console.log("Enabling Rename button on input is executing");
+    let testName = $(this).val();
+    let isTestNameAlreadyTaken;
+    isTestNameAlreadyTaken = checkQuestionaryName(testName);
+    console.log("Tast name is taken or not: ", isTestNameAlreadyTaken);
 
-    case "navbar-admin-btn":
-      window.location.href = "./admin.html";
-      break;
-
-    case "navbar-user-management-btn":
-      window.location.href = "./userManagement.html";
-      break;
-  }
-}
-
-
-$("form#registration-form").on("submit", function(e){
-  console.log("Registration form submit event is executing....");
-  //e.preventDefault();
-  let $inputs = $("#registration-form :input");
-  console.log("Inputs: ",$inputs);
-    let registrationData = {};
- 
-    $inputs.each(function () {
-      console.log("Form data values: ", $(this).val(), typeof( $(this).val()));
-        registrationData[this.name] = $(this).val();
-    });
-    const isObjectEmpty =  (
-        registrationData &&
-        Object.keys(registrationData).length === 0 &&
-        registrationData.constructor === Object
-      );
-    const isDataempty = (registrationData["username"]!="" && registrationData["email"]!="" && registrationData["password"]!="");
-    console.log("registration data object is empty or not: ",registrationData,"Data empty",isDataempty);
-    if (!isObjectEmpty && isDataempty){
-      //check if email already exists then 
-        registerNewUser(registrationData,e);
+    console.log("testname is : " + testName);
+    if ($(this).val().trim() != "" && !isTestNameAlreadyTaken) {
+      console.log("not null");
+      $("button#questionarie-rename-btn").prop("disabled", false);
+    } else {
+      $("button#questionarie-rename-btn").prop("disabled", true);
     }
-})
+  });
 
-function registerNewUser(registrationData,e){
-  console.log("Register new user......");
-  let userObj = getRegisteredUsers();
-  console.log("User Object in local Storage: ",userObj);
-  //e.preventDefault();
-
-  let ulength = Object.keys(userObj).length;
-  if(ulength>0){
-    ulength = Object.keys(userObj)[ulength - 1].substring(12);
-  }
-  let newUserId = "u-20230405-0" + (parseInt(ulength) + 1);
-  console.log("new user Id: ",newUserId);
-  //session date
-  let sessionDateObj = getSessionDate();
-  console.log("New user Id: ",newUserId);
-  let newUserObj = createNewUserRegistrationObject(newUserId,registrationData,sessionDateObj);
-  console.log("New USer Object On Registration: ",newUserObj);
-  Object.assign(userObj, newUserObj);
-  console.log("After assigning new user: ",userObj);
-  localStorage.setItem("users", JSON.stringify(userObj));
-  //set loggedinUserId to localstorage
-  setLoggedInUserId(userObj,newUserId);
-  $('#registration-form').attr('action', './index.html');
-  //window.location.href = "/index.html";
-}
-
-$("form#login-form").on("submit", function(event) {
-  console.log("Login submit event is executing...");
- // event.preventDefault();
-  let $inputs = $("#login-form :input");
-  console.log("Inputs: ",$inputs);
-    let loginData = {};
-    $inputs.each(function () {
-      console.log("Login form data values: ", $(this).val(), typeof( $(this).val()));
-      if(( $(this).val())!= ""){
-        loginData[this.name] = $(this).val();
-      }
-    });
-    const isObjectEmpty =  (
-      loginData &&
-      Object.keys(loginData).length === 0 &&
-      loginData.constructor === Object
-    );
-  console.log("loginData data object is empty: ",isObjectEmpty);
-  if (!isObjectEmpty){
-    //check if email already exists then find login Id and save into the localstoarge
-      findLoginId(loginData,event);
-  }
-});
-
-function findLoginId(loginData,event){
-  console.log("Find logged in user event is executing...");
-  let userObj = getRegisteredUsers();
-  console.log("User Object in local Storage: ",userObj);
- 
-  if(userObj!=null){
-    let userId = Object.keys(userObj);
-    console.log("user Keys: ",userId);
-
-     for (const userId in userObj) {
-      console.log("userId : ",userId);
-      let email = userObj[userId].email;
-      let password = userObj[userId].password;
-      console.log("userId : ",userId,"email: ",email,"password: ",password,"loginData: ",loginData);
-      if(loginData.email === email && loginData.password === password){
-        console.log("This email id is already registered");
-        //set loggedIn to true
-        setLoggedInUserId(userObj,userId);
-        console.log("Admin is loggin in : ",userObj,userObj[userId].isAdmin);
-        if(userObj[userId].isAdmin){
-          window.location.href = "./admin.html";
-        } else {
-          window.location.href = "./index.html";
-        }
-       
-        // $('#login-form').attr('action', '/index.html');
-        // $('#login-form').submit();
-      } else{
-        event.preventDefault();
-        console.log("User is not registered");
-        $("h2#login-status").text("Please register!!!");
-      }
-    }
-  }
-  // else{
-  //   console.log("User is not registered");
-  //   $("h2#login-status").text("Please register!!!");
-  // }
-}
 
 
 $("a#navbar-notification-btn").on("click", function(event){
@@ -399,26 +210,6 @@ $("a#navbar-notification-btn").on("click", function(event){
 $("a#navbar-logout-btn").on("click", function(event){
   logout();
 });
-
-function logout(){
-  let users = getRegisteredUsers();
-  let userId =  localStorage.getItem("loggedInUserID");
-  console.log("logout event is executing for login Id.....",userId, users[userId].isLoggedIn);
-  Object.assign(users[userId], {
-    isLoggedIn: false
-  });
-  localStorage.setItem("users", JSON.stringify(users));
-  //set userloginid to null localstorage
-  localStorage.setItem("loggedInUserID",'null');
-  console.log("logged in user id: ",localStorage.getItem("loggedInUserID"));
-  if(forcedUserLogoutTimout != null){
-    console.log("Clearing timout");
-    clearTimeout(forcedUserLogoutTimout);
-    forcedUserLogoutTimout = null;
-  }   
-  window.location.href = "./loginRegister.html";
-}
-
 
 $("button#questionarie-rename-btn").on("click", function(event){
   console.log("Changing Questionary name..............");
@@ -447,25 +238,6 @@ $("a#student-dashboard-link").on("click", function(event){
   }
 });
 
-function appendQuestionaryNameToSecondaryNavbar()
-{
-  let questionarieId = getQuestionarieID();
-  let questionaries = getQuestionaries();
-  let questioanrieObj = questionaries[questionarieId];
-  console.log("questioanry Object: ",questioanrieObj);
-  let testName = questioanrieObj["name"];
-  console.log("Test Name.......: ",testName);
-  let loggedInUserID = localStorage.getItem("loggedInUserID");
-  let users = getRegisteredUsers();
-  let userObj = users[loggedInUserID];
-  console.log("Current value of test: ",$("span#student-dashboard-questionarie-name").val());
-  if(userObj.isAdmin){
-  $("span#student-dashboard-questionarie-name").val("Score Record");
-  }else{
-    $("span#student-dashboard-questionarie-name").val(testName);
-  }
-}
-
 //window resize event
 $( window ).on( "resize", function() {
   console.log("Window resizing event is executing...........");
@@ -481,3 +253,72 @@ $( window ).on( "resize", function() {
     $("div#small-screen-user-list").hide();
   }
 } );
+
+}
+
+function onChange(obj) {
+  var id = $(obj).attr("id");
+  switch (id) {
+    case "navbar-student-btn":
+      window.location.href = "./index.html";
+      break;
+
+    case "navbar-admin-btn":
+      window.location.href = "./admin.html";
+      break;
+
+    case "navbar-user-management-btn":
+      window.location.href = "./userManagement.html";
+      break;
+  }
+}
+
+$("form#registration-form").on("submit", function(e){
+  console.log("Registration form submit event is executing....");
+  //e.preventDefault();
+  let $inputs = $("#registration-form :input");
+  console.log("Inputs: ",$inputs);
+    let registrationData = {};
+ 
+    $inputs.each(function () {
+      console.log("Form data values: ", $(this).val(), typeof( $(this).val()));
+        registrationData[this.name] = $(this).val();
+    });
+    const isObjectEmpty =  (
+        registrationData &&
+        Object.keys(registrationData).length === 0 &&
+        registrationData.constructor === Object
+      );
+    const isDataempty = (registrationData["username"]!="" && registrationData["email"]!="" && registrationData["password"]!="");
+    console.log("registration data object is empty or not: ",registrationData,"Data empty",isDataempty);
+    if (!isObjectEmpty && isDataempty){
+      //check if email already exists then 
+        registerNewUser(registrationData,e);
+    }
+});
+
+$("form#login-form").on("submit", function(event) {
+  console.log("Login submit event is executing...");
+ // event.preventDefault();
+  let $inputs = $("#login-form :input");
+  console.log("Inputs: ",$inputs);
+    let loginData = {};
+    $inputs.each(function () {
+      console.log("Login form data values: ", $(this).val(), typeof( $(this).val()));
+      if(( $(this).val())!= ""){
+        loginData[this.name] = $(this).val();
+      }
+    });
+    const isObjectEmpty =  (
+      loginData &&
+      Object.keys(loginData).length === 0 &&
+      loginData.constructor === Object
+    );
+  console.log("loginData data object is empty: ",isObjectEmpty);
+ // if(loginData.hasOwnProperty('email') && loginData.hasOwnProperty('password'))
+  if (!isObjectEmpty && loginData.hasOwnProperty('email') && loginData.hasOwnProperty('password')){
+    //check if email already exists then find login Id and save into the localstoarge
+    $("h6#login-status").text("");
+      findLoginId(loginData,event);
+  }
+});

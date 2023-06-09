@@ -85,7 +85,7 @@
       </nav>
       <!-- Breadcrumb -->
     </div>
-    <section id="questionsList">
+    <section id="questionsList" class="mb-5">
       <div class="bigHeading">
         <h1 id="addHeadingForTest1" class="mb-4">Scores Record</h1>
       </div>
@@ -101,9 +101,11 @@
     integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
     crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
+    <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+></script> 
     <script type="text/javascript" src="assets/js/data/data.js"></script>
-    <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
@@ -112,9 +114,34 @@
     <script type="text/javascript" src="assets/js/templates/usersNotification.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
     <script type="text/javascript" src="assets/js/users.js"></script>
+    <script type="text/javascript" src="assets/js/validation/validate.js"></script>
+    <script type="text/javascript" src="assets/js/events-util.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
-
+    <script>
+       $(document).ready(function () {
+        toastr.options = {
+          debug: false,
+          newestOnTop: false,
+          positionClass: "toast-bottom-right",
+          preventDuplicates: true,
+          progressBar: false,
+          onclick: null,
+          fadeIn: 300,
+          fadeOut: 3000,
+          timeOut: 3000,
+          extendedTimeOut: 1000,
+        };
+        const isRecordPresent = checkIfScoreRecordExists();
+        $('a#open-questionarie-score-record-btn').click(function (){
+          if(!isRecordPresent){
+          toastr.info("No one has taken the test yet");
+        }
+        })
+       });
+      
+    </script>
 
   </body>
 </html>

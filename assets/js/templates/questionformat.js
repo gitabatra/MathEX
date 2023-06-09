@@ -1,7 +1,5 @@
 
 function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionType,firstNum,secondNum){
-    console.log("QuestionType: ",questionType);
-    console.log("second number type", secondNum,typeof(secondNum));
     $("div#questions-list").append(appendQuestionsToStudentQuestionary(questionId,countQuestion,questionType));
           appendFirstNumberInRow(questionId,firstNum,nDigits);
           appendSecondNumberInRow(questionId,secondNum,nDigits);
@@ -9,7 +7,6 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
   }
     
     function appendFirstNumberInRow(questionId,number,nDigits){
-      console.log("First Number---",number," No of Digits: ",nDigits);
       console.log("first number type", typeof(number));
       let firstNumLength = number.length;
       console.log("Length of Second number: ", firstNumLength);
@@ -196,10 +193,6 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
     // $("").on('keyup', function() {
       console.log("Keycode for pressed key : ", e.keyCode);
       console.log("Key up..........",$(this).next().find('input'), "MaxLength: ",this.maxLength);
-      
-        // if(e.keyCode == 8){
-        //   console.log("Backspace key is pressed");
-        // } 
         
         if (this.value.length == this.maxLength) {
           $(this).parent().next().find('input').focus();

@@ -85,51 +85,53 @@
       </nav>
       <!-- Breadcrumb -->
     </div>
-    <section class="buttonGroup">
-      <div id="alignQuestions" class="col">
-        <input
-          type="button"
-          id="student-questionarie-check-btn"
-          class="btn btn-dark checkBtn saveBtn"
-          value="Check"
-        />
-        <input
-          type="button"
-          id="student-questionarie-finish-btn"
-          class="btn btn-dark submitBtn saveBtn"
-          value="Finish"
-          disabled="true"
-        />
-      </div>
-    </section>
+    
     <section class="pb-3">
       <div class="bigHeading text-center mx-3">
         <h3 id="add-heading-questionarie-student" class="text-center">Test</h3>
       </div>
+      <div class="buttonGroup mb-5">
+        <div id="alignQuestions" class="col">
+          <input
+            type="button"
+            id="student-questionarie-check-btn"
+            class="btn btn-dark checkBtn saveBtn"
+            value="Check"
+          />
+          <input
+            type="button"
+            id="student-questionarie-finish-btn"
+            class="btn btn-dark submitBtn saveBtn"
+            value="Finish"
+            disabled="true"
+          />
+        </div>
+      </div>
 
-      <div class="container">
+      <div class="container mb-5">
         <div class="row g-3" id="questions-list" ></div>
+      </div>
+      <div  class="buttonGroup px-4 mb-5">
+        <div id="alignQuestions" class="col">
+          <input
+            type="button"
+            id="student-questionarie-check-btn"
+            class="btn btn-dark checkBtn saveBtn"
+            value="Check"
+          />
+          <input
+            type="button"
+            id="student-questionarie-finish-btn"
+            class="btn btn-dark submitBtn saveBtn"
+            value="Finish"
+            disabled="true"
+          />
+        </div>
+        <br><br>
       </div>
     
     </section>
-    <section  class="buttonGroup px-4">
-      <div id="alignQuestions" class="col">
-        <input
-          type="button"
-          id="student-questionarie-check-btn"
-          class="btn btn-dark checkBtn saveBtn"
-          value="Check"
-        />
-        <input
-          type="button"
-          id="student-questionarie-finish-btn"
-          class="btn btn-dark submitBtn saveBtn"
-          value="Finish"
-          disabled="true"
-        />
-      </div>
-      <br><br>
-    </section>
+    
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script
@@ -146,8 +148,6 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     ></script>
     <script type="text/javascript" src="assets/js/data/data.js"></script>
-    <script type="text/javascript" src="assets/js/validation/validate.js"></script>
-    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
     <script type="text/javascript" src="assets/js/templates/questions.js"></script>
@@ -156,6 +156,9 @@
     <script type="text/javascript" src="assets/js/templates/usersNotification.js"></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
     <script type="text/javascript" src="assets/js/users.js"></script>
+    <script type="text/javascript" src="assets/js/validation/validate.js"></script>
+    <script type="text/javascript" src="assets/js/events-util.js"></script>
+    <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
     <script>
@@ -174,19 +177,14 @@
         };
         // show when page load
         toastr.info("Questionary Loaded");
-        
-
         $(".checkBtn").click(function () {
           // show when the button is clicked
-          toastr.info("Checking answers...");
-          console.log("Checking the Questionaries event is executing");
+          toastr.info("Checking answers...","",{extendedTimeOut: 500,timeOut: 500});
           toastr.success("Checked succesfully!");
         });
         $(".submitBtn").mouseenter(function () {
           // show when the button is clicked
           toastr.warning("Make sure you have attempted all Questions!");
-          console.log("Checking the Questionaries event is executing");
-          //toastr.success("Submitted succesfully.");
         });
       });
     </script>
