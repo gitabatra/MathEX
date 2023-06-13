@@ -107,7 +107,7 @@
       <div class="mx-0 text-center">
         <div class="row justify-content-center">
           <div class="col-lg-9 text-center">
-            <input type="text" id="add-heading-questionarie-text" class="testNameInput" placeholder="Enter Questionary Name" value="Test" maxlength="50"/>
+            <input type="text" id="add-heading-questionarie-text" class="testNameInput" placeholder="Enter Questionary Name" value="Test" maxlength="50" autofocus="autofocus"/>
           </div>
           <div class="col-lg-3 align-self-center mb-0">
             <button id="questionarie-rename-btn" type="" class="btn saveBtn renameBtnMsg">Rename Test</button>
@@ -311,7 +311,8 @@
     
     $(".renameBtnMsg").mouseenter(function () {
       // show when the button is clicked
-      toastr.info("To rename the test, Click on the test name, edit and press rename","",{extendedTimeOut: 1000,timeOut: 3000});
+      toastr.info("To rename the test, Click on the test name, edit and press rename");
+      //,"",{extendedTimeOut: 0,timeOut: 3000, preventDuplicates: true}
     });
 
         toastr.warning("If you remove or add new questions to the published test then that test will remain hidden to students until you republish","",{closeButton: true,

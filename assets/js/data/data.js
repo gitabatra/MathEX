@@ -4,25 +4,11 @@ function initLocalStorage(){
         console.log("Avoiding Quesitonarie initialization because values already exist.");
         return;
     }
-    // register page (add an extra checkbox input asking if the user wants to be admin)
-    // login page
-    // logout button on the navbar
-    // if else condition in every page, if is LoggedIn is false or last Session >= TIMOUT (10mins) send them to the login page. window.href = /signin
-    // user management page, list all users, edit their values 
-    // user edit page
-    // let notifications = {
-
-    // }
-
-    // let screenSize = {
-    //     width: 922,
-    //     height: 1000
-    // }
-
+   
     let users = {
         "u-20230405-01": {
-            username: "Gita",
-            email: "gita@test.ca",
+            username: "Admin",
+            email: "admin@test.ca",
             password: "12345",
             lastSession: { 
                 day: 10,
@@ -34,7 +20,6 @@ function initLocalStorage(){
             scores: {
 
             },
-            switchAdmin: false,
             inbox: {
                 // "n-20230405-01": {
                 //     description: "",
@@ -58,7 +43,6 @@ function initLocalStorage(){
             isAdmin: false,
             isLoggedIn: false,
             scores: {},
-            switchAdmin: false,
             inbox: {
                 // "n-20230405-01": {
                 //     description: "",

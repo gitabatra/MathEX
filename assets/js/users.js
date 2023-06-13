@@ -41,16 +41,18 @@ function refreshUserManagement(){
         
         if(isAdmin){
             position = "Admin";
-            //checked_toggle_button = "checked";
+            checked_toggle_button = "checked";
             $("div#small-screen-user-list").append(appendUsersListSmallScreen(userId,userObject,position,disable_toggle_button,checked_toggle_button));
             $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button)); 
             $(`span#position-badge-${userId}-${position}`).addClass('badge badge-success rounded-pill d-inline');
+            $(`label#switch-check-label-${userId}`).text("Turn to Student");
         }else {
             position = "Student";
-            //checked_toggle_button = "";
+            checked_toggle_button = "";
             $("div#small-screen-user-list").append(appendUsersListSmallScreen(userId,userObject,position,disable_toggle_button,checked_toggle_button));
             $("tbody#user-data-table").append(appendUserToUsersTable(userId,userObject,position,disable_toggle_button,checked_toggle_button)); 
             $(`span#position-badge-${userId}-${position}`).addClass('badge badge-info rounded-pill d-inline');
+            $(`label#switch-check-label-${userId}`).text("Turn to Admin");
         }
         console.log("userId : ",userId,"email: ",email,"password: ",password);
        
@@ -115,23 +117,19 @@ $(document).on('change', '.switchAdmin[type=checkbox]', function(event) {
     let target = targetId.split("_");
     let userId = target[1];
     let users = getRegisteredUsers();
-    
-    console.log("Checked property",$((`#${targetId}[type = checkbox]`)));
 
-    if( $((`#${targetId}[type = checkbox]`)).is(':checked') ){
-        console.log("Turned ON the Admin switch",users[userId].isAdmin);
-        users[userId].isAdmin = true;
-        position = "Admin";
-        $(`.user-position-${userId}`).text("Admin");
-        $(`label#switch-check-label-${userId}`).text("Turn to Student");
-        //$('#'+targetId).attr('Checked','Checked');
-    } else{
-        console.log("Turned OFF the Admin switch",users[userId].isAdmin);
+    if(users[userId].isAdmin){
+        console.log("Turned to Student",users[userId].isAdmin);
         users[userId].isAdmin = false;
         position = "Student";
         $(`.user-position-${userId}`).text("Student");
         $(`label#switch-check-label-${userId}`).text("Turn to Admin");
-        //$('#'+targetId).attr('Checked','');
+    }else{
+        console.log("Turned to Admin",users[userId].isAdmin);
+        users[userId].isAdmin = true;
+        position = "Admin";
+        $(`.user-position-${userId}`).text("Admin");
+        $(`label#switch-check-label-${userId}`).text("Turn to Student");
     }
     Object.assign(users,  users[userId].isAdmin);
     localStorage.setItem("users", JSON.stringify(users));
