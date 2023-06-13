@@ -87,24 +87,27 @@
         </div>
       </nav>
     </header>
-    <div class="p-4 mb-1">
-      <!-- Breadcrumb -->
-      <nav class="d-flex">
-        <h6 class="mb-0">
-          <!-- <a href="" class="text-reset">Home</a> -->
-          <!-- <span>/</span> -->
-          <a href="#" id="student-dashboard-link" class="text-reset"><u>Dashboard</u></a>
-          <span>/</span>
-          <a class="text-reset"><span id="student-dashboard-questionarie-name">Test Paper</span></a>
-        </h6>
-      </nav>
-      <!-- Breadcrumb -->
-    </div>
-    <section id="questionsList" class="mb-5">
+    
+    <section  class="mb-5">
+      <div class="container">
+        <div class="m-4 m-lg-4">
+          <!-- Breadcrumb -->
+          <nav class="d-flex">
+            <h6 class="mb-0">
+              <!-- <a href="" class="text-reset">Home</a> -->
+              <!-- <span>/</span> -->
+              <a href="#" id="student-dashboard-link" class="text-reset"><u>Dashboard</u></a>
+              <span>/</span>
+              <a class="text-reset"><span id="student-dashboard-questionarie-name">Test Paper</span></a>
+            </h6>
+          </nav>
+          <!-- Breadcrumb -->
+        </div>
+    
       <div class="mx-0 text-center">
         <div class="row justify-content-center">
           <div class="col-lg-9 text-center">
-            <input type="text" id="add-heading-questionarie-text" class="testNameInput" placeholder="Enter Questionary Name" value="Test" maxlength="50"/>
+            <input type="text" id="add-heading-questionarie-text" class="testNameInput" placeholder="Enter Questionary Name" value="Test" maxlength="50" autofocus="autofocus"/>
           </div>
           <div class="col-lg-3 align-self-center mb-0">
             <button id="questionarie-rename-btn" type="" class="btn saveBtn renameBtnMsg">Rename Test</button>
@@ -143,6 +146,7 @@
           
         </div>
       </form>
+    </div>
     </section>
     <div
       class="modal fade"
@@ -307,7 +311,8 @@
     
     $(".renameBtnMsg").mouseenter(function () {
       // show when the button is clicked
-      toastr.info("To rename the test, Click on the test name, edit and press rename","",{extendedTimeOut: 1000,timeOut: 3000});
+      toastr.info("To rename the test, Click on the test name, edit and press rename");
+      //,"",{extendedTimeOut: 0,timeOut: 3000, preventDuplicates: true}
     });
 
         toastr.warning("If you remove or add new questions to the published test then that test will remain hidden to students until you republish","",{closeButton: true,
