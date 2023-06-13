@@ -34,7 +34,7 @@ function initLocalStorage(){
             scores: {
 
             },
-            hasNotifications: true,
+            switchAdmin: false,
             inbox: {
                 // "n-20230405-01": {
                 //     description: "",
@@ -58,6 +58,7 @@ function initLocalStorage(){
             isAdmin: false,
             isLoggedIn: false,
             scores: {},
+            switchAdmin: false,
             inbox: {
                 // "n-20230405-01": {
                 //     description: "",

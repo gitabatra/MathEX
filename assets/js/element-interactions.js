@@ -82,6 +82,7 @@ function appendNewQuestionToList(popupData) {
   let questionarieId = getQuestionarieID();
   console.log("questionarieId", questionarieId);
   let questionarieObject = questionaries[questionarieId];
+
   let qlength = Object.keys(questionarieObject["questions"]).length;
   if(qlength>0){
     qlength = Object.keys(questionarieObject["questions"])[qlength - 1].substring(12);
@@ -99,15 +100,17 @@ function appendNewQuestionToList(popupData) {
     let isModified = checkQuestionaryUpdated(questionarieObject.modifiedDate);
     //modify the date and set isModified to true
     if(isModified){
-      let currentDate = getSessionDate();
-      Object.assign(questionaries[questionarieId], {
-        isModified:true,
-        modifiedDate: {
-          day: currentDate[0],
-          month: currentDate[1],
-          year: currentDate[2]
-      }
-    });
+      //let currentDate = getSessionDate();
+      Object.assign(questionaries[questionarieId], {isModified:true,isNotificationSent: false});
+    //   let currentDate = getSessionDate();
+    //   Object.assign(questionaries[questionarieId], {
+    //     isModified:true,
+    //     modifiedDate: {
+    //       day: currentDate[0],
+    //       month: currentDate[1],
+    //       year: currentDate[2]
+    //   }
+    // });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
     changeQuestionaryStatus(questionaries[questionarieId],questionarieId);
     }
@@ -118,10 +121,11 @@ function appendNewQuestionToList(popupData) {
 
 function changeQuestionaryStatus(questionarieObj,questionarieId){
   console.log("Changing Questionary modified Date.....",questionarieId, questionarieObj)
-  let modifiedDate = questionarieObj.modifiedDate;
-  let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
+  //let modifiedDate = questionarieObj.modifiedDate;
+  //let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
   $('input#republish-btn').removeAttr('hidden');
-  $(`p#questionary-modified-status-${questionarieId}`).text("Modified on "+dateObj.toLocaleDateString());
+  $(`p#questionary-modified-status-${questionarieId}`).text("Modified");
+  // $(`p#questionary-modified-status-${questionarieId}`).text("Modified on "+dateObj.toLocaleDateString());
   $(`p#questionary-modified-status-${questionarieId}`).addClass("statusModified");
 }
 

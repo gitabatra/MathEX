@@ -117,6 +117,7 @@ function createNewUserRegistrationObject(newUserID,registrationData,sessionDate)
             isAdmin: false,
             isLoggedIn: true,
             scores: {},
+            switchAdmin: false,
             inbox: {
              
             }

@@ -76,7 +76,7 @@
                 <a class="link-secondary me-3 px-2 text-light" id="navbar-notification-btn" href="#">
                     <i class="fas fa-envelope fa-lg"></i>
                     <!-- <span  class="badge bg-danger badge-dot">7</span> -->
-                    <span id="inbox-total-notification" class="badge rounded-pill badge-notification bg-danger"></span>
+                    <!-- <span id="inbox-total-notification" class="badge rounded-pill badge-notification bg-danger"></span> -->
                   </a>
               <!-- Icon -->
               <a class="link-secondary me-3 px-2" id="navbar-logout-btn" href="#">
@@ -86,24 +86,34 @@
           </div>
         </nav>
       </header>
-      <div class="p-4 mb-1">
-        <!-- Breadcrumb -->
-        <nav class="d-flex">
-          <h6 class="mb-0">
-            <!-- <a href="" class="text-reset">Home</a> -->
-            <!-- <span>/</span> -->
-            <a href="#" id="student-dashboard-link" class="text-reset"><u>Dashboard</u></a>
-            <span>/</span>
-            <a class="text-reset"><span id="student-dashboard-questionarie-name">Notification</span></a>
-          </h6>
-        </nav>
-        <!-- Breadcrumb -->
-      </div>
-      <section  id="testPapers">
-            <div id="notification-list" class="inbox justify-content-center">
+      
+      <section>
+        <div class="container mb-5">
+          <div class="px-0 m-4 mx-lg-4">
+            <!-- Breadcrumb -->
+            <nav class="d-flex">
+              <h6 class="mb-0">
+                <!-- <a href="" class="text-reset">Home</a> -->
+                <!-- <span>/</span> -->
+                <a href="#" id="student-dashboard-link" class="text-reset"><u>Dashboard</u></a>
+                <span>/</span>
+                <a class="text-reset"><span id="student-dashboard-questionarie-name">Notification</span></a>
+              </h6>
+            </nav>
+            <!-- Breadcrumb -->
+          </div>
+            <div id="notification-list" class="justify-content-center">
                 <h1 class="text-center mt-4 mb-2">Notifications</h1>
+                <div class="col-auto float-end">
+                  <div class="form-check">
+                     <button class="btn btn-outline-info switchReadAll" id="read-all-notifications-btn"><b>Read all</b></button>
+                     
+                  </div>
+                </div>
+                <br />
                 <!-- <hr class="mb-4"> -->
                 <h3 id="notification-status-message" class="text-center text-secondary mt-4"></h3>
+                <div id="notification-list-items" class="inbox justify-content-center"></div>
                 <!-- <div id="notification-list-item-${notificationId}" class="row mb-2 editNotification">
                         <div class="col-auto px-0"><label><h6 class="px-0"><i class="fas fa-square-pen text-info"></i> ${questionarieName}+"is updated!"  </h6> 
                         </label></div>
@@ -118,6 +128,7 @@
                     <div class="col text-end"><b>May 28, 2023</b></div>
                 </div> -->
             </div>
+        </div>
       </section>
   
  <script
