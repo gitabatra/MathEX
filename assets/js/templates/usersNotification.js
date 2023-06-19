@@ -16,13 +16,6 @@ function appendNewNotificationListItem(
    </div>`;
 }
 
-{/* <div class="col-auto">
-<div class="form-check">
-    <input class="form-check-input switchRead" type="checkbox" name="notification-read" value="" id="flex-read-check_${notificationId}">
-    <label class="form-check-label" for="flex-read-check_${notificationId}">Read</label>
-</div>
-</div> */}
-
 function appendUsersListSmallScreen(
     userId,
     userObj,
