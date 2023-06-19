@@ -129,7 +129,7 @@
       <div id="questionarie-status-row" class="row">
       </div>
       
-      <form class="align-items-sm-center">
+      <form class="align-items-sm-center mb-5">
         <div id="add-question-from-popupdata" class="mb-4 pb-2">
         </div>
         <div id="question-list" class="col">
@@ -299,7 +299,6 @@
     <script type="text/javascript" src="assets/js/index.js"></script>
   </body>
   <script>
-    // $(document).ready(function () {
   $(function () {
     $("#popup-form").parsley().validate();
     let $modal = $("#basicQuestionModal");
@@ -334,14 +333,14 @@
         timeOut: 0,
         tapToDismiss: false});
        
-        $(".publish-questionarie-msg").click(function () {
-          // show when the button is clicked
-          toastr.info("Publishing Questionary for Student...","",{positionClass: "toast-bottom-right",
-          preventDuplicates: true,extendedTimeOut: 500,timeOut: 500});
+        // $(".publish-questionarie-msg").click(function () {
+        //   // show when the button is clicked
+        //   toastr.info("Publishing Questionary for Student...","",{positionClass: "toast-bottom-right",
+        //   preventDuplicates: true,extendedTimeOut: 500,timeOut: 500});
       
-          toastr.success("Published succesfully.","",{positionClass: "toast-bottom-right",
-          preventDuplicates: true,extendedTimeOut: 1000,timeOut: 3000});
-        });
+        //   toastr.success("Published succesfully.","",{positionClass: "toast-bottom-right",
+        //   preventDuplicates: true,extendedTimeOut: 1000,timeOut: 3000});
+        // });
         
 
       $("#add-heading-questionarie-text").mouseenter(function(e){

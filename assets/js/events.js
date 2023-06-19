@@ -115,7 +115,7 @@ function initEvents() {
 
   //Admin Publish Button
   $("input#publish-btn").click(function (event) {
-    console.log(event.delegateTarget);
+    //console.log(event.delegateTarget);
     console.log("Publish event is executing");
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
@@ -130,12 +130,16 @@ function initEvents() {
     }
     });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
+    toastr.info("Publishing Questionary for Student...","",{positionClass: "toast-bottom-right",
+    preventDuplicates: true,extendedTimeOut: 500,timeOut: 500});
     //once published push notification to user that new test is available
     createNewquestioanryNotification(questionarieId);
     $(`span#questionary-status-${questionarieId}`).text("Published");
     $(`span#questionary-status-${questionarieId}`).addClass("questionaryStatus");
     $("input#publish-btn").hide();
     $("input#add-new-question-btn").hide();
+    toastr.success("Published succesfully.","",{positionClass: "toast-bottom-right",
+    preventDuplicates: true,extendedTimeOut: 1000,timeOut: 3000});
   });
 
   $("button#pop-up-submit-btn").click(function (event) {
