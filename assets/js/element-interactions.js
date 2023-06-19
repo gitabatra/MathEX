@@ -112,21 +112,11 @@ function appendNewQuestionToList(popupData) {
     //   }
     // });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    changeQuestionaryStatus(questionaries[questionarieId],questionarieId);
+    changeQuestionaryStatus(questionarieId);
     }
   }
   appendQuestionForAdmin(newQuestionKey, popupData.type, popupData.num1, popupData.num2);
   setQuestionary(questionarieId, questionarieObject);
-}
-
-function changeQuestionaryStatus(questionarieObj,questionarieId){
-  console.log("Changing Questionary modified Date.....",questionarieId, questionarieObj)
-  //let modifiedDate = questionarieObj.modifiedDate;
-  //let dateObj = new Date(modifiedDate.year,(modifiedDate.month -1),modifiedDate.day);
-  $('input#republish-btn').removeAttr('hidden');
-  $(`p#questionary-modified-status-${questionarieId}`).text("Modified");
-  // $(`p#questionary-modified-status-${questionarieId}`).text("Modified on "+dateObj.toLocaleDateString());
-  $(`p#questionary-modified-status-${questionarieId}`).addClass("statusModified");
 }
 
 
@@ -146,12 +136,13 @@ function refreshQuestionsList() {
     $("div#questionarie-status-row").append(questionarieStatus(questionarieId));
 
     if(questionarieObject.isQuestionariePublished){
-      $(`p#questionary-status-${questionarieId}`).text("Status: Published");
+      $(`span#questionary-status-${questionarieId}`).text("Published");
+     
       console.log("Publish button is clicked.........................");
       $("input#publish-btn").hide();
       if(questionarieObject.isModified){
       console.log(".............questionarie is modified..............");
-      changeQuestionaryStatus(questionarieObject,questionarieId);
+      changeQuestionaryStatus(questionarieId);
      //hide the questionarie for student
       // $(`div#questionarie-list-item-${questionarieId}`).hide();
       $("input#republish-btn").show();

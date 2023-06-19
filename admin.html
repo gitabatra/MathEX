@@ -41,6 +41,17 @@
             <i class="fas fa-bars"></i>
           </button>
           <div class="collapse navbar-collapse" id="navigation-nav-bar">
+            <!-- Navbar brand -->
+          <a class="navbar-brand me-2" href="#">
+            <img
+               src="assets/images/logo.png"
+               height="55"
+               width="70"
+               alt="mathEX Logo"
+               loading="lazy"
+               style="margin-top: -1px;"
+             />
+            </a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item px-2">
                 <a
@@ -141,7 +152,8 @@
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
     <script>
-      $(document).ready(function () {
+      // $(document).ready(function () {
+    $(function () {
      toastr.options = {
        debug: false,
        newestOnTop: false,
@@ -159,9 +171,9 @@
        // show when the button is clicked
        toastr.info("You can Check scores of all students for this test here");
      });
+    }); 
      
-     
-   });
+  //  });
  </script>
   </body>
 </html>

@@ -37,6 +37,17 @@
               <i class="fas fa-bars"></i>
             </button>
               <div class="collapse navbar-collapse" id="navigation-nav-bar">
+               <!-- Navbar brand -->
+          <a class="navbar-brand me-2" href="#">
+            <img
+               src="assets/images/logo.png"
+               height="55"
+               width="70"
+               alt="mathEX Logo"
+               loading="lazy"
+               style="margin-top: -1px;"
+             />
+            </a>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                        <li class="nav-item px-2">
                             <a id="navbar-student-btn" class="nav-link" aria-current="page" href="#" onclick="onChange(this)"><i class="fas fa-user fa-sm"></i> Student</a>
@@ -134,10 +145,10 @@
                     </div>
                     <div class="col-sm-6">
                       <div class="row mx-0 mb-3">
-                        <input type="number" class="form-control" id="inputNumber1" name="num1" placeholder="First Number" required="">
+                        <input type="number" class="form-control" id="inputNumber1" name="num1" data-parsley-trigger="change" placeholder="First Number" required="">
                       </div>
                       <div class="row mx-0 mb-3">
-                        <input type="number" class="form-control" id="inputNumber2" name="num2" placeholder="Second Number" required="">
+                        <input type="number" class="form-control" id="inputNumber2" name="num2" data-parsley-trigger="change" placeholder="Second Number" required="">
                       </div>
                     </div>
                   </div>
@@ -179,10 +190,8 @@
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
     <script>
-        $(document).ready(function () {
-          $('#basicQuestionModal').draggable();
-     });
-     $(document).ready(function () {
+       $(function () {
+        $('#basicQuestionModal').draggable();
         toastr.options = {
           debug: false,
           newestOnTop: false,
@@ -198,6 +207,7 @@
         // show when page load
         toastr.info("You can create new Questionary by clicking on + button");
       });
+   
     </script>
 
 </body>

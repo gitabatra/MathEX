@@ -154,14 +154,19 @@ return(scoreRecordObject[scoreAttemptID]);
     if (popupData["ndigit"] != "" && popupData["num1"] != ""  &&  popupData["num2"] != "") {
       console.log("Popup data not null and validate data");
       console.log("No of digits entered in pop up: ",popupData["ndigit"]);
-      if(parseInt(popupData["ndigit"])<=0 || parseInt(popupData["ndigit"])>4){
+      if(parseInt(popupData["ndigit"])<1 || parseInt(popupData["ndigit"])>4){
         console.log("Greater than 4...........");
         event.preventDefault();
       }else{
-        let popupDataObj = validatePopUpData(popupData,event);
-        return (popupDataObj);
+        if((popupData["type"] === "/") && (parseInt(popupData["num1"]) <= 0 || parseInt(popupData["num2"]) <= 0)){
+          console.log("Division question input validation....");
+         // validateInputNumbers();
+          event.preventDefault();
+        }else{
+          let popupDataObj = validatePopUpData(popupData,event);
+          return (popupDataObj);
+        }
       }
-      
     } else {
       console.log("Pop up data is null");
       return null;
