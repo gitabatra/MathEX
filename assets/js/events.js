@@ -76,8 +76,9 @@ function initEvents() {
     }
     }
   });
-
-  $("input#student-questionarie-finish-btn").click(function (event) {
+  
+  $("input#student-questionarie-finish-btn").on('click',function (event) {
+  //$("input#student-questionarie-finish-btn").click(function (event) {
     event.stopPropagation();
     console.log("Finish Questionarie button event is executing");
     let questionarieId = getQuestionarieID();
@@ -150,18 +151,8 @@ function initEvents() {
    }
   });
 
-  // $(document).off('click').on('click', 'input#student-questionarie-check-btn', function () {
-  //   console.log("Checking the Questionaries event is executing");
-  //   checkQuestionarie();
-  //   toastr.info("Checking answers...","",{positionClass: "toast-bottom-right",
-  //   preventDuplicates: true,extendedTimeOut: 500,timeOut: 300});
-  //   //Enable Finish Button
-  //   $("input#student-questionarie-finish-btn").prop("disabled", false);
-  //   toastr.success("Checked succesfully!","",{positionClass: "toast-bottom-right",
-  //   preventDuplicates: true,extendedTimeOut: 1000,timeOut: 3000});
-  // });
-
-  $("input#student-questionarie-check-btn").click(function (event) {
+  $("input#student-questionarie-check-btn").on('click',function(event){
+  // $("input#student-questionarie-check-btn").click(function (event) {
     event.stopPropagation();
     console.log("Checking the Questionaries event is executing");
     checkQuestionarie();
@@ -328,7 +319,8 @@ $("form#login-form").on("submit", function(event) {
 });
 
  //Admin Publish Button
- $("input#publish-btn").click(function (event) {
+ $("input#publish-btn").on('click', function(event){
+ //$("input#publish-btn").click(function (event) {
   event.stopPropagation();
   //console.log(event.delegateTarget);
   console.log("Publish event is executing.......",event.isTrusted);
