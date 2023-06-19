@@ -39,6 +39,17 @@
             <i class="fas fa-bars"></i>
           </button>
           <div class="collapse navbar-collapse" id="navigation-nav-bar">
+             <!-- Navbar brand -->
+          <a class="navbar-brand me-2" href="#">
+            <img
+               src="assets/images/logo.png"
+               height="55"
+               width="70"
+               alt="mathEX Logo"
+               loading="lazy"
+               style="margin-top: -1px;"
+             />
+            </a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item px-2">
                 <a id="navbar-student-btn" class="nav-link" aria-current="page" href="#" onclick="onChange(this)"
@@ -164,7 +175,7 @@
     <script type="text/javascript" src="assets/js/events.js"></script>
     <script type="text/javascript" src="assets/js/element-interactions.js"></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
-    <script>
+    <!-- <script>
       $(document).ready(function () {
         toastr.options = {
           debug: false,
@@ -180,16 +191,16 @@
         };
         // show when page load
         toastr.info("Questionary Loaded");
-        $(".checkBtn").click(function () {
-          // show when the button is clicked
-          toastr.info("Checking answers...","",{extendedTimeOut: 500,timeOut: 500});
-          toastr.success("Checked succesfully!");
-        });
+        // $(".checkBtn").click(function () {
+        //   // show when the button is clicked
+        //   toastr.info("Checking answers...","",{extendedTimeOut: 500,timeOut: 500});
+        //   toastr.success("Checked succesfully!");
+        // });
         $(".submitBtn").mouseenter(function () {
           // show when the button is clicked
           toastr.warning("Make sure you have attempted all Questions!");
         });
       });
-    </script>
+    </script> -->
   </body>
 </html>

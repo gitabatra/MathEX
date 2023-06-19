@@ -2,8 +2,34 @@
  $("#inputNumber").change(function () {
     let inputDigit = parseInt($("#inputNumber").val());
     console.log("Input Digit: ",inputDigit);
-    $("#inputNumber1").attr("data-parsley-min", 0);
-    $("#inputNumber2").attr("data-parsley-min", 0);
+    validateInputNumbers(inputDigit);
+  });
+
+
+  $('input#inputNumber1').change(function(){
+    console.log("Changing input number 1......");
+    let inputDigit = parseInt($("#inputNumber").val());
+    validateInputNumbers(inputDigit);
+  })
+
+  $('input#inputNumber2').change(function(){
+    console.log("Changing input number 2......");
+    let inputDigit = parseInt($("#inputNumber").val());
+    validateInputNumbers(inputDigit);
+  })
+
+  function validateInputNumbers(inputDigit){
+    console.log("validate numbers...");
+    if($('select#select-question-type option:selected').val() === "/"){
+      console.log("selected question is /");
+      $("#inputNumber1").attr("data-parsley-min", 1);
+      $("#inputNumber2").attr("data-parsley-min", 1);
+    }else{
+      console.log("selected question type is othet than /");
+      $("#inputNumber1").attr("data-parsley-min", 0);
+      $("#inputNumber2").attr("data-parsley-min", 0);
+    }
+    
     if (inputDigit === 1) {
       console.log("digit 1");
       $("#inputNumber1").attr("data-parsley-max", 9);
@@ -21,10 +47,11 @@
       $("#inputNumber1").attr("data-parsley-max", 9999);
       $("#inputNumber2").attr("data-parsley-max", 9999);
     }
-  });
+  }
 
 function validatePopUpData(popupData,event){
   console.log("Validating popup data.....");
+     // validateInputNumbers();
       event.preventDefault();
       popupData["num1"] = popupData["num1"].replace(/[^0-9 ]/g, "");
       popupData["num2"] = popupData["num2"].replace(/[^0-9 ]/g, "");
@@ -40,6 +67,12 @@ function validatePopUpData(popupData,event){
         popupData["num1"] = parseInt(popupData["num1"]);
         popupData["num2"] = parseInt(popupData["num2"]);
       }
+      // if(popupData["type"] == "/"){
+      //   if(parseInt(popupData["num1"]) === 0 || parseInt(popupData["num2"]) === 0){
+      //     console.log("either number 1 or number 2 is ZERO.......");
+      //     //
+      //   }
+      // }
       popupData["ndigit"] = parseInt(popupData["ndigit"]);
       return popupData;
    

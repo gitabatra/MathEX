@@ -1,17 +1,26 @@
+body,html {
+  height: 100%;
+}
 
 /****** index page styles *******/
 #navigation-bar{
   background-color: #1572A1;
 }
 
-  /* #testPapers {
-    margin: 2% 10%;
-  } */
+.customBackground{
+  background-color: #1572A1;
+  color: #E0E0E0;
+}
  
   .container
  {
     font-family: 'Helvetica', 'Arial', sans-serif;
     font-size: large;
+ }
+
+ .logoImage{
+    width: 170px; 
+    height: 170px;
  }
 
  .addTestBtn {
@@ -106,12 +115,12 @@
   text-align: center;
 }
 
-.StudentNotification{
+/* .StudentNotification{
   margin: 2% 1%;
   text-align: center;
   background-color: #FFCCBC;
   padding: 5px;
-}
+} */
 
 .col {
   text-align: center;
@@ -144,11 +153,17 @@
   margin: 5% auto;
 } */
 
-.loginSection{
-  margin: 10% 15%;
+/* .loginForm{
   padding: 2rem;
   border: 2px solid #BDBDBD;
   border-radius: 10px;
+} */
+
+.loginForm{
+  padding: 2rem;
+  background-color: #FFF;
+  border-radius: 10px;
+  color: #000;
 }
 
 .testPapers > .row  {
@@ -291,6 +306,14 @@
   font-size: clamp(1.2rem, 0.9111rem + 1.2840vw, 2.5rem);
 }
 
+/* .testNameInput:focus, .testNameInput:active{
+  border:2px solid green;
+} */
+
+.highlightInput{
+  border:2px solid green;
+}
+
 .questionaryName{
   font-size: clamp(1.2rem, 0.9778rem + 0.9877vw, 2.2rem);
 }
@@ -301,5 +324,9 @@
 
 .list-group-item {
   background-color: transparent;
+}
+
+.hidden{
+  display: none;
 }
 

@@ -214,7 +214,6 @@ function createEditquestionaryNotification(){
     $(`div#questionarie-list-item-${questionarieId}`).show();
     $("input#republish-btn").hide();
     $("input#add-new-question-btn").hide();
-
       let currentDate = getSessionDate();
       Object.assign(questionaries[questionarieId], {
         isModified:false,
@@ -234,7 +233,10 @@ function createEditquestionaryNotification(){
       console.log("Modifying on the same day");
     }
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-  })
+    $(`span#questionary-status-${questionarieId}`).removeClass("statusModified");
+    $(`span#questionary-status-${questionarieId}`).text("Published");
+    $(`span#questionary-status-${questionarieId}`).addClass("questionaryStatus");
+  });
 
 $("button#read-all-notifications-btn").click(function (event) {
     console.log("Click event on READ ALL btn is executing...........");

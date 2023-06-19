@@ -51,3 +51,10 @@ function checkQuestionaryUpdated(modifiedDate){
         }
     }
   }
+
+  function changeQuestionaryStatus(questionarieId){
+    console.log("Changing Questionary status.....",questionarieId);
+    $('input#republish-btn').removeAttr('hidden'); 
+    $(`span#questionary-status-${questionarieId}`).text("Modified");
+    $(`span#questionary-status-${questionarieId}`).addClass("statusModified");
+  }
