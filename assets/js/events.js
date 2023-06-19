@@ -78,7 +78,8 @@ function initEvents() {
   });
   
 
-  $("input#student-questionarie-finish-btn").click(function () {
+  $("input#student-questionarie-finish-btn").click(function (event) {
+    event.stopPropagation();
     console.log("Finish Questionarie button event is executing");
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
@@ -150,7 +151,8 @@ function initEvents() {
    }
   });
 
-  $("input#student-questionarie-check-btn").click(function () {
+  $("input#student-questionarie-check-btn").click(function (event) {
+    event.stopPropagation();
     console.log("Checking the Questionaries event is executing");
     checkQuestionarie();
     toastr.info("Checking answers...","",{positionClass: "toast-bottom-right",
@@ -318,6 +320,7 @@ $("form#login-form").on("submit", function(event) {
 
  //Admin Publish Button
  $("input#publish-btn").click(function (event) {
+  event.stopPropagation();
   //console.log(event.delegateTarget);
   console.log("Publish event is executing.......",event.isTrusted);
   let questionarieId = getQuestionarieID();
