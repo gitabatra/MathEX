@@ -40,7 +40,7 @@ function initializeDate(){
      if(currrentUser.isAdmin != true && adminRestrictedPathnames.includes(pathName)){
             window.location.replace("./index.html");
       }
-
+      initUsers();
       initEvents();
       initElements();
       forcedUserLogoutTimout = setTimeout(logout, 1800000);

@@ -9,7 +9,7 @@ function initElements() {
     $("a#navbar-user-management-btn").show();
   }
   initQuestions();
-  initUsers();
+  //initUsers();
 }
 
 function initQuestions() {
