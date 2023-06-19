@@ -76,7 +76,6 @@ function initEvents() {
     }
     }
   });
-  
 
   $("input#student-questionarie-finish-btn").click(function (event) {
     event.stopPropagation();
@@ -151,6 +150,17 @@ function initEvents() {
    }
   });
 
+  // $(document).off('click').on('click', 'input#student-questionarie-check-btn', function () {
+  //   console.log("Checking the Questionaries event is executing");
+  //   checkQuestionarie();
+  //   toastr.info("Checking answers...","",{positionClass: "toast-bottom-right",
+  //   preventDuplicates: true,extendedTimeOut: 500,timeOut: 300});
+  //   //Enable Finish Button
+  //   $("input#student-questionarie-finish-btn").prop("disabled", false);
+  //   toastr.success("Checked succesfully!","",{positionClass: "toast-bottom-right",
+  //   preventDuplicates: true,extendedTimeOut: 1000,timeOut: 3000});
+  // });
+
   $("input#student-questionarie-check-btn").click(function (event) {
     event.stopPropagation();
     console.log("Checking the Questionaries event is executing");
@@ -161,7 +171,6 @@ function initEvents() {
     $("input#student-questionarie-finish-btn").prop("disabled", false);
     toastr.success("Checked succesfully!","",{positionClass: "toast-bottom-right",
     preventDuplicates: true,extendedTimeOut: 1000,timeOut: 3000});
-
   });
 
   $("input#new-questionarie-name").keyup(function () {
