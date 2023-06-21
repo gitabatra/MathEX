@@ -79,8 +79,8 @@ function initEvents() {
   
   $("input#student-questionarie-finish-btn").on('click',function (event) {
   //$("input#student-questionarie-finish-btn").click(function (event) {
-    event.stopPropagation();
-    console.log("Finish Questionarie button event is executing");
+    event.preventDefault();
+    console.log("Finish Questionarie button event is executing....",event);
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
     let users = getRegisteredUsers();
@@ -153,8 +153,8 @@ function initEvents() {
 
   $("input#student-questionarie-check-btn").on('click',function(event){
   // $("input#student-questionarie-check-btn").click(function (event) {
-    event.stopPropagation();
-    console.log("Checking the Questionaries event is executing");
+    event.preventDefault();
+    console.log("Checking the Questionaries event is executing.....",event);
     checkQuestionarie();
     toastr.info("Checking answers...","",{positionClass: "toast-bottom-right",
     preventDuplicates: true,extendedTimeOut: 500,timeOut: 300});
@@ -321,9 +321,9 @@ $("form#login-form").on("submit", function(event) {
  //Admin Publish Button
  $("input#publish-btn").on('click', function(event){
  //$("input#publish-btn").click(function (event) {
-  event.stopPropagation();
+  event.preventDefault();
   //console.log(event.delegateTarget);
-  console.log("Publish event is executing.......",event.isTrusted);
+  console.log("Publish event is executing.......",event);
   let questionarieId = getQuestionarieID();
   let questionaries = getQuestionaries();
   console.log(questionaries[questionarieId].isQuestionariePublished);
