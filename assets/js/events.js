@@ -319,7 +319,7 @@ $("form#login-form").on("submit", function(event) {
 });
 
  //Admin Publish Button
- $("input#publish-btn").on('click', function(event){
+ $("input#publish-btn").one('click', function(event){
  //$("input#publish-btn").click(function (event) {
   event.preventDefault();
   //console.log(event.delegateTarget);
