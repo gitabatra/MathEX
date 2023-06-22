@@ -256,7 +256,7 @@ $("button#read-all-notifications-btn").click(function (event) {
             for(const notifyId in inboxObj){
                 if (Object.hasOwnProperty.call(inboxObj, notifyId)) {
                     console.log("Notification Id: ",notifyId);
-                    $(`#notification-list-item-${notifyId}`).addClass("checkedReadNotification");
+                    $(`div#notification-list-item-${notifyId}`).addClass("checkedReadNotification");
                     Object.assign(userObj["inbox"][notifyId],{isRead: true});
                     // Object.assign(userObj,{hasNotifications: false});
                 }

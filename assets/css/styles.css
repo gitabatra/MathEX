@@ -25,7 +25,7 @@ body,html {
 
  .addTestBtn {
     font-size: large;
-    background-color: #0C2D48;
+    background-color: #003D7A;
     color: #fff;
  }
  .addTestBtn:hover, .addBtn:hover, .saveBtn:hover, .addTestBtn:active{
@@ -34,22 +34,35 @@ body,html {
 }
 
  .btn-outline-info, .btn-outline-info:hover, .btn-outline-info:active, .btn-outline-info:focus{
-  border: 2px solid  #0C2D48;
+  border: 2px solid  #003D7A;
   color:  #0C2D48;
 }
 
-.questionaryEditBtn,.questionaryGoBtn{
+/* .questionaryEditBtn,.questionaryGoBtn{
+  background-color: #1572A1;
+  color: #fff;
+} */
+
+.questionaryScoreRecord, .questionaryGoBtn{
   background-color: #1572A1;
   color: #fff;
 }
 
-.questionaryEditBtn:hover,.questionaryEditBtn:active, .questionaryGoBtn:hover,.questionaryGoBtn:active{
+.questionaryScoreRecord:hover,.questionaryScoreRecord:active, .questionaryGoBtn:hover,.questionaryGoBtn:active{
   background-color: #1572A1;
   color: #fff;
+}
+
+.questionaryDeleteBtn, .questionaryDeleteBtn:hover{
+  color: #000;
+}
+
+.questionaryDeleteBtn:active{
+  color: #000;
 }
 
 .btn-outline-info:visited{
-  border: 2px solid  #0C2D48;
+  border: 2px solid  #003D7A;
   color:  #0C2D48;
 }
 /* .questionaryDeleteBtn{
@@ -68,30 +81,46 @@ body,html {
   font-size: 1.2rem;
   width: 70px;
   font-weight: bolder;
-  background-color: #0C2D48;
+  background-color: #003D7A;
   color: #fff;
 }
 
 .addBtn:disabled,.saveBtn[disabled],
 .addBtn[disabled]{
-  background-color: #0C2D48;
-  color: #fff;
+  background-color: #E0E0E0;
+  color: #616161;
   cursor: no-drop
 }
 
 .saveBtn{
-  background-color: #0C2D48;
+  background-color: #003D7A;
   color: #fff;
 }
 
+/* .saveBtn{
+  background-color: #0C2D48;
+  color: #fff;
+} */
+
+/* .signInBtn{
+  background-color: #003D7A;
+  color: #fff;
+} */
+
+/* .signUpBtn {
+  background-color: #0405AB;
+  color:#fff;
+} */
+
 .nav-pills > li > a.nav-link {
-  background-color: #86A3B8;
-  color: white;
+  background-color: #fff;
+  color:#000;
 }
 
 .nav-pills > li > a.nav-link.active {
-  background-color: #1572A1;
-  color: white;
+  background-color: #ECEFF1;
+  color:#000;
+  border:1px solid #003D7A;
 }
 
 .gradient-custom {
@@ -115,13 +144,6 @@ body,html {
   text-align: center;
 }
 
-/* .StudentNotification{
-  margin: 2% 1%;
-  text-align: center;
-  background-color: #FFCCBC;
-  padding: 5px;
-} */
-
 .col {
   text-align: center;
   justify-content: center;
@@ -142,11 +164,17 @@ body,html {
   margin:2% 10%;
 }
 
-.alignQuestions {
+/* .alignQuestions {
   text-align: center;
   padding: 2% 10%;
   border: 1px solid #000;
   margin: 1% auto;
+} */
+
+.alignQuestions {
+  border-bottom: 1px solid #E0E0E0;
+  background-color: #FBFBFB;
+  text-align: center;
 }
 /* 
 .testPapers {
@@ -166,13 +194,20 @@ body,html {
   color: #000;
 }
 
-.testPapers > .row  {
+/* .testPapers > .row  {
   border:2px solid black;
-  /* margin: 2% auto; */
   padding:1% 3%;
+} */
 
+.testPapers > .row  {
+  border-bottom: 1px solid #E0E0E0;
+  background-color: #FBFBFB;
+  text-align: center;
 }
-
+.vcenter{
+  display: inline-block;
+  vertical-align: middle;
+}
 .correctAns {
   color : #388E3C;
 }
@@ -261,25 +296,12 @@ body,html {
   text-decoration: underline;
 }
 
-.inbox > .row  {
-  border:1px solid #BDBDBD;
-  border-radius: 10px;
-  /* margin: 1% auto;  */
-  padding:1% 3%;
+.newNotification {
+  border-bottom: 1px solid #E0E0E0;
+  background-color: #FBFBFB;
+  text-align: center;
   text-align: left;
   font-size: small;
-}
-
-/* .editNotification {
-     background-color: #E8F5E9;
-}
-
-.removeNotification {
-     background-color: #FBE9E7;
-} */
-
-.newNotification {
-     background-color: #E3F2FD;
 }
 
 .link-secondary:active {
@@ -320,10 +342,13 @@ body,html {
 
 .checkedReadNotification {
   background-color: #E8EAF6;
+  border-bottom: 1px solid #9FA6B2;
 }
 
 .list-group-item {
-  background-color: transparent;
+  border:none;
+  background-color: #fff;
+  border-bottom: 1px solid #E0E0E0;
 }
 
 .hidden{

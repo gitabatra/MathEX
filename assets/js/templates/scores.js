@@ -1,12 +1,13 @@
 function scoreRecord(questionarieId, questionarieName){
     return `<div id="score-record-${questionarieId}" class="row gx-3 mt-3">
-    <div class="col-sm-6 col-md-6 col-lg-4 text-center">
+    <div class="d-flex flex-wrap flex-column flex-md-row align-content-center justify-content-center">
+    <div class="col text-start align-self-center">
       <h3>${questionarieName}</h3>
     </div>
-    <div class="col-sm-6 col-md-6 col-lg-4 text-center">
+    <div class="col text-end align-self-center">
       <a
         id="open-questionarie-score-record-btn"
-        class="btn btn-dark ms-3 px-4"
+        class="btn btn-info saveBtn ms-3 px-4"
         data-mdb-toggle="collapse"
         href="#questionarie-score-${questionarieId}"
         role="button"
@@ -15,6 +16,7 @@ function scoreRecord(questionarieId, questionarieName){
       >
         Show results
       </a>
+    </div>
     </div>
     <div class="collapse mt-3" id="questionarie-score-${questionarieId}">
     <div class="accordion" id="accordion-${questionarieId}">
