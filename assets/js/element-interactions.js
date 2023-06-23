@@ -4,9 +4,13 @@ function initElements() {
   if(!isAdmin){
     $("a#navbar-admin-btn").hide();
     $("a#navbar-user-management-btn").hide();
+    $("a#navbar-student-btn").addClass("active");
+    $("a#navbar-admin-btn").removeClass("active");
   }else {
     $("a#navbar-admin-btn").show();
     $("a#navbar-user-management-btn").show();
+    // $("a#navbar-admin-btn").addClass("active");
+    // $("a#navbar-student-btn").removeClass("active");
   }
   initQuestions();
   //initUsers();
@@ -169,7 +173,7 @@ function appendQuestionForAdmin(questionId, questionType, firstNum, secondNum){
   const ques = firstNum + " " + questionType + " " + secondNum + " = ? ";
   console.log("Append Question for Admin------- : ",ques);
   $("div#add-question-from-popupdata")
-    .append(`<div id="question-${questionId}" class="alignQuestions">
+    .append(`<div id="question-${questionId}" class="alignQuestions p-3">
     ${ques} 
     <a id="delete-question-link" href="#" key="${questionId}" class="text-dark"><i class="fas fa-trash-alt ms-5"></i></a>   
   </div>`);

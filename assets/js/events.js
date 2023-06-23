@@ -77,8 +77,7 @@ function initEvents() {
     }
   });
   
-  $("input#student-questionarie-finish-btn").on('click',function (event) {
-  //$("input#student-questionarie-finish-btn").click(function (event) {
+  $("input#student-questionarie-finish-btn").one('click',function (event) {
     event.preventDefault();
     console.log("Finish Questionarie button event is executing....",event);
     let questionarieId = getQuestionarieID();
@@ -320,9 +319,7 @@ $("form#login-form").on("submit", function(event) {
 
  //Admin Publish Button
  $("input#publish-btn").one('click', function(event){
- //$("input#publish-btn").click(function (event) {
   event.preventDefault();
-  //console.log(event.delegateTarget);
   console.log("Publish event is executing.......",event);
   let questionarieId = getQuestionarieID();
   let questionaries = getQuestionaries();

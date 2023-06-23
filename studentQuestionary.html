@@ -26,68 +26,111 @@
   <body class="gradient-custom">
     <header id="navigation-bar">
       <nav class="navbar navbar-expand-md navbar-dark">
-        <div class="container-fluid">
-          <button
-           class="navbar-toggler"
-           type="button"
-           data-mdb-toggle="collapse"
-           data-mdb-target="#navigation-nav-bar"
-           aria-controls="navigation-nav-bar"
-           aria-expanded="false"
-           aria-label="Toggle navigation"
-          >
-            <i class="fas fa-bars"></i>
-          </button>
-          <div class="collapse navbar-collapse" id="navigation-nav-bar">
-             <!-- Navbar brand -->
-          <a class="navbar-brand me-2" href="#">
+        <div class="container">
+          <a class="navbar-brand" href="#">
             <img
-               src="assets/images/logo.png"
-               height="55"
-               width="70"
-               alt="mathEX Logo"
-               loading="lazy"
-               style="margin-top: -1px;"
-             />
-            </a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item px-2">
-                <a id="navbar-student-btn" class="nav-link" aria-current="page" href="#" onclick="onChange(this)"
-                  ><i class="fas fa-user fa-sm"></i> Student</a
-                >
-              </li>
-              <li class="nav-item px-2">
-                <a id="navbar-admin-btn" class="nav-link active" href="#" onclick="onChange(this)"><i class="fas fa-user-gear fa-sm"></i> Admin</a>
-              </li>
-              <li class="nav-item px-2">
+              src="assets/images/logo.png"
+              height="60"
+              width="70"
+              alt="mathEX Logo"
+              loading="lazy"
+              style="margin-top: -1px"
+            />
+          </a>
+          <ul
+            class="navbar-nav dflex d-md-none flex-row align-items-center justify-content-right"
+          >
+            <li class="nav-item me-1 me-lg-0 d-md-none">
+              <a
+                class="text-white me-1 px-2"
+                id="navbar-notification-btn"
+                href="#"
+              >
+                <i class="fas fa-envelope fa-lg inboxLink"></i>
+                <span
+                  id="inbox-total-notification"
+                  class="badge rounded-pill badge-notification bg-danger"
+                ></span>
+              </a>
+            </li>
+            <li>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <i class="fas fa-bars text-white"></i>
+              </button>
+            </li>
+          </ul>
+  
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0 mb-lg-0">
+              <li class="nav-item px-2 px-md-0">
                 <a
-                  id="navbar-user-management-btn"
-                  class="nav-link"
+                  id="navbar-student-btn"
+                  class="nav-link text-center active"
+                  aria-current="page"
                   href="#"
                   onclick="onChange(this)"
-                  ><i class="fas fa-users-gear fa-sm"></i></i> User Management</a
+                  ><i class="fas fa-user fa-sm"></i> Student&nbsp;</a
+                >
+              </li>
+              <li class="nav-item px-2 px-md-0">
+                <a
+                  id="navbar-admin-btn"
+                  class="nav-link text-center"
+                  href="#"
+                  onclick="onChange(this)"
+                  ><i class="fas fa-user-gear fa-sm"></i> Admin&nbsp;</a
+                >
+              </li>
+              <li class="nav-item px-2 px-md-0">
+                <a
+                  id="navbar-user-management-btn"
+                  class="nav-link text-center"
+                  href="#"
+                  onclick="onChange(this)"
+                  ><i class="fas fa-users-gear fa-sm"></i> User
+                  Management&nbsp;</a
                 >
               </li>
             </ul>
-          </div>
-          <div class="d-flex align-items-center">
-            <a class="link-secondary me-3 px-2" id="navbar-notification-btn" href="#">
-              <i class="fas fa-envelope fa-lg"></i>
-              <span id="inbox-total-notification" class="badge rounded-pill badge-notification bg-danger"></span>
-            </a>
-            <!-- Icon -->
-            <a class="link-secondary me-3 px-2" id="navbar-logout-btn" href="#">
-              <i class="fas fa-power-off"></i> Logout
-            </a>
+  
+            <div class="d-flex w-auto align-items-center justify-content-center">
+              <a
+                class="text-white d-none d-md-flex me-3 px-2"
+                id="navbar-notification-btn"
+                href="#"
+              >
+                <i class="fas fa-envelope fa-lg inboxLink"></i>
+                <span
+                  id="inbox-total-notification"
+                  class="badge rounded-pill badge-notification bg-danger"
+                ></span>
+              </a>
+              <a
+                class="text-white me-3 px-2 logoutLink"
+                id="navbar-logout-btn"
+                href="#"
+              >
+                <i class="fas fa-power-off"></i> Logout&nbsp;
+              </a>
+            </div>
           </div>
         </div>
       </nav>
-    </header><br>
+    </header>
+    <br>
     
     
     <section class="pb-3">
       <div class="container mb-5">
-      <div class="px-0 m-4 mx-lg-4">
+      <div class="pt-3 pb-5 pt-lg-5">
         <!-- Breadcrumb -->
         <nav class="d-flex">
           <h6 class="mb-0">
@@ -103,7 +146,7 @@
       <div class="bigHeading text-center mx-3">
         <h3 id="add-heading-questionarie-student" class="text-center">Test</h3>
       </div>
-      <div class="buttonGroup px-0 m-5 m-lg-4">
+      <div class="buttonGroup px-0 m-5 m-lg-4" hidden>
         <div id="alignQuestions" class="col">
           <input
             type="button"
@@ -120,7 +163,6 @@
           />
         </div>
       </div>
-
       <!-- <div class="container mb-5"> -->
         <div class="row g-3" id="questions-list" ></div>
       <!-- </div> -->
@@ -129,13 +171,13 @@
           <input
             type="button"
             id="student-questionarie-check-btn"
-            class="btn btn-dark checkBtn saveBtn"
+            class="btn btn-primary checkBtn saveBtn"
             value="Check"
           />
           <input
             type="button"
             id="student-questionarie-finish-btn"
-            class="btn btn-dark submitBtn saveBtn"
+            class="btn btn-primary submitBtn saveBtn"
             value="Finish"
             disabled="true"
           />

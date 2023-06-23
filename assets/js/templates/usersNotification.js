@@ -3,8 +3,8 @@ function appendNewNotificationListItem(
   description,
   dateString
 ) {
-  return `<div id="notification-list-item-${notificationId}" class="row mb-2 newNotification">
-    <div class="col-auto px-0"><label><h6 class="px-0"><i class="fas fa-bell text-warning"></i> ${description}</h6> 
+  return `<div id="notification-list-item-${notificationId}" class="row mx-auto pt-3 pb-3 align-self-center newNotification">
+    <div class="col-auto px-md-2"><label><h6 class="px-0"><i class="fas fa-bell text-warning"></i> ${description}</h6> 
     </label></div>
     <div class="col text-end">
     <div class="row" id="row">
@@ -46,10 +46,10 @@ function appendUserToUsersTable(
   checked_toggle_button
 ) {
   return ` <tr>
-    <td>${userObj.username}</td>
+    <td class="fw-normal">${userObj.username}</td>
     <td><p class="fw-normal mb-1"> ${userObj.email}</p></td>
     <td><span id="position-badge-${userId}-${position}" class="user-position-${userId}">${position}</span></td>
-    <td class="w-auto align-content-center">
+    <td class="w-auto align-content-center fw-normal">
       <div class="form-check form-switch align-content-center">
        <div class="d-flex flex-wrap align-content-center justify-content-center">
           <input class="form-check-input switchAdmin" type="checkbox" role="switch" id="flex-switch-check_${userId}" ${checked_toggle_button} ${disable_toggle_button}/>
