@@ -2,12 +2,12 @@ function scoreRecord(questionarieId, questionarieName){
     return `<div id="score-record-${questionarieId}" class="row gx-3 mt-3">
     <div class="d-flex flex-wrap flex-column flex-md-row align-content-center justify-content-center">
     <div class="col text-start align-self-center">
-      <h3>${questionarieName}</h3>
+      <h5>${questionarieName}</h5>
     </div>
     <div class="col text-end align-self-center">
       <a
         id="open-questionarie-score-record-btn"
-        class="btn btn-info saveBtn ms-3 px-4"
+        class="btn btn-primary saveBtn ms-3 px-4"
         data-mdb-toggle="collapse"
         href="#questionarie-score-${questionarieId}"
         role="button"

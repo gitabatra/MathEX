@@ -16,11 +16,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    
+
     <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-    rel="stylesheet"
-  />
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+      rel="stylesheet"
+    />
 
     <!--Local Stylesheet-->
     <link rel="stylesheet" href="assets/css/styles.css" />
@@ -28,96 +28,132 @@
   <body id="admin" class="gradient-custom">
     <header id="navigation-bar">
       <nav class="navbar navbar-expand-md navbar-dark">
-        <div class="container-fluid">
-          <button
-           class="navbar-toggler"
-           type="button"
-           data-mdb-toggle="collapse"
-           data-mdb-target="#navigation-nav-bar"
-           aria-controls="navigation-nav-bar"
-           aria-expanded="false"
-           aria-label="Toggle navigation"
-          >
-            <i class="fas fa-bars"></i>
-          </button>
-          <div class="collapse navbar-collapse" id="navigation-nav-bar">
-            <!-- Navbar brand -->
-          <a class="navbar-brand me-2" href="#">
+        <div class="container">
+          <a class="navbar-brand" href="#">
             <img
-               src="assets/images/logo.png"
-               height="55"
-               width="70"
-               alt="mathEX Logo"
-               loading="lazy"
-               style="margin-top: -1px;"
-             />
-            </a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item px-2">
+              src="assets/images/logo.png"
+              height="60"
+              width="70"
+              alt="mathEX Logo"
+              loading="lazy"
+              style="margin-top: -1px"
+            />
+          </a>
+          <ul
+            class="navbar-nav dflex d-md-none flex-row align-items-center justify-content-right"
+          >
+            <li class="nav-item me-1 me-lg-0 d-md-none">
+              <a
+                class="text-white me-1 px-2"
+                id="navbar-notification-btn"
+                href="#"
+              >
+                <i class="fas fa-envelope fa-lg inboxLink"></i>
+                <span
+                  id="inbox-total-notification"
+                  class="badge rounded-pill badge-notification bg-danger"
+                ></span>
+              </a>
+            </li>
+            <li>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <i class="fas fa-bars text-white"></i>
+              </button>
+            </li>
+          </ul>
+
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0 mb-lg-0">
+              <li class="nav-item px-2 px-md-0">
                 <a
                   id="navbar-student-btn"
-                  class="nav-link"
+                  class="nav-link text-center"
                   aria-current="page"
                   href="#"
                   onclick="onChange(this)"
-                  ><i class="fas fa-user fa-sm"></i> Student</a
+                  ><i class="fas fa-user fa-sm"></i> Student&nbsp;</a
                 >
               </li>
-              <li class="nav-item px-2">
+              <li class="nav-item px-2 px-md-0">
                 <a
                   id="navbar-admin-btn"
-                  class="nav-link active"
+                  class="nav-link text-center active"
                   href="#"
                   onclick="onChange(this)"
-                  ><i class="fas fa-user-gear fa-sm"></i> Admin</a
+                  ><i class="fas fa-user-gear fa-sm"></i> Admin&nbsp;</a
                 >
               </li>
-              <li class="nav-item px-2">
+              <li class="nav-item px-2 px-md-0">
                 <a
                   id="navbar-user-management-btn"
-                  class="nav-link"
+                  class="nav-link text-center"
                   href="#"
                   onclick="onChange(this)"
-                  ><i class="fas fa-users-gear fa-sm"></i></i> User Management</a
+                  ><i class="fas fa-users-gear fa-sm"></i> User
+                  Management&nbsp;</a
                 >
               </li>
             </ul>
-          </div>
-          <div class="d-flex align-items-center">
-            <a class="link-secondary me-3 px-2" id="navbar-notification-btn" href="#">
-              <i class="fas fa-envelope fa-lg"></i>
-              <span id="inbox-total-notification" class="badge rounded-pill badge-notification bg-danger"></span>
-            </a>
-            <!-- Icon -->
-            <a class="link-secondary me-3 px-2" id="navbar-logout-btn" href="#">
-              <i class="fas fa-power-off"></i> Logout
-            </a>
+
+            <div class="d-flex w-auto align-items-center justify-content-center">
+              <a
+                class="text-white d-none d-md-flex me-3 px-2"
+                id="navbar-notification-btn"
+                href="#"
+              >
+                <i class="fas fa-envelope fa-lg inboxLink"></i>
+                <span
+                  id="inbox-total-notification"
+                  class="badge rounded-pill badge-notification bg-danger"
+                ></span>
+              </a>
+              <a
+                class="text-white me-3 px-2 logoutLink"
+                id="navbar-logout-btn"
+                href="#"
+              >
+                <i class="fas fa-power-off"></i> Logout&nbsp;
+              </a>
+            </div>
           </div>
         </div>
       </nav>
     </header>
+    <!-- class="btn btn-info addTestBtn" -->
     <section id="testPapers" class="mb-5">
-     <div class="container">
-      <div class="d-flex flex-wrap flex-column flex-md-row  align-content-center justify-content-md-evenly justify-content-lg-between m-4 m-lg-6">
-          <div class="col text-start"><h1>List of Test Papers</h1></div>
-              <div class="col text-end">  <button
-          id="add-new-questionarie-btn"
-          class="btn btn-info addTestBtn"
-          href="#"
-          role="button"
+      <div class="container">
+        <div
+          class="d-flex flex-wrap flex-column flex-md-row align-content-center justify-content-md-evenly justify-content-lg-between m-4"
         >
-          Add New Test Paper
-        </button></div>
-          
-       </div>
+          <div class="col text-start"><h1>List of Test Papers</h1></div>
+          <div class="col text-end">
+            <button
+              id="add-new-questionarie-btn"
+              class="btn btn-primary btn-lg fs-6"
+              style="background-color: #003d7a"
+              href="#"
+              role="button"
+            >
+              Add New Test Paper
+            </button>
+          </div>
+        </div>
 
-       <div class="container-sm text-center">
-        <div id="questionarie-grid" class="testPapers justify-content-center align-content-center">
+        <div class="container-sm text-center">
+          <div
+            id="questionarie-grid"
+            class="testPapers justify-content-center align-content-center"
+          ></div>
         </div>
       </div>
-
-      </div>
-      
     </section>
     <script
       src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -125,55 +161,79 @@
       crossorigin="anonymous"
     ></script>
     <script
-    src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
-    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
-    crossorigin="anonymous"></script>
+      src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+      integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+      crossorigin="anonymous"
+    ></script>
     <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
-  ></script>
-  <script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-></script> 
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    ></script>
 
     <script type="text/javascript" src="assets/js/data/data.js"></script>
-    <script type="text/javascript" src="assets/js/data/questionaries.js"></script>
-    <script type="text/javascript" src="assets/js/templates/questionaries.js"></script>
-    <script type="text/javascript" src="assets/js/templates/questions.js"></script>
-    <script type="text/javascript" src="assets/js/templates/questionformat.js"></script>
+    <script
+      type="text/javascript"
+      src="assets/js/data/questionaries.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="assets/js/templates/questionaries.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="assets/js/templates/questions.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="assets/js/templates/questionformat.js"
+    ></script>
     <script type="text/javascript" src="assets/js/templates/scores.js"></script>
-    <script type="text/javascript" src="assets/js/templates/usersNotification.js"></script>
+    <script
+      type="text/javascript"
+      src="assets/js/templates/usersNotification.js"
+    ></script>
     <script type="text/javascript" src="assets/js/utils.js"></script>
     <script type="text/javascript" src="assets/js/users.js"></script>
-    <script type="text/javascript" src="assets/js/validation/validate.js"></script>
+    <script
+      type="text/javascript"
+      src="assets/js/validation/validate.js"
+    ></script>
     <script type="text/javascript" src="assets/js/events-util.js"></script>
     <script type="text/javascript" src="assets/js/events.js"></script>
-    <script type="text/javascript" src="assets/js/element-interactions.js"></script>
+    <script
+      type="text/javascript"
+      src="assets/js/element-interactions.js"
+    ></script>
     <script type="text/javascript" src="assets/js/index.js"></script>
     <script>
       // $(document).ready(function () {
-    $(function () {
-     toastr.options = {
-       debug: false,
-       newestOnTop: false,
-       positionClass: "toast-bottom-right",
-       preventDuplicates: true,
-       progressBar: false,
-       onclick: null,
-       fadeIn: 300,
-       fadeOut: 3000,
-       timeOut: 3000,
-       extendedTimeOut: 1000,
-     };
-    
-     $(".questionaryScoreRecord").mouseenter(function () {
-       // show when the button is clicked
-       toastr.info("You can Check scores of all students for this test here");
-     });
-    }); 
-     
-  //  });
- </script>
+      $(function () {
+        toastr.options = {
+          debug: false,
+          newestOnTop: false,
+          positionClass: "toast-bottom-right",
+          preventDuplicates: true,
+          progressBar: false,
+          onclick: null,
+          fadeIn: 300,
+          fadeOut: 3000,
+          timeOut: 3000,
+          extendedTimeOut: 1000,
+        };
+
+        $(".questionaryScoreRecord").mouseenter(function () {
+          // show when the button is clicked
+          toastr.info(
+            "You can Check scores of all students for this test here"
+          );
+        });
+      });
+
+      //  });
+    </script>
   </body>
 </html>

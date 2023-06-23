@@ -30,70 +30,101 @@
   <body id="questionPaper" class="gradient-custom">
     <header id="navigation-bar">
       <nav class="navbar navbar-expand-md navbar-dark">
-        <div class="container-fluid">
-          <button
-           class="navbar-toggler"
-           type="button"
-           data-mdb-toggle="collapse"
-           data-mdb-target="#navigation-nav-bar"
-           aria-controls="navigation-nav-bar"
-           aria-expanded="false"
-           aria-label="Toggle navigation"
-          >
-            <i class="fas fa-bars"></i>
-          </button>
-          <div class="collapse navbar-collapse" id="navigation-nav-bar">
-            <!-- Navbar brand -->
-          <a class="navbar-brand me-2" href="#">
+        <div class="container">
+          <a class="navbar-brand" href="#">
             <img
-               src="assets/images/logo.png"
-               height="55"
-               width="70"
-               alt="mathEX Logo"
-               loading="lazy"
-               style="margin-top: -1px;"
-             />
-            </a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item px-2">
+              src="assets/images/logo.png"
+              height="60"
+              width="70"
+              alt="mathEX Logo"
+              loading="lazy"
+              style="margin-top: -1px"
+            />
+          </a>
+          <ul
+            class="navbar-nav dflex d-md-none flex-row align-items-center justify-content-right"
+          >
+            <li class="nav-item me-1 me-lg-0 d-md-none">
+              <a
+                class="text-white me-1 px-2"
+                id="navbar-notification-btn"
+                href="#"
+              >
+                <i class="fas fa-envelope fa-lg inboxLink"></i>
+                <span
+                  id="inbox-total-notification"
+                  class="badge rounded-pill badge-notification bg-danger"
+                ></span>
+              </a>
+            </li>
+            <li>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-mdb-toggle="collapse"
+                data-mdb-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <i class="fas fa-bars text-white"></i>
+              </button>
+            </li>
+          </ul>
+  
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0 mb-lg-0">
+              <li class="nav-item px-2 px-md-0">
                 <a
                   id="navbar-student-btn"
-                  class="nav-link"
+                  class="nav-link text-center"
                   aria-current="page"
                   href="#"
                   onclick="onChange(this)"
-                  ><i class="fas fa-user fa-sm"></i> Student</a
+                  ><i class="fas fa-user fa-sm"></i> Student&nbsp;</a
                 >
               </li>
-              <li class="nav-item px-2">
+              <li class="nav-item px-2 px-md-0">
                 <a
                   id="navbar-admin-btn"
-                  class="nav-link active"
+                  class="nav-link text-center active"
                   href="#"
                   onclick="onChange(this)"
-                  ><i class="fas fa-user-gear fa-sm"></i> Admin</a
+                  ><i class="fas fa-user-gear fa-sm"></i> Admin&nbsp;</a
                 >
               </li>
-              <li class="nav-item px-2">
+              <li class="nav-item px-2 px-md-0">
                 <a
                   id="navbar-user-management-btn"
-                  class="nav-link"
+                  class="nav-link text-center"
                   href="#"
                   onclick="onChange(this)"
-                  ><i class="fas fa-users-gear fa-sm"></i></i> User Management</a
+                  ><i class="fas fa-users-gear fa-sm"></i> User
+                  Management&nbsp;</a
                 >
               </li>
             </ul>
-          </div>
-          <div class="d-flex align-items-center">
-            <a class="link-secondary me-3 px-2" id="navbar-notification-btn" href="#">
-              <i class="fas fa-envelope fa-lg"></i>
-              <span id="inbox-total-notification" class="badge rounded-pill badge-notification bg-danger"></span>
-            </a>
-            <!-- Icon -->
-            <a class="link-secondary me-3 px-2"id="navbar-logout-btn" href="#">
-              <i class="fas fa-power-off"></i> Logout
-            </a>
+  
+            <div class="d-flex w-auto align-items-center justify-content-center">
+              <a
+                class="text-white d-none d-md-flex me-3 px-2"
+                id="navbar-notification-btn"
+                href="#"
+              >
+                <i class="fas fa-envelope fa-lg inboxLink"></i>
+                <span
+                  id="inbox-total-notification"
+                  class="badge rounded-pill badge-notification bg-danger"
+                ></span>
+              </a>
+              <a
+                class="text-white me-3 px-2 logoutLink"
+                id="navbar-logout-btn"
+                href="#"
+              >
+                <i class="fas fa-power-off"></i> Logout&nbsp;
+              </a>
+            </div>
           </div>
         </div>
       </nav>
@@ -121,7 +152,7 @@
             <input type="text" id="add-heading-questionarie-text" class="testNameInput mb-3" placeholder="Enter Questionary Name" value="Test" maxlength="50"/>
           </div>
           <div class="col-lg-3 align-self-center mb-0">
-            <button id="questionarie-rename-btn" type="" class="btn saveBtn renameBtnMsg">Rename Test</button>
+            <button id="questionarie-rename-btn" type="" class="btn btn-primary saveBtn renameBtnMsg">Rename Test</button>
           </div>
         </div>
         <!-- <h1 id="add-heading-questionarie">Test</h1> -->
@@ -144,13 +175,13 @@
           <input
             type="button"
             id="publish-btn"
-            class="btn btn-dark saveBtn publish-questionarie-msg"
+            class="btn btn-primary saveBtn publish-questionarie-msg"
             value="Publish"
           />
           <input
             type="button"
             id="republish-btn"
-            class="btn btn-dark saveBtn notify-questionarie-msg"
+            class="btn btn-primary saveBtn notify-questionarie-msg"
             value="Republish"
             hidden
           />
@@ -247,7 +278,7 @@
               </div>
 
               <div class="modal-footer">
-                <button id="pop-up-submit-save-btn" type="button" class="btn saveBtn">
+                <button id="pop-up-submit-save-btn" type="button" class="btn btn-primary saveBtn">
                   Save
                 </button>
                 <button

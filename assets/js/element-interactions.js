@@ -4,9 +4,13 @@ function initElements() {
   if(!isAdmin){
     $("a#navbar-admin-btn").hide();
     $("a#navbar-user-management-btn").hide();
+    $("a#navbar-student-btn").addClass("active");
+    $("a#navbar-admin-btn").removeClass("active");
   }else {
     $("a#navbar-admin-btn").show();
     $("a#navbar-user-management-btn").show();
+    // $("a#navbar-admin-btn").addClass("active");
+    // $("a#navbar-student-btn").removeClass("active");
   }
   initQuestions();
   //initUsers();
