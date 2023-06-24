@@ -39,23 +39,9 @@ function questionarieListItemAdmin(questionarieId, questionarieName){
   </div>`
 }
 
-// function questionarieStatus(questionarieId){
-//   return `<div class="col-auto mt-4">
-//   <p id="questionary-status-${questionarieId}" class="px-0 questionaryStatus">
-//    </p>
-//    </div>
-//    <div class="col-auto mt-4">
-//     <p><i id="questionary-modified-status-${questionarieId}" class="fas fa-rocket text-success"></i></p>
-//    </div>`
-// }
-
-// Status - <span id="questionarie-status-${questionarieId}"></span>
-
 function questionarieStatus(questionarieId){
   return `<div class="row-auto mt-4">
   <p> Status - <span id="questionary-status-${questionarieId}" class="px-0 questionaryStatus"> New
   </span></p>
    </div>`
 }
-
-// <span><i id="questionary-modified-status-${questionarieId}" class="fas fa-rocket text-success hidden"></i></span>

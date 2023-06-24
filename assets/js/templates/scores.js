@@ -36,12 +36,12 @@ function scoreRecord(questionarieId, questionarieName){
     <div id="collapse-questionarie-score-${attemptCount}" class="accordion-collapse collapse" aria-labelledby="heading-${attemptCount}" data-mdb-parent="#accordion-${questionarieId}">
       <div id="score-accordion-body-${attemptCount}" class="accordion-body">
       <div class="d-flex justify-content-end">
-        <h5 id="date-questionarie-attempt-${attemptCount}" class="">${questionarieDate}</h5>
-        <h5 id="score-${attemptCount}" class="ms-5">Score - ${score}
+        <h6 id="date-questionarie-attempt-${attemptCount}" class="fw-normal">${questionarieDate}</h6>
+        <h6 id="score-${attemptCount}" class="fw-normal ms-5">Score - ${score}
           <div class="progress">
              <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
-        </h5>
+        </h6>
       </div>
     </div>
   </div>
