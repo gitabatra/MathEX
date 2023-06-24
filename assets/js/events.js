@@ -150,13 +150,14 @@ function initEvents() {
    }
   });
 
-  $("input#student-questionarie-check-btn").on('click',function(event){
+  $("input#student-questionarie-check-btn").one('click',function(event){
   // $("input#student-questionarie-check-btn").click(function (event) {
     event.preventDefault();
     console.log("Checking the Questionaries event is executing.....",event);
     checkQuestionarie();
     toastr.info("Checking answers...","",{positionClass: "toast-bottom-right",
     preventDuplicates: true,extendedTimeOut: 500,timeOut: 300});
+    $("input#student-questionarie-check-btn").prop("disabled", true);
     //Enable Finish Button
     $("input#student-questionarie-finish-btn").prop("disabled", false);
     toastr.success("Checked succesfully!","",{positionClass: "toast-bottom-right",

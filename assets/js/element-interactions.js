@@ -13,7 +13,6 @@ function initElements() {
     // $("a#navbar-student-btn").removeClass("active");
   }
   initQuestions();
-  //initUsers();
 }
 
 function initQuestions() {
@@ -172,11 +171,26 @@ function refreshQuestionsList() {
 function appendQuestionForAdmin(questionId, questionType, firstNum, secondNum){
   const ques = firstNum + " " + questionType + " " + secondNum + " = ? ";
   console.log("Append Question for Admin------- : ",ques);
+  // $("div#add-question-from-popupdata")
+  //   .append(`<div id="question-${questionId}" class="alignQuestions p-3">
+  //   ${ques} 
+  //   <a id="delete-question-link" href="#" key="${questionId}" class="text-dark"><i class="fas fa-trash-alt ms-5"></i></a>   
+  // </div>`);
+
   $("div#add-question-from-popupdata")
-    .append(`<div id="question-${questionId}" class="alignQuestions p-3">
-    ${ques} 
-    <a id="delete-question-link" href="#" key="${questionId}" class="text-dark"><i class="fas fa-trash-alt ms-5"></i></a>   
-  </div>`);
+    .append(`
+    <div class="row alignQuestions p-3">
+        <div class="d-flex flex-wrap flex-row align-content-center justify-content-center">
+          <div class="col text-start px-md-3 align-self-center">
+            <div id="question-${questionId}">
+            <span>${ques}  </span>
+            </div>
+          </div>
+        <div class="col text-end px-md-3 align-self-center">
+             <a id="delete-question-link" href="#" key="${questionId}" class="text-dark"><i class="fas fa-trash-alt ms-5"></i></a>
+        </div>
+      </div>
+    </div> ` );
 }
 
 //Appending Questions on Student Page

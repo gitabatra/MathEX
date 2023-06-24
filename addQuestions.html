@@ -118,7 +118,7 @@
                 ></span>
               </a>
               <a
-                class="text-white me-3 px-2 logoutLink"
+                class="text-white me-0 px-2 logoutLink"
                 id="navbar-logout-btn"
                 href="#"
               >
@@ -145,22 +145,21 @@
           </nav>
           <!-- Breadcrumb -->
         </div>
-    
-      <div class="mx-0 text-center">
-        <div class="row justify-content-center">
-          <div class="col-lg-9 text-center">
-            <input type="text" id="add-heading-questionarie-text" class="testNameInput mb-3" placeholder="Enter Questionary Name" value="Test" maxlength="50"/>
+        <div class="mx-0 text-center">
+          <div class="row justify-content-center align-content-center">
+            <div class="col-lg-9 text-center">
+              <input type="text" id="add-heading-questionarie-text" class="testNameInput mb-3" placeholder="Enter Questionary Name" value="Test" maxlength="50"/>
+            </div>
+            <div class="col-auto justify-content-center col-lg-3 text-end align-self-center mb-0">
+              <button id="questionarie-rename-btn" type="" class="btn btn-primary saveBtn renameBtnMsg">Rename Test</button>
+            </div>
           </div>
-          <div class="col-lg-3 align-self-center mb-0">
-            <button id="questionarie-rename-btn" type="" class="btn btn-primary saveBtn renameBtnMsg">Rename Test</button>
-          </div>
+          <!-- <h1 id="add-heading-questionarie">Test</h1> -->
         </div>
-        <!-- <h1 id="add-heading-questionarie">Test</h1> -->
-      </div>
-      <div id="questionarie-status-row" class="row">
-      </div>
+
+        <div id="questionarie-status-row" class="row"></div>
       
-      <form class="align-items-sm-center mb-5">
+        <form class="align-items-sm-center mb-6 pb-4">
         <div id="add-question-from-popupdata" class="mb-4 pb-2">
         </div>
         <div id="question-list" class="col">
@@ -349,29 +348,19 @@
           extendedTimeOut: 1000,
         };
         $(".notify-questionarie-msg").click(function () {
-      // show when the button is clicked
-      toastr.success("Republished successfully!!");
-    });
+        // show when the button is clicked
+           toastr.success("Republished successfully!!");
+        });
     
-    $(".renameBtnMsg").mouseenter(function () {
-      // show when the button is clicked
-      toastr.info("To rename the test, Click on the test name, edit and press rename");
-      //,"",{extendedTimeOut: 0,timeOut: 3000, preventDuplicates: true}
-    });
+        $(".renameBtnMsg").mouseenter(function () {
+          // show when the button is clicked
+          toastr.info("To rename the test, Click on the test name, edit and press rename");
+        });
 
         toastr.warning("If you remove or add new questions to the published test then that test will remain hidden to students until you republish","",{closeButton: true,
         extendedTimeOut: 0,
         timeOut: 0,
         tapToDismiss: false});
-       
-        // $(".publish-questionarie-msg").click(function () {
-        //   // show when the button is clicked
-        //   toastr.info("Publishing Questionary for Student...","",{positionClass: "toast-bottom-right",
-        //   preventDuplicates: true,extendedTimeOut: 500,timeOut: 500});
-      
-        //   toastr.success("Published succesfully.","",{positionClass: "toast-bottom-right",
-        //   preventDuplicates: true,extendedTimeOut: 1000,timeOut: 3000});
-        // });
         
 
       $("#add-heading-questionarie-text").mouseenter(function(e){
@@ -385,11 +374,7 @@
          console.log("mouse enter event on input box is executing......",e.target.id);
          let targetId = e.target.id;
          $("#"+targetId).blur();
-         //$("#"+targetId).removeClass("highlightInput");
       })
-    
     });
-  
-    // });
   </script>
 </html>
