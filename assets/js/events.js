@@ -10,9 +10,6 @@ function initEvents() {
     console.log("Delete Questionarie button event is executing");
     let questionaryKey = $(this).parent().attr("key");
     let targetId = $("div#questionarie-grid-item-" + questionaryKey);
-    // let users = getRegisteredUsers();
-    // let userId = localStorage.getItem("loggedInUserID");
-    // let userObj = users[userId];
     console.log(
       "Removing object with id : ",
       targetId,
@@ -23,15 +20,12 @@ function initEvents() {
     console.log(targetId);
 
     let questionaries = getQuestionaries();
-    //if questionary was published then push notification that questionary is deleted
     if(questionaries[questionaryKey].isQuestionariePublished){
         console.log("Date is modified, so creating notification..........");
         createDeleteQuestioanryNotification(questionaryKey);
     }
     delete questionaries[questionaryKey];
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
-    // Object.assign(userObj,{hasNotifications: true});
-    // localStorage.setItem("users", JSON.stringify(users));
   });
 
   //Delete Question from a Questionarie
@@ -54,22 +48,12 @@ function initEvents() {
     let questionarieId = getQuestionarieID();
     let questionaries = getQuestionaries();
     console.log(questionaries[questionarieId]["questions"][questionKey]);
-    // delete questionaries[questionarieId]["questions"][questionKey];
-    // localStorage.setItem("questionaries", JSON.stringify(questionaries));
+   
     if(questionaries[questionarieId].isQuestionariePublished){
       let isModified = checkQuestionaryUpdated(questionaries[questionarieId].modifiedDate);
       console.log("After deleting a question, check questionary is modified or not: ",isModified);
       if(isModified){
         Object.assign(questionaries[questionarieId], {isModified:true,isNotificationSent: false});
-      //   let currentDate = getSessionDate();
-      //   Object.assign(questionaries[questionarieId], {
-      //     isModified:true,
-      //     modifiedDate: {
-      //       day: currentDate[0],
-      //       month: currentDate[1],
-      //       year: currentDate[2]
-      //   }
-      // });
       delete questionaries[questionarieId]["questions"][questionKey];
       localStorage.setItem("questionaries", JSON.stringify(questionaries));
       changeQuestionaryStatus(questionarieId);

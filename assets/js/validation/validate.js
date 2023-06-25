@@ -67,12 +67,6 @@ function validatePopUpData(popupData,event){
         popupData["num1"] = parseInt(popupData["num1"]);
         popupData["num2"] = parseInt(popupData["num2"]);
       }
-      // if(popupData["type"] == "/"){
-      //   if(parseInt(popupData["num1"]) === 0 || parseInt(popupData["num2"]) === 0){
-      //     console.log("either number 1 or number 2 is ZERO.......");
-      //     //
-      //   }
-      // }
       popupData["ndigit"] = parseInt(popupData["ndigit"]);
       return popupData;
    

@@ -103,17 +103,7 @@ function appendNewQuestionToList(popupData) {
     let isModified = checkQuestionaryUpdated(questionarieObject.modifiedDate);
     //modify the date and set isModified to true
     if(isModified){
-      //let currentDate = getSessionDate();
       Object.assign(questionaries[questionarieId], {isModified:true,isNotificationSent: false});
-    //   let currentDate = getSessionDate();
-    //   Object.assign(questionaries[questionarieId], {
-    //     isModified:true,
-    //     modifiedDate: {
-    //       day: currentDate[0],
-    //       month: currentDate[1],
-    //       year: currentDate[2]
-    //   }
-    // });
     localStorage.setItem("questionaries", JSON.stringify(questionaries));
     changeQuestionaryStatus(questionarieId);
     }
@@ -131,8 +121,6 @@ function refreshQuestionsList() {
   if (Object.hasOwnProperty.call(questionaries, questionarieId)) {
     let questionarieObject = questionaries[questionarieId];
     $("#add-heading-questionarie-text").text(questionarieObject["name"]);
-    // let isAdmin = checkIfLoggedInUserAdmin();
-    // if(isAdmin){}else
     $("#student-dashboard-questionarie-name").text(questionarieObject["name"]);
     $("input#add-heading-questionarie-text").val(questionarieObject["name"]);
     $("h3#add-heading-questionarie-student").text(questionarieObject["name"]);
@@ -146,8 +134,6 @@ function refreshQuestionsList() {
       if(questionarieObject.isModified){
       console.log(".............questionarie is modified..............");
       changeQuestionaryStatus(questionarieId);
-     //hide the questionarie for student
-      // $(`div#questionarie-list-item-${questionarieId}`).hide();
       $("input#republish-btn").show();
      }
     }
@@ -179,10 +165,10 @@ function appendQuestionForAdmin(questionId, questionType, firstNum, secondNum){
 
   $("div#add-question-from-popupdata")
     .append(`
-    <div class="row alignQuestions p-3">
+    <div  id="question-${questionId}" class="row alignQuestions p-3">
         <div class="d-flex flex-wrap flex-row align-content-center justify-content-center">
           <div class="col text-start px-md-3 align-self-center">
-            <div id="question-${questionId}">
+            <div>
             <span>${ques}  </span>
             </div>
           </div>
