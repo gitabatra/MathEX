@@ -7,19 +7,13 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
   }
     
     function appendFirstNumberInRow(questionId,number,nDigits){
-      console.log("first number type", typeof(number));
       let firstNumLength = number.length;
-      console.log("Length of Second number: ", firstNumLength);
       for (let i = 0; i< nDigits; i++){
         if(firstNumLength == nDigits){
-          console.log("Length of first number is equal to number of Digits");
           $("tr#first-number-"+`${questionId}`).append(`<td id="first-number-digit-${i}" class="text-center align-bottom">${number[i]}</td>`);
         } else if(firstNumLength <nDigits){
-          console.log("Length of first number is less than the number of Digits");
           let calcDifference = (nDigits - firstNumLength);
-          console.log("Difference in Length: ",calcDifference);
           if(i<calcDifference){
-            console.log("i ",i,"is less than calcDifference",calcDifference);
             $("tr#first-number-"+`${questionId}`).append(`<td id="first-number-digit-${i}" class="text-center align-bottom"></td>`);
           }
          else{
@@ -30,22 +24,16 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
     }
     
     function appendSecondNumberInRow(questionId,secondNumber,nDigits){
-      console.log("First Number--- No of Digits: ",nDigits);
-      console.log("Second number type", secondNumber, typeof(secondNumber.toString()));
       let numLength = (secondNumber.length);
-      console.log("Length of Second number: ", numLength);
       for (let i = 0; i< nDigits; i++){
         if(numLength == nDigits){
           $("tr#second-number-"+`${questionId}`).append(`<td id="second-number-digit-${i}" class="text-center align-bottom">${secondNumber[i]}</td>`);
         } else if(numLength <nDigits){
           let calcDifference = (nDigits - numLength);
-          console.log("Difference in Length: ",calcDifference);
           if(i<calcDifference){
-            console.log("i ",i,"is less than calcDifference",calcDifference);
             $("tr#second-number-"+`${questionId}`).append(`<td id="second-number-digit-${i}" class="text-center align-bottom"></td>`);
           }
           else {
-            console.log("Value of second Number at position: ",i, secondNumber[i-calcDifference]);
             $("tr#second-number-"+`${questionId}`).append(`<td id="second-number-digit-${i}" class="text-center align-bottom">${secondNumber[i-calcDifference]}</td>`);
           } 
         }
@@ -60,11 +48,8 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
           $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom"></td>`);
         }
       }
-      console.log("ADD / Subtract -- maximum input Boxes for answer ",answerLength);
+     
       for(let i=0; i<answerLength; i++){
-        console.log("AnswerLength: ",answerLength);
-       
-          console.log("AnswerLength is equal to number of Digits.");
           $("#answer-input-box-"+`${questionId}`).append(`<td class="text-center align-bottom">
           <input id="answer-box-${questionId}-${i}" class="no-outline finalInputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
           </td>`); 
@@ -72,7 +57,6 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
     }
     
     function appendInputBoxForAnswer(questionId,nDigits,firstNum,secondNum,questionType){
-      console.log("QuestionType: ",questionType);
       let firstNumLength = firstNum.toString().length;
       //let secondNumLength = secondNum.toString().length;
       let answer,answerLength;
@@ -97,21 +81,17 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
       }else{
         answerLength = (answer).toString().length;
       }
-      console.log("Multiply Answer length: ",answerLength);
       appendFirstNumberInRow(questionId,firstNum,answerLength);
       appendSecondNumberInRow(questionId,secondNum,answerLength);
        $("#answer-input-box-"+`${questionId}`).append(appendRowsForMultiplyAnswer(questionId,firstNum,secondNum,nDigits));
     }
   
     function appendRowsForMultiplyAnswer(questionId,firstNum,secondNum,nDigits){
-      console.log("InputBox for Multiplication.......");
-      console.log("First number and Second Number", firstNum, typeof(firstNum),secondNum, typeof(secondNum));
       let totalAnswerLength;
       let firstNumLength = firstNum.toString().length;
       let secondNumLength = secondNum.toString().length;
       if(parseInt(firstNum) === 0 || parseInt(secondNum) === 0){
           //display single box to enter 0 as answer
-          console.log("One of the number is zero---------------");
         if(firstNumLength > secondNumLength){
           totalAnswerLength = firstNumLength;
         }else {
@@ -126,7 +106,6 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
       } else{
         let secondNumLength = secondNum.length;
       //let totalAnswerRows = secondNumLength+1;
-      console.log("second number, Length of Second Number: ",secondNum, secondNumLength);
       totalAnswerLength = ((parseInt(firstNum)*parseInt(secondNum)).toString().length);
       let countX=0;
       if(secondNumLength == 1){
@@ -135,7 +114,6 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
       }else {
         for(let rowCount=0; rowCount<secondNumLength; rowCount++){
           let secondNumDigit = secondNum[secondNumLength-(rowCount+1)];
-          console.log("Second number digit: ",secondNum[secondNumLength-(rowCount+1)]);
           $(`#multiplication-questionarie-table-${questionId}`).append(`<tr id="answer-input-box-row-${questionId}-${rowCount}"><td class="text-center align-bottom"></td></tr>`);
           appendAnswerRowForMultiplication(questionId,firstNum,secondNumDigit,rowCount,totalAnswerLength,countX);
           countX = countX + 1;
@@ -147,7 +125,6 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
     }
   
     function displayFinalAnswerRow(questionId,totalAnswerLength){
-      console.log("Total Length in Final box: ",totalAnswerLength);
       for(let i=0; i<totalAnswerLength; i++){
         $(`tr#answer-input-box-final-${questionId}`).append(` <td class="text-center align-bottom">
         <input id="final-answer-box-${questionId}-${i}" class="finalInputBox" type="text" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');"/>
@@ -158,18 +135,12 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
     function  appendAnswerRowForMultiplication(questionId,firstNum,secondNumDigit,rowCount,totalAnswerLength,countX){
       let multiRowLength;
       if(secondNumDigit == 0){
-        console.log("Second Number Digit : ", secondNumDigit, "Length of first number: ",firstNum.length);
         multiRowLength = (firstNum.length);
-  
       } else{
         let multiResult = parseInt(firstNum)*parseInt(secondNumDigit);
-        console.log("First number: ",firstNum,"second number digit: ",secondNumDigit);
         multiRowLength = multiResult.toString().length;
       }
-         
-          console.log("Length of calculated answer: ",multiRowLength, "TotalLength of Answer",totalAnswerLength);
           let invlength = totalAnswerLength-multiRowLength;
-          console.log("Length of Invisible boxes: ",invlength);
           for(let i=0; i<(invlength-countX); i++)
           {
             $(`#answer-input-box-row-${questionId}-${rowCount}`).append(`<td class="emptyBox"></td>`);
@@ -190,9 +161,7 @@ function appendAddSubtractQuestions(questionId,nDigits,countQuestion,questionTyp
     }
   
     $(document).on("keyup", "input.finalInputBox, input.inputBox", function (e) {
-    // $("").on('keyup', function() {
-      console.log("Keycode for pressed key : ", e.keyCode);
-      console.log("Key up..........",$(this).next().find('input'), "MaxLength: ",this.maxLength);
+     // console.log("Key up..........",$(this).next().find('input'), "MaxLength: ",this.maxLength);
         
         if (this.value.length == this.maxLength) {
           $(this).parent().next().find('input').focus();

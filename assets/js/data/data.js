@@ -1,7 +1,7 @@
 function initLocalStorage(){
-    console.log("Initializing Questionaries Array");
+   // console.log("Initializing Questionaries Array");
     if(localStorage.getItem("questionaries") != null){
-        console.log("Avoiding Quesitonarie initialization because values already exist.");
+        //console.log("Avoiding Quesitonarie initialization because values already exist.");
         return;
     }
    
@@ -118,5 +118,5 @@ function initLocalStorage(){
     localStorage.setItem("screenWidth", "768");
     localStorage.setItem("loggedInUserID", null);
 
-    console.log("Checking Questionaries Array", JSON.parse(localStorage.getItem("questionaries")));
+    //console.log("Checking Questionaries Array", JSON.parse(localStorage.getItem("questionaries")));
 }

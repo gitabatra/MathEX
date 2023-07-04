@@ -29,7 +29,6 @@ function createNewQuestionarie(newQuestionarieKey,testName,popupData){
 
 
 function createNewScoreObject(scoreId){
-  console.log("Creating new score object...... ");
   let newScoreObject = {
      [scoreId] :{
       "scoreAttempts" :{
@@ -38,7 +37,6 @@ function createNewScoreObject(scoreId){
       
      }
     };
-    console.log("New Score object: ",newScoreObject);
     localStorage.setItem("scores", JSON.stringify(newScoreObject));
     return newScoreObject;
 }
@@ -55,22 +53,16 @@ function getDateForQuestionaryAttempt(){
 }
 
 function createNewScoreAttemptID(questionarieId,loggedInUserId){
-  console.log("Creating new Score attempt Id for user: ",loggedInUserId);
   let currentDate = getDateForQuestionaryAttempt();
-  console.log("Date String: ",currentDate);
    let scoreId = questionarieId+"_"+loggedInUserId;
    let users = getRegisteredUsers();
    let userId = localStorage.getItem("loggedInUserID");
-   console.log("users :----- : ",users, users[userId]);
    let scoreObj = users[userId]["scores"];
-   console.log("Score object while creating new attemptID: ",scoreObj);
   
    let qlength = Object.keys(scoreObj[scoreId]["scoreAttempts"]).length;
    let attemptCount = qlength+1;
-   //console.log("ScoreObject Attempts: ",questionarieObj["scoreAttempts"],"Qlength: ",qlength);
 
    dateString = "sa-"+currentDate+"-"+attemptCount+"_"+questionarieId+"_"+loggedInUserId;
-   console.log("New AttemptID :", dateString);
    return (dateString);
 }
 
@@ -122,7 +114,6 @@ function createNewUserRegistrationObject(newUserID,registrationData,sessionDate)
             }
       }
     };
-    console.log("New Registered user: ",newUserObject);
     return newUserObject;
 }
 
@@ -147,7 +138,6 @@ function getSessionDate(){
   let day = currentDate.getDate();
   let month = (currentDate.getMonth()+1);
   let year = currentDate.getFullYear();
-  console.log("Current date: day, month, year ---",[day,month,year]);
   return ([day,month,year]);
 }
 
