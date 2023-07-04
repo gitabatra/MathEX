@@ -1,6 +1,5 @@
 $(document).ready(function () {
   var forcedUserLogoutTimout;
-  console.log("Initializing Events");
   initLocalStorage();
   initializeDate();
 });
@@ -8,7 +7,6 @@ $(document).ready(function () {
 function checkIfLoggedIn(){
   let loggedInUserID = localStorage.getItem("loggedInUserID");
   if(loggedInUserID ==="null"){
-    console.log("USer id is null....................................");
     return false
   }else {
     return true
@@ -17,7 +15,6 @@ function checkIfLoggedIn(){
 
 function initializeDate(){
   let isUserLoggedIn = checkIfLoggedIn();
-  console.log("User is logged in or not..", isUserLoggedIn);
 
   const {
         host, hostname, href, origin, pathname, port, protocol, search
@@ -25,7 +22,7 @@ function initializeDate(){
 
   let pathnameArr = pathname.split("/");
   let pathName = pathnameArr[pathnameArr.length - 1];
-  console.log(pathName);
+  // console.log(pathName);
 
   if(pathName != "loginRegister.html"){
     if(isUserLoggedIn){
@@ -48,7 +45,6 @@ function initializeDate(){
       window.location.replace("./loginRegister.html");
     }
   } else {
-    console.log("Location is  login or register....",localStorage.getItem("loggedInUserID"));
     localStorage.setItem("loggedInUserID","null");
   }
 }

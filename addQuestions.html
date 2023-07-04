@@ -364,14 +364,12 @@
         
 
       $("#add-heading-questionarie-text").mouseenter(function(e){
-         console.log("mouse enter event on input box is executing......",e.target.id);
          let targetId = e.target.id;
          $("#"+targetId).focus();
         // $("#"+targetId).addClass("highlightInput");
       });
 
       $("#add-heading-questionarie-text").mouseout(function(e){
-         console.log("mouse enter event on input box is executing......",e.target.id);
          let targetId = e.target.id;
          $("#"+targetId).blur();
       })
